@@ -15,6 +15,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 import java.io.DataInputStream;
@@ -25,6 +27,8 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.nio.file.Files;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Logger;
 
 public class MainActivity extends AppCompatActivity {
@@ -86,5 +90,54 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+        ViewFiles("/storage/emulated/0/");
+    }
+
+    Map<String,Integer> GetIcons(){
+        Map<String,Integer> map = new HashMap<String,Integer>();
+        map.put("txt", R.drawable.ic_file_icon_txt);
+        map.put("avi", R.drawable.ic_file_icon_avi);
+        map.put("css", R.drawable.ic_file_icon_css);
+        map.put("csv", R.drawable.ic_file_icon_csv);
+        map.put("doc", R.drawable.ic_file_icon_doc);
+        map.put("htm", R.drawable.ic_file_icon_html);
+        map.put("html", R.drawable.ic_file_icon_html);
+        map.put("js", R.drawable.ic_file_icon_javascript);
+        map.put("jpg", R.drawable.ic_file_icon_jpg);
+        map.put("jpeg", R.drawable.ic_file_icon_jpg);
+        map.put("json", R.drawable.ic_file_icon_json);
+        map.put("mp3", R.drawable.ic_file_icon_mp3);
+        map.put("mp4", R.drawable.ic_file_icon_mp4);
+        map.put("pdf", R.drawable.ic_file_icon_pdf);
+        map.put("png", R.drawable.ic_file_icon_png);
+        map.put("ppt", R.drawable.ic_file_icon_ppt);
+        map.put("psd", R.drawable.ic_file_icon_psd);
+        map.put("svg", R.drawable.ic_file_icon_svg);
+        map.put("xls", R.drawable.ic_file_icon_xls);
+        map.put("xml", R.drawable.ic_file_icon_xml);
+        map.put("zip", R.drawable.ic_file_icon_zip);
+
+
+        map.put("folder", R.drawable.ic_file_icon_folder);
+        map.put("unknown", R.drawable.ic_file_icon_txt);
+        return map;
+    }
+
+    public void ViewFiles(String path){
+        FileExplorer explorer = new FileExplorer(path);
+        File[] files = explorer.GetFiles();
+        FileViewer fileViewer = new FileViewer(GetIcons());
+
+        TableLayout table = findViewById(R.id.fileTable);
+
+        int rows = 4;
+        TableRow row;
+        for(int r = 0; r<5; r++){
+            row = new TableRow(this);
+            for(int i = 0; i<4; i++){
+                row.addView(fileViewer.GetFileView(this, files[r*4+i]));
+            }
+            table.addView(row);
+        }
     }
 }
