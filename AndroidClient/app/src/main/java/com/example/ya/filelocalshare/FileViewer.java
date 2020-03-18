@@ -7,6 +7,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -45,5 +49,18 @@ public class FileViewer {
             }
         }
         return extension;
+    }
+    public static void SortFilesByAlphabetAndFolders(File[] input){
+        ArrayList<File> outputFiles = new ArrayList<>();
+        ArrayList<File> outputDirs = new ArrayList<>();
+        for(int i =0; i<input.length; i++)
+            if(input[i].isDirectory())
+                outputDirs.add(input[i]);
+            else
+                outputFiles.add(input[i]);
+        Collections.sort(outputFiles);
+        Collections.sort(outputDirs);
+        outputDirs.addAll(outputFiles);
+        input = outputDirs.toArray(input);
     }
 }

@@ -12,9 +12,11 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.format.Formatter;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -91,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         ViewFiles("/storage/emulated/0/");
+        ViewPath("/storage/emulated/0/storage/emulated/0/storage/emulated/0/storage/emulated/0/storage/emulated/0/storage/emulated/0/");
     }
 
     Map<String,Integer> GetIcons(){
@@ -127,17 +130,33 @@ public class MainActivity extends AppCompatActivity {
         FileExplorer explorer = new FileExplorer(path);
         File[] files = explorer.GetFiles();
         FileViewer fileViewer = new FileViewer(GetIcons());
+        fileViewer.SortFilesByAlphabetAndFolders(files);
 
         TableLayout table = findViewById(R.id.fileTable);
-
+        View[] fileViews = new View[files.length];
+        for(int i =0; i< files.length; i++)
+            fileViews[i] = fileViewer.GetFileView(this, files[i]);
         int rows = 4;
         TableRow row;
-        for(int r = 0; r<5; r++){
+        for(int r = 0; r<Math.ceil((float)files.length/4); r++){
             row = new TableRow(this);
-            for(int i = 0; i<4; i++){
-                row.addView(fileViewer.GetFileView(this, files[r*4+i]));
+            for(int i = 0; i<4&&r*4+i<fileViews.length; i++){
+                row.addView(fileViews[r*4+i]);
             }
+            row.setGravity(Gravity.CENTER_HORIZONTAL);
             table.addView(row);
+        }
+    }
+    public void ViewPath(String path){
+        String[] dirs = path.split("[/]");
+        LinearLayout scroller = findViewById(R.id.pathViewerLayout);
+        TextView textView;
+        for(int i =0; i<dirs.length; i++){
+            Log.d("DEB", dirs[i]);
+            textView = new TextView(this);
+            textView.setText(dirs[i]+"/");
+            textView.setGravity(Gravity.START);
+            scroller.addView(textView);
         }
     }
 }
