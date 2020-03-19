@@ -30,6 +30,7 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
@@ -132,9 +133,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void ViewFiles(String path){
+        HashSet<String> imExtensions = new HashSet<>();
+        imExtensions.add("png");
+        imExtensions.add("jpg");
+        imExtensions.add("jpeg");
+        imExtensions.add("giv");
         explorer.SetCurrentPath(path);
         File[] files = explorer.GetFiles();
-        FileViewer fileViewer = new FileViewer(GetIcons());
+        FileViewer fileViewer = new FileViewer(GetIcons(), imExtensions);
         fileViewer.SortFilesByAlphabetAndFolders(files);
 
         TableLayout table = findViewById(R.id.fileTable);
@@ -153,6 +159,7 @@ public class MainActivity extends AppCompatActivity {
             row.setGravity(Gravity.START);
             table.addView(row);
         }
+        fileViewer.ShowImageThumbnails();
     }
     public void ViewPath(String path){
         pathShower.showPath(this, (LinearLayout) findViewById(R.id.pathViewerLayout),explorer,path);
