@@ -35,6 +35,7 @@ import java.util.logging.Logger;
 
 public class MainActivity extends AppCompatActivity {
 
+    FileExplorer explorer = new FileExplorer("/");
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         ViewFiles("/storage/emulated/0/");
-        ViewPath("/storage/emulated/0/storage/emulated/0/storage/emulated/0/storage/emulated/0/storage/emulated/0/storage/emulated/0/");
+        ViewPath("/storage/emulated/0/");
     }
 
     Map<String,Integer> GetIcons(){
@@ -127,12 +128,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void ViewFiles(String path){
-        FileExplorer explorer = new FileExplorer(path);
+        explorer.SetCurrentPath(path);
         File[] files = explorer.GetFiles();
         FileViewer fileViewer = new FileViewer(GetIcons());
         fileViewer.SortFilesByAlphabetAndFolders(files);
 
         TableLayout table = findViewById(R.id.fileTable);
+        table.removeAllViews();
         View[] fileViews = new View[files.length];
         for(int i =0; i< files.length; i++)
             fileViews[i] = fileViewer.GetFileView(this, files[i]);
@@ -150,6 +152,7 @@ public class MainActivity extends AppCompatActivity {
     public void ViewPath(String path){
         String[] dirs = path.split("[/]");
         LinearLayout scroller = findViewById(R.id.pathViewerLayout);
+        scroller.removeAllViews();
         TextView textView;
         for(int i =0; i<dirs.length; i++){
             Log.d("DEB", dirs[i]);

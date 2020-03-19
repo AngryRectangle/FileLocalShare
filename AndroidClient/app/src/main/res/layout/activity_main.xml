@@ -75,8 +75,7 @@
         android:layout_height="25dp"
         android:layout_gravity="left"
         android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:scrollX="1000dp">
+        android:paddingRight="10dp">
 
         <LinearLayout
             android:id="@+id/pathViewerLayout"

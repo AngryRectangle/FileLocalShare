@@ -11,4 +11,7 @@ public class FileExplorer {
         File root = new File(currentPath);
         return  root.listFiles();
     }
+    public void SetCurrentPath(String path){
+        currentPath = path;
+    }
 }

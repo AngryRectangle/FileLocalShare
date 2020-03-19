@@ -24,20 +24,22 @@ public class FileViewer {
         this.iconResources = iconResources;
     }
 
-    public  View GetFileView(Activity activity, File file){
+    public  View GetFileView(Activity activity, File file) {
         LayoutInflater ltInflater = activity.getLayoutInflater();
         View output = ltInflater.inflate(FileView, null, false);
-        ((TextView)output.findViewById(R.id.fileName)).setText(file.getName());
-        int iconId =iconResources.get("unknown");
-        if(file.isDirectory())
+        ((TextView) output.findViewById(R.id.fileName)).setText(file.getName());
+        int iconId = iconResources.get("unknown");
+        if (file.isDirectory()) {
             iconId = iconResources.get("folder");
+            setOnClickActionForFolder((MainActivity)activity, output, file);
+        }
         else {
             String extension = GetFileExtension(file.getName());
             if (iconResources.containsKey(extension))
                 iconId = iconResources.get(extension);
         }
         ((ImageView)output.findViewById(R.id.fileIcon)).setImageResource(iconId);
-        return  output;
+        return output;
     }
     public String GetFileExtension(String extension){
         char[] textArray = extension.toCharArray();
@@ -62,5 +64,16 @@ public class FileViewer {
         Collections.sort(outputDirs);
         outputDirs.addAll(outputFiles);
         input = outputDirs.toArray(input);
+    }
+
+    private void setOnClickActionForFolder(final MainActivity activity, final View view, final File file){
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                activity.explorer.SetCurrentPath(file.getAbsolutePath());
+                activity.ViewPath(file.getAbsolutePath());
+                activity.ViewFiles(file.getAbsolutePath()+"/");
+            }
+        });
     }
 }
