@@ -3,6 +3,7 @@ package com.example.ya.filelocalshare;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.ThumbnailUtils;
 import android.os.AsyncTask;
 import android.text.Layout;
 import android.util.Log;
@@ -10,6 +11,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.signature.ObjectKey;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -48,7 +52,12 @@ public class FileViewer {
         }
         ((ImageView)output.findViewById(R.id.fileIcon)).setImageResource(iconId);
         if(imageExtensions.contains(GetFileExtension(file.getName()))){
-            bitmapHolders.add(new BitmapHolder(null, (ImageView)output.findViewById(R.id.fileIcon), file));
+            //bitmapHolders.add(new BitmapHolder(null, (ImageView)output.findViewById(R.id.fileIcon), file));
+            Glide.with(activity)
+                    .load(file)
+                    .centerCrop()
+                    .placeholder(R.drawable.ic_file_icon_jpg)
+                    .into((ImageView)output.findViewById(R.id.fileIcon));
         }
         return output;
     }
@@ -93,15 +102,18 @@ public class FileViewer {
         });
     }
     private Bitmap getBitmap(File file){
-        Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
-        float ratioWidth = (float)bitmap.getWidth()/Math.max(bitmap.getWidth(), bitmap.getHeight());
-        float ratioHeight = (float)bitmap.getHeight()/Math.max(bitmap.getWidth(), bitmap.getHeight());
-        return Bitmap.createScaledBitmap(
-                bitmap,
-                (int)(ratioWidth*120),
-                (int)(ratioHeight*120),
-                false
-        );
+        BitmapFactory.Options opts = new BitmapFactory.Options();
+        // Get bitmap dimensions before reading...
+        opts.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(file.getAbsolutePath(), opts);
+        int width = opts.outWidth;
+        int height = opts.outHeight;
+        int largerSide = Math.max(width, height);
+        opts.inJustDecodeBounds = false; // This time it's for real!
+        opts.inPreferredConfig = Bitmap.Config.RGB_565;
+        int sampleSize = Math.round(largerSide/128f);
+        opts.inSampleSize = sampleSize;
+        return ThumbnailUtils.extractThumbnail(BitmapFactory.decodeFile(file.getAbsolutePath(), opts), 130, 130);
     }
 
     private File[] GetSpecificFiles(File[] files, HashSet<String> extensions){
@@ -127,6 +139,7 @@ public class FileViewer {
     private class AsyncBitmapSettings extends AsyncTask<BitmapHolder[], BitmapHolder, Void> {
         @Override
         protected Void doInBackground(BitmapHolder[]... holders) {
+            android.os.Process.setThreadPriority(  android.os.Process.THREAD_PRIORITY_BACKGROUND +   android.os.Process.THREAD_PRIORITY_MORE_FAVORABLE);
             for(int i =0; i<holders[0].length; i++){
 
                 holders[0][i].bitmap = getBitmap(holders[0][i].file);
