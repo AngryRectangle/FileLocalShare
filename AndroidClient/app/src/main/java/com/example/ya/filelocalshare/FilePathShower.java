@@ -7,7 +7,9 @@ import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import java.io.File;
@@ -34,7 +36,13 @@ public class FilePathShower {
             if(i<parts.length-2)
                 fullPath+=parts[i+1]+"/";
         }
-
+        final HorizontalScrollView scrollview =  (activity.findViewById(R.id.pathScroller));
+        scrollview.post(new Runnable() {
+            @Override
+            public void run() {
+                scrollview.fullScroll(ScrollView.FOCUS_RIGHT);
+            }
+        });
     }
     private String[] getPathParts(String path){
         return path.split("[/]");

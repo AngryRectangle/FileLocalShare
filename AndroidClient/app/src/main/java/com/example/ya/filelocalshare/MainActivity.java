@@ -16,7 +16,9 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -92,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
         ViewFiles("/storage/emulated/0/");
         pathShower.showPath(this, (LinearLayout) findViewById(R.id.pathViewerLayout),explorer,"/storage/emulated/0/");
     }
@@ -140,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
         for(int i =0; i< files.length; i++)
             fileViews[i] = fileViewer.GetFileView(this, files[i]);
         int rows = 4;
-        int inRowCount = 3;
+        int inRowCount = 5;
         TableRow row;
         for(int r = 0; r<Math.ceil((float)files.length/inRowCount); r++){
             row = new TableRow(this);
