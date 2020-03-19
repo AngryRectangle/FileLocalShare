@@ -10,15 +10,15 @@
 
     <ImageView
         android:id="@+id/fileIcon"
-        android:layout_width="wrap_content"
+        android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_gravity="center|top"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:adjustViewBounds="true"
-        android:scaleType="fitXY"
+        android:adjustViewBounds="false"
+        android:scaleType="fitCenter"
         android:scaleX="1"
         android:scaleY="1"
         app:srcCompat="@drawable/ic_file_icon_txt" />

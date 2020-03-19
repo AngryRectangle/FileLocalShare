@@ -1,6 +1,8 @@
 package com.example.ya.filelocalshare;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,11 +22,11 @@ public class FileViewer {
     Map<String,Integer> iconResources;
     static final int FileView = R.layout.file_view;
 
-    public  FileViewer( Map<String,Integer> iconResources){
+    public FileViewer( Map<String,Integer> iconResources){
         this.iconResources = iconResources;
     }
 
-    public  View GetFileView(Activity activity, File file) {
+    public View GetFileView(Activity activity, File file) {
         LayoutInflater ltInflater = activity.getLayoutInflater();
         View output = ltInflater.inflate(FileView, null, false);
         ((TextView) output.findViewById(R.id.fileName)).setText(file.getName());
@@ -39,9 +41,11 @@ public class FileViewer {
                 iconId = iconResources.get(extension);
         }
         ((ImageView)output.findViewById(R.id.fileIcon)).setImageResource(iconId);
+        if(GetFileExtension(file.getName()).equals("png")||GetFileExtension(file.getName()).equals("jpeg")||GetFileExtension(file.getName()).equals("jpg")||GetFileExtension(file.getName()).equals("gif"))
+            ((ImageView)output.findViewById(R.id.fileIcon)).setImageBitmap(getBitmap(file));
         return output;
     }
-    public String GetFileExtension(String extension){
+    private String GetFileExtension(String extension){
         char[] textArray = extension.toCharArray();
         for(int i = extension.length()-1; i>=0; i--){
             if(textArray[i]=='.'){
@@ -75,5 +79,16 @@ public class FileViewer {
                 activity.ViewFiles(file.getAbsolutePath()+"/");
             }
         });
+    }
+    private Bitmap getBitmap(File file){
+        Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
+        float ratioWidth = (float)bitmap.getWidth()/Math.max(bitmap.getWidth(), bitmap.getHeight());
+        float ratioHeight = (float)bitmap.getHeight()/Math.max(bitmap.getWidth(), bitmap.getHeight());
+        return Bitmap.createScaledBitmap(
+                bitmap,
+                (int)(ratioWidth*120),
+                (int)(ratioHeight*120),
+                false
+        );
     }
 }
