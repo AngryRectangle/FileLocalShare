@@ -21,23 +21,22 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Socket;
-import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Logger;
 
 public class MainActivity extends AppCompatActivity {
 
     FileExplorer explorer = new FileExplorer("/");
+    FilePathShower pathShower;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        pathShower = new FilePathShower(getApplicationContext(), R.layout.path_view);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         TextView text = findViewById(R.id.ipText);
@@ -94,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         ViewFiles("/storage/emulated/0/");
-        ViewPath("/storage/emulated/0/");
+        pathShower.showPath(this, (LinearLayout) findViewById(R.id.pathViewerLayout),explorer,"/storage/emulated/0/");
     }
 
     Map<String,Integer> GetIcons(){
@@ -104,6 +103,7 @@ public class MainActivity extends AppCompatActivity {
         map.put("css", R.drawable.ic_file_icon_css);
         map.put("csv", R.drawable.ic_file_icon_csv);
         map.put("doc", R.drawable.ic_file_icon_doc);
+        map.put("docx", R.drawable.ic_file_icon_doc);
         map.put("htm", R.drawable.ic_file_icon_html);
         map.put("html", R.drawable.ic_file_icon_html);
         map.put("js", R.drawable.ic_file_icon_javascript);
@@ -115,6 +115,7 @@ public class MainActivity extends AppCompatActivity {
         map.put("pdf", R.drawable.ic_file_icon_pdf);
         map.put("png", R.drawable.ic_file_icon_png);
         map.put("ppt", R.drawable.ic_file_icon_ppt);
+        map.put("pptx", R.drawable.ic_file_icon_ppt);
         map.put("psd", R.drawable.ic_file_icon_psd);
         map.put("svg", R.drawable.ic_file_icon_svg);
         map.put("xls", R.drawable.ic_file_icon_xls);
@@ -139,27 +140,18 @@ public class MainActivity extends AppCompatActivity {
         for(int i =0; i< files.length; i++)
             fileViews[i] = fileViewer.GetFileView(this, files[i]);
         int rows = 4;
+        int inRowCount = 3;
         TableRow row;
-        for(int r = 0; r<Math.ceil((float)files.length/4); r++){
+        for(int r = 0; r<Math.ceil((float)files.length/inRowCount); r++){
             row = new TableRow(this);
-            for(int i = 0; i<4&&r*4+i<fileViews.length; i++){
-                row.addView(fileViews[r*4+i]);
+            for(int i = 0; i<inRowCount&&r*inRowCount+i<fileViews.length; i++){
+                row.addView(fileViews[r*inRowCount+i]);
             }
-            row.setGravity(Gravity.CENTER_HORIZONTAL);
+            row.setGravity(Gravity.START);
             table.addView(row);
         }
     }
     public void ViewPath(String path){
-        String[] dirs = path.split("[/]");
-        LinearLayout scroller = findViewById(R.id.pathViewerLayout);
-        scroller.removeAllViews();
-        TextView textView;
-        for(int i =0; i<dirs.length; i++){
-            Log.d("DEB", dirs[i]);
-            textView = new TextView(this);
-            textView.setText(dirs[i]+"/");
-            textView.setGravity(Gravity.START);
-            scroller.addView(textView);
-        }
+        pathShower.showPath(this, (LinearLayout) findViewById(R.id.pathViewerLayout),explorer,path);
     }
 }
