@@ -7,5 +7,5 @@ public interface FileBrowser {
     public void displayFile(File file, FileExplorer explorer);
     public void displayPath(String path, FileExplorer explorer);
     public void clearFileView();
-    public void startSearching(File[] files, String target);
+    public void startSearching(File dir, String target);
 }

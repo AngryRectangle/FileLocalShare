@@ -15,6 +15,10 @@ public class FileExplorer {
         File root = new File(currentPath);
         return root.listFiles();
     }
+    public static File[] getFiles(String path){
+        File root = new File(path);
+        return root.listFiles();
+    }
     public void openDirectory(String path){
         currentPath = path;
         File[] files = getFiles();
@@ -39,6 +43,6 @@ public class FileExplorer {
         input = outputDirs.toArray(input);
     }
     public void search(String target){
-        fileBrowser.startSearching(getFiles(), target);
+        fileBrowser.startSearching(new File(currentPath), target);
     }
 }

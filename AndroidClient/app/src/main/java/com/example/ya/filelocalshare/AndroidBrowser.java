@@ -2,12 +2,15 @@ package com.example.ya.filelocalshare;
 
 import android.app.Activity;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.Nullable;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -40,6 +43,17 @@ public class AndroidBrowser implements FileBrowser {
         if(options==null)
             options = new FileViewer.FileViewOptions(3);
         this.options = options;
+
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                if(asyncSearch!=null&&asyncSearch.getStatus().equals(AsyncTask.Status.RUNNING))
+                    asyncSearch.cancel(false);
+                clearFileView();
+
+            }
+        };
+        ((MainActivity)activity).getOnBackPressedDispatcher().addCallback((MainActivity)activity, callback);
     }
 
     public void displayFiles(File[] files, FileExplorer explorer){
@@ -54,23 +68,32 @@ public class AndroidBrowser implements FileBrowser {
     public void clearFileView(){
         fileViewer.clear();
     }
-    public void startSearching(File[] files, String target){
+    public void startSearching(File dir, String target){
         clearFileView();
         if(asyncSearch!=null&&asyncSearch.getStatus().equals(AsyncTask.Status.RUNNING))
             asyncSearch.cancel(false);
         asyncSearch = new AsyncSearch();
-        asyncSearch.files = files;
+        asyncSearch.dir = dir;
         asyncSearch.execute(target);
     }
 
     private class AsyncSearch extends AsyncTask<String, File, Void> {
-        File[] files;
+        File dir;
         FileExplorer explorer;
         @Override
         protected Void doInBackground(String... targetString) {
-            for(int i =0; i<files.length&&!isCancelled(); i++)
-                if(files[i].getName().contains(targetString[0]))
-                    publishProgress(files[i]);
+            ArrayList<File> dirs = new ArrayList<>();
+            dirs.add(dir);
+            File[] files;
+            for(int i =0; i<dirs.size()&&!isCancelled(); i++){
+                files = dirs.get(i).listFiles();
+                for(int j = 0; j<files.length; j++){
+                    if(files[j].getName().contains(targetString[0]))
+                        publishProgress(files[j]);
+                    if(files[j].isDirectory())
+                        dirs.add(files[j]);
+                }
+            }
             return null;
         }
 

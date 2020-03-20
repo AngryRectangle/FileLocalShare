@@ -1,5 +1,6 @@
 package com.example.ya.filelocalshare;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
@@ -101,6 +102,7 @@ public class MainActivity extends AppCompatActivity {
                 explorer.search(((EditText)findViewById(R.id.searchText)).getText().toString());
             }
         });
+
 
         createExplorer(getString(R.string.default_path));
         explorer.openDirectory(getString(R.string.default_path));
