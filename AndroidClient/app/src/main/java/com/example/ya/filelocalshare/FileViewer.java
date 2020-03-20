@@ -32,6 +32,7 @@ public class FileViewer {
     Map<String,Integer> iconResources;
     HashSet<String> imageExtensions;
     TableLayout parent;
+    ArrayList<File> viewedFile = new ArrayList<>();
     static final int FileView = R.layout.file_view;
 
     public FileViewer( Map<String,Integer> iconResources, HashSet<String> imageExtensions, TableLayout parent){
@@ -73,15 +74,7 @@ public class FileViewer {
         clear();
         View[] fileViews = new View[files.length];
         for(int i =0; i< files.length; i++)
-            fileViews[i] = GetFileView(activity, files[i], explorer);
-        TableRow row;
-        for(int r = 0; r<Math.ceil((float)files.length/opt.columns); r++){
-            row = new TableRow(activity);
-            for(int i = 0; i<opt.columns&&r*opt.columns+i<fileViews.length; i++){
-                row.addView(fileViews[r*opt.columns+i]);
-            }
-            parent.addView(row);
-        }
+            viewFile(activity, files[i], explorer, opt);
     }
     public void viewFile(Activity activity, File file, FileExplorer explorer, FileViewOptions opt) {
         View fileView = GetFileView(activity, file, explorer);
@@ -98,9 +91,11 @@ public class FileViewer {
             parent.addView(row);
         }
         row.addView(fileView);
+        viewedFile.add(file);
     }
     public void clear(){
         parent.removeAllViews();
+        viewedFile.clear();
     }
 
     public static class FileViewOptions{

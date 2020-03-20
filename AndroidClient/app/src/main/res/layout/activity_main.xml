@@ -69,23 +69,40 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <HorizontalScrollView
-        android:id="@+id/pathScroller"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="25dp"
-        android:layout_gravity="start"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:foregroundGravity="right"
-        android:scrollbars="none"
-        android:visibility="visible">
+        android:orientation="horizontal">
 
-        <LinearLayout
-            android:id="@+id/pathViewerLayout"
+        <HorizontalScrollView
+            android:id="@+id/pathScroller"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:orientation="horizontal" />
-    </HorizontalScrollView>
+            android:layout_gravity="start"
+            android:layout_weight="1"
+            android:foregroundGravity="right"
+            android:scrollbars="none"
+            android:visibility="visible">
+
+            <LinearLayout
+                android:id="@+id/pathViewerLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal" />
+        </HorizontalScrollView>
+
+        <ImageButton
+            android:id="@+id/popupMenuButton"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="start|center_vertical"
+            android:layout_weight=".06"
+            android:background="?android:attr/panelBackground"
+            app:srcCompat="@drawable/ic_menu" />
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"

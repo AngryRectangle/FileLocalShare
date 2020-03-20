@@ -15,6 +15,7 @@ import android.text.format.Formatter;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
@@ -22,6 +23,7 @@ import android.widget.EditText;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -128,7 +130,26 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
         );
+        ((ImageButton)findViewById(R.id.popupMenuButton)).setOnClickListener(new View.OnClickListener() {
 
+            @Override
+            public void onClick(View v) {
+                PopupMenu popup = new PopupMenu(MainActivity.this, findViewById(R.id.popupMenuButton));
+                popup.getMenuInflater().inflate(R.menu.popup_menu, popup.getMenu());
+                popup.show();
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+
+                    public boolean onMenuItemClick(MenuItem item) {
+                        if(item.getItemId()==R.id.selectSortButton){
+                            PopupMenu popup = new PopupMenu(MainActivity.this, findViewById(R.id.popupMenuButton));
+                            popup.getMenuInflater().inflate(R.menu.sort_popup_menu, popup.getMenu());
+                            popup.show();
+                        }
+                        return true;
+                    }
+                });
+            }
+        });
         explorer.openDirectory(getString(R.string.default_path));
     }
 
