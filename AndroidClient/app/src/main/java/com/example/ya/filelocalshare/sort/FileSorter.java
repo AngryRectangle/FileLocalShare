@@ -1,7 +1,11 @@
 package com.example.ya.filelocalshare.sort;
 
+import android.util.Log;
+
 import java.io.File;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 
@@ -12,7 +16,14 @@ public class FileSorter {
         BY_DATE
     }
 
-    public static void sort(ArrayList<File> files, SortType type){
+    public static File[] sort(File[] files, SortType type){
+        ArrayList<File> output = new ArrayList<>(Arrays.asList(files));
+        Log.d("SORT", output.get(0).getName());
+        output = sort(output, type);
+        Log.d("SORT", output.get(0).getName());
+        return output.toArray(new File[0]);
+    }
+    public static ArrayList<File> sort(ArrayList<File> files, SortType type){
         ArrayList<File>[] filesSplitted= splitFileDirs(files);
         switch (type) {
             case BY_NAME: {
@@ -32,7 +43,7 @@ public class FileSorter {
             }
         }
         filesSplitted[0].addAll(filesSplitted[1]);
-        files = filesSplitted[0];
+        return filesSplitted[0];
     }
 
     private static ArrayList<File>[] splitFileDirs(ArrayList<File> files){
@@ -52,7 +63,7 @@ public class FileSorter {
         Collections.sort(file, new Comparator<File>() {
             @Override
             public int compare(File a, File b) {
-                return longComparator(a.length(), b.length());
+                return -longComparator(a.length(), b.length());
             }
         });
     }
@@ -60,7 +71,7 @@ public class FileSorter {
         Collections.sort(file, new Comparator<File>() {
             @Override
             public int compare(File a, File b) {
-                return longComparator(a.lastModified(), b.lastModified());
+                return -longComparator(a.lastModified(), b.lastModified());
             }
         });
     }

@@ -1,28 +1,17 @@
 package com.example.ya.filelocalshare;
 
 import android.app.Activity;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.media.ThumbnailUtils;
-import android.os.AsyncTask;
-import android.text.Layout;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.webkit.MimeTypeMap;
 import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.signature.ObjectKey;
+import com.example.ya.filelocalshare.sort.FileSorter;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 
@@ -32,7 +21,7 @@ public class FileViewer {
     Map<String,Integer> iconResources;
     HashSet<String> imageExtensions;
     TableLayout parent;
-    ArrayList<File> viewedFile = new ArrayList<>();
+    public ArrayList<File> viewedFiles = new ArrayList<>();
     static final int FileView = R.layout.file_view;
 
     public FileViewer( Map<String,Integer> iconResources, HashSet<String> imageExtensions, TableLayout parent){
@@ -91,11 +80,11 @@ public class FileViewer {
             parent.addView(row);
         }
         row.addView(fileView);
-        viewedFile.add(file);
+        viewedFiles.add(file);
     }
     public void clear(){
         parent.removeAllViews();
-        viewedFile.clear();
+        viewedFiles.clear();
     }
 
     public static class FileViewOptions{

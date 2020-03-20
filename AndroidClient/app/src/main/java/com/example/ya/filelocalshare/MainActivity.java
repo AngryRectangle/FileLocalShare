@@ -29,6 +29,8 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.example.ya.filelocalshare.sort.FileSorter;
+
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -144,6 +146,21 @@ public class MainActivity extends AppCompatActivity {
                             PopupMenu popup = new PopupMenu(MainActivity.this, findViewById(R.id.popupMenuButton));
                             popup.getMenuInflater().inflate(R.menu.sort_popup_menu, popup.getMenu());
                             popup.show();
+                            popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+
+                                public boolean onMenuItemClick(MenuItem item) {
+                                    if(item.getItemId()==R.id.sortByName){
+                                        explorer.setSortType(FileSorter.SortType.BY_NAME);
+                                    }
+                                    if(item.getItemId()==R.id.sortByDate){
+                                        explorer.setSortType(FileSorter.SortType.BY_DATE);
+                                    }
+                                    if(item.getItemId()==R.id.sortBySize){
+                                        explorer.setSortType(FileSorter.SortType.BY_SIZE);
+                                    }
+                                    return true;
+                                }
+                            });
                         }
                         return true;
                     }

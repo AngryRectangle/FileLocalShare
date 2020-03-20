@@ -2,12 +2,15 @@ package com.example.ya.filelocalshare;
 
 import android.app.Activity;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.Nullable;
+
+import com.example.ya.filelocalshare.sort.FileSorter;
 
 import java.io.File;
 import java.nio.file.Path;
@@ -86,7 +89,14 @@ public class AndroidBrowser implements FileBrowser {
                 explorer.openDirectory(fullpath);
             }
         };
+
         pathViewer.handler = selectPathHandler;
+        explorer.addSortChangeListener(new FileExplorer.SortChangeCallback() {
+            @Override
+            public void execute(FileSorter.SortType type) {
+                sortViewedFiles(type);
+            }
+        });
     }
 
     public void displayFiles(File[] files){
@@ -118,6 +128,14 @@ public class AndroidBrowser implements FileBrowser {
         activity.findViewById(R.id.searchText).clearFocus();
         pathViewer.showPath(explorer.currentPath, explorer);
     }
+
+    private void sortViewedFiles(FileSorter.SortType type){
+        fileViewer.viewedFiles = FileSorter.sort(fileViewer.viewedFiles, type);
+        File[] fileToView = fileViewer.viewedFiles.toArray(new File[0]);
+        fileViewer.clear();
+        fileViewer.viewFiles(activity, fileToView, explorer, options);
+    }
+
     private class AsyncSearch extends AsyncTask<String, File, Void> {
         File dir;
         FileExplorer explorer;
