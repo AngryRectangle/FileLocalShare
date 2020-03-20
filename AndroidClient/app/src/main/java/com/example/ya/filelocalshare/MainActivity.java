@@ -101,7 +101,8 @@ public class MainActivity extends AppCompatActivity {
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                explorer.search(((EditText)findViewById(R.id.searchText)).getText().toString());
+                String text = ((EditText)findViewById(R.id.searchText)).getText().toString();
+                if(text.length()>0)explorer.search(text);
             }
         });
 
