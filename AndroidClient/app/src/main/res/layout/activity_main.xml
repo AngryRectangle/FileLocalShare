@@ -104,6 +104,21 @@
 
     </LinearLayout>
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="6dp"
+        android:layout_marginRight="6dp"
+        android:layout_weight="1"
+        android:scrollbars="none">
+
+        <TableLayout
+            android:id="@+id/fileTable"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="bottom" />
+    </ScrollView>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="35dp"
@@ -132,19 +147,5 @@
             android:scaleType="centerInside"
             app:srcCompat="@drawable/ic_search" />
     </LinearLayout>
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="6dp"
-        android:layout_marginRight="6dp"
-        android:scrollbars="none">
-
-        <TableLayout
-            android:id="@+id/fileTable"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="bottom" />
-    </ScrollView>
 
 </LinearLayout>

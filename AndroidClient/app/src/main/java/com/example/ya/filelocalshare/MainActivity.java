@@ -1,6 +1,5 @@
 package com.example.ya.filelocalshare;
 
-import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
@@ -13,20 +12,16 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.format.Formatter;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
-import android.widget.ScrollView;
 import android.widget.TableLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.example.ya.filelocalshare.sort.FileSorter;
@@ -142,9 +137,9 @@ public class MainActivity extends AppCompatActivity {
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
 
                     public boolean onMenuItemClick(MenuItem item) {
-                        if(item.getItemId()==R.id.selectSortButton){
+                        if(item.getItemId()==R.id.selectOrderButton){
                             PopupMenu popup = new PopupMenu(MainActivity.this, findViewById(R.id.popupMenuButton));
-                            popup.getMenuInflater().inflate(R.menu.sort_popup_menu, popup.getMenu());
+                            popup.getMenuInflater().inflate(R.menu.order_popup_menu, popup.getMenu());
                             popup.show();
                             popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
 
@@ -211,6 +206,7 @@ public class MainActivity extends AppCompatActivity {
         thumbnailsExtensions.add("gif");
         thumbnailsExtensions.add("mp4");
         thumbnailsExtensions.add("avi");
+        thumbnailsExtensions.add("pdf");
         explorer = new FileExplorer();
         androidBrowser = new AndroidBrowser(
                 this,

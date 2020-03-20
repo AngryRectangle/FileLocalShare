@@ -5,8 +5,8 @@
     android:orientation="vertical">
 
     <item
-        android:id="@+id/selectSortButton"
-        android:title="Sort" />
+        android:id="@+id/selectOrderButton"
+        android:title="Order" />
     <item
         android:id="@+id/settingsButton"
         android:title="Settings" />
