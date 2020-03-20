@@ -9,6 +9,7 @@ import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.webkit.MimeTypeMap;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -36,6 +37,10 @@ public class FileViewer {
         this.imageExtensions = imageExtensions;
     }
 
+    /*private boolean isMediaContent(String extension){
+        if( MimeTypeMap.getMimeTypeFromExtension(extension))
+
+    }*/
     public View GetFileView(Activity activity, File file) {
         LayoutInflater ltInflater = activity.getLayoutInflater();
         View output = ltInflater.inflate(FileView, null, false);
@@ -56,7 +61,7 @@ public class FileViewer {
             Glide.with(activity)
                     .load(file)
                     .centerCrop()
-                    .placeholder(R.drawable.ic_file_icon_jpg)
+                    .placeholder(iconId)
                     .into((ImageView)output.findViewById(R.id.fileIcon));
         }
         return output;

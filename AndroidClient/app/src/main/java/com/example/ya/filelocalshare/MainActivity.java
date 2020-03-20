@@ -112,6 +112,7 @@ public class MainActivity extends AppCompatActivity {
         map.put("html", R.drawable.ic_file_icon_html);
         map.put("js", R.drawable.ic_file_icon_javascript);
         map.put("jpg", R.drawable.ic_file_icon_jpg);
+        map.put("jpe", R.drawable.ic_file_icon_jpg);
         map.put("jpeg", R.drawable.ic_file_icon_jpg);
         map.put("json", R.drawable.ic_file_icon_json);
         map.put("mp3", R.drawable.ic_file_icon_mp3);
@@ -133,14 +134,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void ViewFiles(String path){
-        HashSet<String> imExtensions = new HashSet<>();
-        imExtensions.add("png");
-        imExtensions.add("jpg");
-        imExtensions.add("jpeg");
-        imExtensions.add("giv");
+        HashSet<String> thumnailsExtensions = new HashSet<>();
+        thumnailsExtensions.add("png");
+        thumnailsExtensions.add("jpg");
+        thumnailsExtensions.add("jpeg");
+        thumnailsExtensions.add("jpe");
+        thumnailsExtensions.add("gif");
+        thumnailsExtensions.add("mp4");
+        thumnailsExtensions.add("avi");
         explorer.SetCurrentPath(path);
         File[] files = explorer.GetFiles();
-        FileViewer fileViewer = new FileViewer(GetIcons(), imExtensions);
+        FileViewer fileViewer = new FileViewer(GetIcons(), thumnailsExtensions);
         fileViewer.SortFilesByAlphabetAndFolders(files);
 
         TableLayout table = findViewById(R.id.fileTable);
