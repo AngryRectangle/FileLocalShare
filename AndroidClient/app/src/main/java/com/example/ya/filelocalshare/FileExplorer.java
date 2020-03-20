@@ -1,15 +1,13 @@
 package com.example.ya.filelocalshare;
 
-import android.os.AsyncTask;
-
-import androidx.annotation.NonNull;
-
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Collections;
 
 public class FileExplorer {
     String currentPath;
     FileBrowser fileBrowser;
-    public  FileExplorer(@NonNull FileBrowser fileBrowser, String currentPath){
+    public  FileExplorer(FileBrowser fileBrowser, String currentPath){
         this.fileBrowser = fileBrowser;
         this.currentPath = currentPath;
     }
@@ -19,27 +17,28 @@ public class FileExplorer {
     }
     public void openDirectory(String path){
         currentPath = path;
-        fileBrowser.displayFiles(getFiles(), this);
+        File[] files = getFiles();
+        sort(files);
+        fileBrowser.displayFiles(files, this);
         fileBrowser.displayPath(path, this);
     }
     public void openDirectory(File dir){
         openDirectory(dir.getAbsolutePath());
     }
-    /*private class AsyncSearch extends AsyncTask<BitmapHolder[], BitmapHolder, Void> {
-        @Override
-        protected Void doInBackground(BitmapHolder[]... holders) {
-            android.os.Process.setThreadPriority(  android.os.Process.THREAD_PRIORITY_BACKGROUND +   android.os.Process.THREAD_PRIORITY_MORE_FAVORABLE);
-            for(int i =0; i<holders[0].length; i++){
-
-                holders[0][i].bitmap = getBitmap(holders[0][i].file);
-                publishProgress(holders[0][i]);
-            }
-            return null;
-        }
-
-        @Override
-        protected void onProgressUpdate(BitmapHolder... holder) {
-            holder[0].view.setImageBitmap(holder[0].bitmap);
-        }
-    }*/
+    public static void sort(File[] input){
+        ArrayList<File> outputFiles = new ArrayList<>();
+        ArrayList<File> outputDirs = new ArrayList<>();
+        for(int i =0; i<input.length; i++)
+            if(input[i].isDirectory())
+                outputDirs.add(input[i]);
+            else
+                outputFiles.add(input[i]);
+        Collections.sort(outputFiles);
+        Collections.sort(outputDirs);
+        outputDirs.addAll(outputFiles);
+        input = outputDirs.toArray(input);
+    }
+    public void search(String target){
+        fileBrowser.startSearching(getFiles(), target);
+    }
 }

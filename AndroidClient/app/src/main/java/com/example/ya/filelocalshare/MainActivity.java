@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.HorizontalScrollView;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TableLayout;
@@ -93,7 +94,13 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
+        ImageButton searchButton= findViewById(R.id.searchButton);
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                explorer.search(((EditText)findViewById(R.id.searchText)).getText().toString());
+            }
+        });
 
         createExplorer(getString(R.string.default_path));
         explorer.openDirectory(getString(R.string.default_path));

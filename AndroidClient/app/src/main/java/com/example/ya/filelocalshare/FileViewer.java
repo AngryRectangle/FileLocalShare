@@ -31,11 +31,13 @@ import java.io.File;
 public class FileViewer {
     Map<String,Integer> iconResources;
     HashSet<String> imageExtensions;
+    TableLayout parent;
     static final int FileView = R.layout.file_view;
 
-    public FileViewer( Map<String,Integer> iconResources, HashSet<String> imageExtensions){
+    public FileViewer( Map<String,Integer> iconResources, HashSet<String> imageExtensions, TableLayout parent){
         this.iconResources = iconResources;
         this.imageExtensions = imageExtensions;
+        this.parent = parent;
     }
 
     /*private boolean isMediaContent(String extension){
@@ -67,8 +69,8 @@ public class FileViewer {
         }
         return output;
     }
-    public void viewFiles(Activity activity, TableLayout parent, File[] files, FileExplorer explorer, FileViewOptions opt){
-        parent.removeAllViews();
+    public void viewFiles(Activity activity, File[] files, FileExplorer explorer, FileViewOptions opt){
+        clear();
         View[] fileViews = new View[files.length];
         for(int i =0; i< files.length; i++)
             fileViews[i] = GetFileView(activity, files[i], explorer);
@@ -82,19 +84,24 @@ public class FileViewer {
             parent.addView(row);
         }
     }
-    public void viewFile(Activity activity, TableLayout parent, File file, FileExplorer explorer, FileViewOptions opt) {
+    public void viewFile(Activity activity, File file, FileExplorer explorer, FileViewOptions opt) {
         View fileView = GetFileView(activity, file, explorer);
         int rowCount = parent.getChildCount();
-        if (rowCount == 0) {
-            parent.addView(new TableRow(activity));
-        }
         TableRow row = (TableRow) parent.getChildAt(rowCount - 1);
+        if (rowCount == 0) {
+            row = new TableRow(activity);
+            parent.addView(row);
+        }
+
         int columnCount = row.getChildCount();
         if (columnCount >= opt.columns) {
             row = new TableRow(activity);
             parent.addView(row);
         }
         row.addView(fileView);
+    }
+    public void clear(){
+        parent.removeAllViews();
     }
 
     public static class FileViewOptions{
@@ -114,19 +121,6 @@ public class FileViewer {
             }
         }
         return extension;
-    }
-    public static void SortFilesByAlphabetAndFolders(File[] input){
-        ArrayList<File> outputFiles = new ArrayList<>();
-        ArrayList<File> outputDirs = new ArrayList<>();
-        for(int i =0; i<input.length; i++)
-            if(input[i].isDirectory())
-                outputDirs.add(input[i]);
-            else
-                outputFiles.add(input[i]);
-        Collections.sort(outputFiles);
-        Collections.sort(outputDirs);
-        outputDirs.addAll(outputFiles);
-        input = outputDirs.toArray(input);
     }
 
     private void setOnClickActionForFolder(final FileExplorer explorer, final View view, final File file){
