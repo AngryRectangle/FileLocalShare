@@ -126,9 +126,9 @@ public class FileViewer {
     }
 
     private void setOnClickActionForFolder(
-            final FileExplorer explorer,
-            final View view,
-            final File file
+            @NonNull final FileExplorer explorer,
+            @NonNull final View view,
+            @NonNull final File file
     ) {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
