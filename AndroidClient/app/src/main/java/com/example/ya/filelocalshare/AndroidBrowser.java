@@ -3,9 +3,11 @@ package com.example.ya.filelocalshare;
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
+import android.widget.TableRow;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.Nullable;
@@ -31,7 +33,7 @@ public class AndroidBrowser implements FileBrowser {
     AsyncSearch asyncSearch;
     FileExplorer explorer;
 
-    public AndroidBrowser(final Activity activity, TableLayout fileView, LinearLayout pathLayout, final FileExplorer explorer, @Nullable Map<String, Integer> icons, @Nullable HashSet<String> thumbnailExtensions, @Nullable FileViewer.FileViewOptions options) {
+    public AndroidBrowser(final Activity activity, final TableLayout fileView, LinearLayout pathLayout, final FileExplorer explorer, @Nullable Map<String, Integer> icons, @Nullable HashSet<String> thumbnailExtensions, @Nullable FileViewer.FileViewOptions options) {
         this.activity = activity;
         this.fileView = fileView;
         if(icons==null) {
@@ -42,7 +44,7 @@ public class AndroidBrowser implements FileBrowser {
         if(thumbnailExtensions==null)
             thumbnailExtensions = new HashSet<>();
         this.thumbnailExtensions = thumbnailExtensions;
-        fileViewer = new FileViewer(icons, thumbnailExtensions, fileView);
+        fileViewer = new FileViewer(icons, thumbnailExtensions);
         pathViewer = new FilePathShower(activity, R.layout.path_view, pathLayout);
         if(options==null)
             options = new FileViewer.FileViewOptions(3);
@@ -97,13 +99,38 @@ public class AndroidBrowser implements FileBrowser {
                 sortViewedFiles(type);
             }
         });
+        fileViewer.fileViewer = new FileViewer.FileViewHandler() {
+            @Override
+            public void execute(File file, FileViewer.FileViewOptions options) {
+                View view = fileViewer.getFileView(activity, file, explorer);
+                int rowCount = fileView.getChildCount();
+                TableRow row = (TableRow) fileView.getChildAt(rowCount - 1);
+                if (rowCount == 0) {
+                    row = new TableRow(activity);
+                    fileView.addView(row);
+                }
+
+                int columnCount = row.getChildCount();
+                if (columnCount >= options.columns) {
+                    row = new TableRow(activity);
+                    fileView.addView(row);
+                }
+                row.addView(view);
+            }
+        };
+        fileViewer.clearViewHandler = new FileViewer.ClearViewHandler() {
+            @Override
+            public void execute() {
+                fileView.removeAllViews();
+            }
+        };
     }
 
     public void displayFiles(File[] files){
-        fileViewer.viewFiles(activity, files, explorer, options);
+        fileViewer.viewFiles(files, options);
     }
     public void displayFile(File file){
-        fileViewer.viewFile(activity, file, explorer, options);
+        fileViewer.viewFile(file, options);
     }
     public void displayPath(String path){
         pathViewer.showPath(path, explorer);
@@ -130,10 +157,10 @@ public class AndroidBrowser implements FileBrowser {
     }
 
     private void sortViewedFiles(FileSorter.SortType type){
-        fileViewer.viewedFiles = FileSorter.sort(fileViewer.viewedFiles, type);
-        File[] fileToView = fileViewer.viewedFiles.toArray(new File[0]);
+        ArrayList<File> sortedFiles = FileSorter.sort(fileViewer.getViewedFiles(), type);
+        File[] fileToView = sortedFiles.toArray(new File[0]);
         fileViewer.clear();
-        fileViewer.viewFiles(activity, fileToView, explorer, options);
+        fileViewer.viewFiles(fileToView, options);
     }
 
     private class AsyncSearch extends AsyncTask<String, File, Void> {

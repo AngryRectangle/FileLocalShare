@@ -4,17 +4,16 @@ import android.app.Activity;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.TableLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.RequestBuilder;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.request.RequestOptions;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -23,106 +22,114 @@ import java.util.Map;
 import java.io.File;
 
 public class FileViewer {
-    Map<String,Integer> iconResources;
-    HashSet<String> imageExtensions;
-    TableLayout parent;
-    public ArrayList<File> viewedFiles = new ArrayList<>();
-    static final int FileView = R.layout.file_view;
+    public FileViewHandler fileViewer;
+    public ClearViewHandler clearViewHandler;
+    private static final int FileView = R.layout.file_view;
+    private final Map<String, Integer> iconResources;
+    private final HashSet<String> imageExtensions;
+    private ArrayList<File> viewedFiles = new ArrayList<>();
 
-    public FileViewer( Map<String,Integer> iconResources, HashSet<String> imageExtensions, TableLayout parent){
-        this.iconResources = iconResources;
-        this.imageExtensions = imageExtensions;
-        this.parent = parent;
+    public static abstract class FileViewHandler {
+        public abstract void execute(File file, FileViewOptions options);
     }
 
-    /*private boolean isMediaContent(String extension){
-        if( MimeTypeMap.getMimeTypeFromExtension(extension))
-
-    }*/
-    public View GetFileView(Activity activity, File file, FileExplorer explorer) {
-        LayoutInflater ltInflater = activity.getLayoutInflater();
-        View output = ltInflater.inflate(FileView, null, false);
-        ((TextView) output.findViewById(R.id.fileName)).setText(file.getName());
-        int iconId = iconResources.get("unknown");
-        if (file.isDirectory()) {
-            iconId = iconResources.get("folder");
-            setOnClickActionForFolder(explorer, output, file);
-        }
-        else {
-            String extension = GetFileExtension(file.getName());
-            if (iconResources.containsKey(extension))
-                iconId = iconResources.get(extension);
-        }
-        ((ImageView)output.findViewById(R.id.fileIcon)).setImageResource(iconId);
-        if(imageExtensions.contains(GetFileExtension(file.getName()))){
-            //bitmapHolders.add(new BitmapHolder(null, (ImageView)output.findViewById(R.id.fileIcon), file));
-            Glide.with(activity)
-                    .load(file)
-                    .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-                    .centerCrop()
-                    .placeholder(iconId)
-                    .into((ImageView)output.findViewById(R.id.fileIcon));
-        }
-        if(GetFileExtension(file.getName()).equals("apk")){
-            PackageManager pm = activity.getPackageManager();
-            PackageInfo pi = pm.getPackageArchiveInfo(file.getAbsolutePath(), 0);
-            if(pi!=null&&pm!=null) {
-                pi.applicationInfo.sourceDir = file.getAbsolutePath();
-                pi.applicationInfo.publicSourceDir = file.getAbsolutePath();
-                Drawable APKicon = pi.applicationInfo.loadIcon(pm);
-                ((ImageView) output.findViewById(R.id.fileIcon)).setImageDrawable(APKicon);
-            }
-        }
-        return output;
-    }
-    public void viewFiles(Activity activity, File[] files, FileExplorer explorer, FileViewOptions opt){
-        clear();
-        View[] fileViews = new View[files.length];
-        for(int i =0; i< files.length; i++)
-            viewFile(activity, files[i], explorer, opt);
-    }
-    public void viewFile(Activity activity, File file, FileExplorer explorer, FileViewOptions opt) {
-        View fileView = GetFileView(activity, file, explorer);
-        int rowCount = parent.getChildCount();
-        TableRow row = (TableRow) parent.getChildAt(rowCount - 1);
-        if (rowCount == 0) {
-            row = new TableRow(activity);
-            parent.addView(row);
-        }
-
-        int columnCount = row.getChildCount();
-        if (columnCount >= opt.columns) {
-            row = new TableRow(activity);
-            parent.addView(row);
-        }
-        row.addView(fileView);
-        viewedFiles.add(file);
-    }
-    public void clear(){
-        parent.removeAllViews();
-        viewedFiles.clear();
+    public static abstract class ClearViewHandler {
+        public abstract void execute();
     }
 
-    public static class FileViewOptions{
+    public static class FileViewOptions {
         int columns;
 
         public FileViewOptions(int columns) {
             this.columns = columns;
         }
     }
-    private String GetFileExtension(String extension){
+
+    public FileViewer(
+            @NonNull Map<String, Integer> iconResources,
+            @NonNull HashSet<String> imageExtensions
+    ) {
+        this.iconResources = iconResources;
+        this.imageExtensions = imageExtensions;
+    }
+
+    public ArrayList<File> getViewedFiles() {
+        return viewedFiles;
+    }
+
+    public View getFileView(
+            @NonNull Activity activity,
+            @NonNull File file,
+            @NonNull FileExplorer explorer
+    ) {
+
+        LayoutInflater ltInflater = activity.getLayoutInflater();
+        View output = ltInflater.inflate(FileView, null, false);
+        ImageView view = output.findViewById(R.id.fileIcon);
+
+        setFileName((TextView) output.findViewById(R.id.fileName), file);
+        setFileIcon(file, view, explorer, activity);
+        return output;
+    }
+
+    public void viewFiles(@NonNull File[] files, @NonNull FileViewOptions opt) {
+        clear();
+        for (int i = 0; i < files.length; i++)
+            viewFile(files[i], opt);
+    }
+
+    public void viewFile(@NonNull File file, @NonNull FileViewOptions opt) {
+        viewedFiles.add(file);
+        fileViewer.execute(file, opt);
+    }
+
+    public void clear() {
+        clearViewHandler.execute();
+        viewedFiles.clear();
+    }
+
+    private static void setFileName(@NonNull TextView view, @NonNull File file) {
+        view.setText(file.getName());
+    }
+
+    private static RequestBuilder requestMediaIcon(
+            @NonNull File file,
+            @NonNull Activity activity
+    ) {
+        return Glide.with(activity)
+                .load(file)
+                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+                .centerCrop();
+    }
+
+    private static Drawable getApkIcon(@NonNull File file, @NonNull Activity activity) {
+        PackageManager pm = activity.getPackageManager();
+        PackageInfo pi = pm.getPackageArchiveInfo(file.getAbsolutePath(), 0);
+        if (pi != null && pm != null) {
+            pi.applicationInfo.sourceDir = file.getAbsolutePath();
+            pi.applicationInfo.publicSourceDir = file.getAbsolutePath();
+            return pi.applicationInfo.loadIcon(pm);
+        }
+        return null;
+    }
+
+    private static String getFileExtension(@NonNull String extension) {
         char[] textArray = extension.toCharArray();
-        for(int i = extension.length()-1; i>=0; i--){
-            if(textArray[i]=='.'){
-                char[] output = new char[extension.length()-i-1];
-                extension.getChars(i+1, extension.length(), output, 0);
+        for (int i = extension.length() - 1; i >= 0; i--) {
+            if (textArray[i] == '.') {
+                char[] output = new char[extension.length() - i - 1];
+                extension.getChars(i + 1, extension.length(), output, 0);
                 return new String(output).toLowerCase();
             }
         }
         return extension;
     }
 
-    private void setOnClickActionForFolder(final FileExplorer explorer, final View view, final File file){
+    private void setOnClickActionForFolder(
+            final FileExplorer explorer,
+            final View view,
+            final File file
+    ) {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -131,11 +138,37 @@ public class FileViewer {
         });
     }
 
-    private File[] GetSpecificFiles(File[] files, HashSet<String> extensions){
-        ArrayList<File> output = new ArrayList<>();
-        for(int i =0; i < files.length; i++)
-            if(extensions.contains(GetFileExtension(files[i].getName())))
-                output.add(files[i]);
-            return output.toArray(new File[0]);
+    private void setFileThumbnail(
+            @NonNull ImageView view,
+            @NonNull File file,
+            @NonNull Activity activity
+    ) {
+        if (imageExtensions.contains(getFileExtension(file.getName()))) {
+            requestMediaIcon(file, activity).into(view);
+        } else if (getFileExtension(file.getName()).equals("apk")) {
+            Drawable drawable = getApkIcon(file, activity);
+            if (drawable != null)
+                view.setImageDrawable(drawable);
+        }
+    }
+
+    private void setFileIcon(
+            @NonNull File file,
+            @NonNull ImageView view,
+            @NonNull FileExplorer explorer,
+            @NonNull Activity activity
+    ) {
+        int iconId = iconResources.get("unknown");
+        if (file.isDirectory()) {
+            iconId = iconResources.get("folder");
+            setOnClickActionForFolder(explorer, (View) view.getParent(), file);
+        } else {
+            String extension = getFileExtension(file.getName());
+            if (iconResources.containsKey(extension))
+                iconId = iconResources.get(extension);
+        }
+
+        view.setImageResource(iconId);
+        setFileThumbnail(view, file, activity);
     }
 }
