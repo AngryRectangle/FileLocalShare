@@ -117,7 +117,7 @@ public class FileViewer {
             if(textArray[i]=='.'){
                 char[] output = new char[extension.length()-i-1];
                 extension.getChars(i+1, extension.length(), output, 0);
-                return new String(output);
+                return new String(output).toLowerCase();
             }
         }
         return extension;
