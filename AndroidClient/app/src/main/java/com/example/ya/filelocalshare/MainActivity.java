@@ -134,17 +134,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void ViewFiles(String path){
-        HashSet<String> thumnailsExtensions = new HashSet<>();
-        thumnailsExtensions.add("png");
-        thumnailsExtensions.add("jpg");
-        thumnailsExtensions.add("jpeg");
-        thumnailsExtensions.add("jpe");
-        thumnailsExtensions.add("gif");
-        thumnailsExtensions.add("mp4");
-        thumnailsExtensions.add("avi");
+        HashSet<String> thumbnailsExtensions = new HashSet<>();
+        thumbnailsExtensions.add("png");
+        thumbnailsExtensions.add("jpg");
+        thumbnailsExtensions.add("jpeg");
+        thumbnailsExtensions.add("jpe");
+        thumbnailsExtensions.add("gif");
+        thumbnailsExtensions.add("mp4");
+        thumbnailsExtensions.add("avi");
         explorer.SetCurrentPath(path);
         File[] files = explorer.GetFiles();
-        FileViewer fileViewer = new FileViewer(GetIcons(), thumnailsExtensions);
+        FileViewer fileViewer = new FileViewer(GetIcons(), thumbnailsExtensions);
         fileViewer.SortFilesByAlphabetAndFolders(files);
 
         TableLayout table = findViewById(R.id.fileTable);

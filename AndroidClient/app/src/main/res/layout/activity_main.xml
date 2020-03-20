@@ -87,6 +87,34 @@
             android:orientation="horizontal" />
     </HorizontalScrollView>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="20dp"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/searchText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="@android:string/search_go"
+            android:textSize="12sp" />
+
+        <ImageButton
+            android:id="@+id/searchButton"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_weight=".05"
+            android:adjustViewBounds="true"
+            android:background="?android:attr/panelBackground"
+            android:scaleType="centerInside"
+            app:srcCompat="@drawable/ic_search" />
+    </LinearLayout>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
