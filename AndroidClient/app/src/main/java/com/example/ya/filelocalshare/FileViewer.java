@@ -80,7 +80,6 @@ public class FileViewer {
             for(int i = 0; i<opt.columns&&r*opt.columns+i<fileViews.length; i++){
                 row.addView(fileViews[r*opt.columns+i]);
             }
-            //row.setGravity(Gravity.START);
             parent.addView(row);
         }
     }

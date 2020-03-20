@@ -180,7 +180,7 @@ public class MainActivity extends AppCompatActivity {
                 (LinearLayout)findViewById(R.id.pathViewerLayout),
                 explorer,
                 getIcons(),thumbnailsExtensions,
-                new FileViewer.FileViewOptions(6)
+                new FileViewer.FileViewOptions(5)
         );
 
     }
