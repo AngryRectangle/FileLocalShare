@@ -18,9 +18,7 @@ public class FileSorter {
 
     public static File[] sort(File[] files, SortType type){
         ArrayList<File> output = new ArrayList<>(Arrays.asList(files));
-        Log.d("SORT", output.get(0).getName());
         output = sort(output, type);
-        Log.d("SORT", output.get(0).getName());
         return output.toArray(new File[0]);
     }
     public static ArrayList<File> sort(ArrayList<File> files, SortType type){
