@@ -149,13 +149,15 @@ public class MainActivity extends AppCompatActivity {
         thumbnailsExtensions.add("gif");
         thumbnailsExtensions.add("mp4");
         thumbnailsExtensions.add("avi");
+        explorer = new FileExplorer();
         AndroidBrowser androidBrowser = new AndroidBrowser(
                 this,
                 (TableLayout) findViewById(R.id.fileTable),
                 (LinearLayout)findViewById(R.id.pathViewerLayout),
+                explorer,
                 getIcons(),thumbnailsExtensions,
                 new FileViewer.FileViewOptions(6)
         );
-        explorer = new FileExplorer(androidBrowser,path);
+
     }
 }

@@ -6,14 +6,13 @@ import java.util.Collections;
 
 public class FileExplorer {
     String currentPath;
-    FileBrowser fileBrowser;
-    public  FileExplorer(FileBrowser fileBrowser, String currentPath){
-        this.fileBrowser = fileBrowser;
-        this.currentPath = currentPath;
-    }
+    ArrayList<ExplorerCallback> openDirListeners = new ArrayList<>();
+    ArrayList<ExplorerCallback> startSearchingListeners = new ArrayList<>();
     public File[] getFiles(){
         File root = new File(currentPath);
-        return root.listFiles();
+        File[] files = root.listFiles();
+        sort(files);
+        return files;
     }
     public static File[] getFiles(String path){
         File root = new File(path);
@@ -21,10 +20,8 @@ public class FileExplorer {
     }
     public void openDirectory(String path){
         currentPath = path;
-        File[] files = getFiles();
-        sort(files);
-        fileBrowser.displayFiles(files, this);
-        fileBrowser.displayPath(path, this);
+        for(int i = 0; i< openDirListeners.size(); i++)
+            openDirListeners.get(i).execute(path);
     }
     public void openDirectory(File dir){
         openDirectory(dir.getAbsolutePath());
@@ -43,6 +40,17 @@ public class FileExplorer {
         input = outputDirs.toArray(input);
     }
     public void search(String target){
-        fileBrowser.startSearching(new File(currentPath), target);
+        for(int i = 0; i< startSearchingListeners.size(); i++)
+            startSearchingListeners.get(i).execute(target);
+    }
+    public void addOpenDirListener(ExplorerCallback listener){
+        openDirListeners.add(listener);
+    }
+    public void addStartSearchingListener(ExplorerCallback listener){
+        startSearchingListeners.add(listener);
+    }
+
+    static abstract class ExplorerCallback {
+        public abstract void execute(String path);
     }
 }
