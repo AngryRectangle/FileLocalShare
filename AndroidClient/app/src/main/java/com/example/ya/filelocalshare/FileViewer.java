@@ -1,6 +1,10 @@
 package com.example.ya.filelocalshare;
 
 import android.app.Activity;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -9,7 +13,8 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.example.ya.filelocalshare.sort.FileSorter;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -53,9 +58,20 @@ public class FileViewer {
             //bitmapHolders.add(new BitmapHolder(null, (ImageView)output.findViewById(R.id.fileIcon), file));
             Glide.with(activity)
                     .load(file)
+                    .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
                     .centerCrop()
                     .placeholder(iconId)
                     .into((ImageView)output.findViewById(R.id.fileIcon));
+        }
+        if(GetFileExtension(file.getName()).equals("apk")){
+            PackageManager pm = activity.getPackageManager();
+            PackageInfo pi = pm.getPackageArchiveInfo(file.getAbsolutePath(), 0);
+            if(pi!=null&&pm!=null) {
+                pi.applicationInfo.sourceDir = file.getAbsolutePath();
+                pi.applicationInfo.publicSourceDir = file.getAbsolutePath();
+                Drawable APKicon = pi.applicationInfo.loadIcon(pm);
+                ((ImageView) output.findViewById(R.id.fileIcon)).setImageDrawable(APKicon);
+            }
         }
         return output;
     }
