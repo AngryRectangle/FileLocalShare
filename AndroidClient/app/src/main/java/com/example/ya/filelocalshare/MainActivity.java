@@ -35,11 +35,9 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
-    FileExplorer explorer = new FileExplorer("/");
-    FilePathShower pathShower;
+    FileExplorer explorer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        pathShower = new FilePathShower(getApplicationContext(), R.layout.path_view);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         TextView text = findViewById(R.id.ipText);
@@ -96,11 +94,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        ViewFiles("/storage/emulated/0/");
-        pathShower.showPath(this, (LinearLayout) findViewById(R.id.pathViewerLayout),explorer,"/storage/emulated/0/");
+
+        createExplorer(getString(R.string.default_path));
+        explorer.openDirectory(getString(R.string.default_path));
     }
 
-    Map<String,Integer> GetIcons(){
+    Map<String,Integer> getIcons(){
         Map<String,Integer> map = new HashMap<String,Integer>();
         map.put("txt", R.drawable.ic_file_icon_txt);
         map.put("avi", R.drawable.ic_file_icon_avi);
@@ -132,8 +131,7 @@ public class MainActivity extends AppCompatActivity {
         map.put("unknown", R.drawable.ic_file_icon_txt);
         return map;
     }
-
-    public void ViewFiles(String path){
+    public void createExplorer(String path){
         HashSet<String> thumbnailsExtensions = new HashSet<>();
         thumbnailsExtensions.add("png");
         thumbnailsExtensions.add("jpg");
@@ -142,30 +140,13 @@ public class MainActivity extends AppCompatActivity {
         thumbnailsExtensions.add("gif");
         thumbnailsExtensions.add("mp4");
         thumbnailsExtensions.add("avi");
-        explorer.SetCurrentPath(path);
-        File[] files = explorer.GetFiles();
-        FileViewer fileViewer = new FileViewer(GetIcons(), thumbnailsExtensions);
-        fileViewer.SortFilesByAlphabetAndFolders(files);
-
-        TableLayout table = findViewById(R.id.fileTable);
-        table.removeAllViews();
-        View[] fileViews = new View[files.length];
-        for(int i =0; i< files.length; i++)
-            fileViews[i] = fileViewer.GetFileView(this, files[i]);
-        int rows = 4;
-        int inRowCount = 5;
-        TableRow row;
-        for(int r = 0; r<Math.ceil((float)files.length/inRowCount); r++){
-            row = new TableRow(this);
-            for(int i = 0; i<inRowCount&&r*inRowCount+i<fileViews.length; i++){
-                row.addView(fileViews[r*inRowCount+i]);
-            }
-            row.setGravity(Gravity.START);
-            table.addView(row);
-        }
-        fileViewer.ShowImageThumbnails();
-    }
-    public void ViewPath(String path){
-        pathShower.showPath(this, (LinearLayout) findViewById(R.id.pathViewerLayout),explorer,path);
+        AndroidBrowser androidBrowser = new AndroidBrowser(
+                this,
+                (TableLayout) findViewById(R.id.fileTable),
+                (LinearLayout)findViewById(R.id.pathViewerLayout),
+                getIcons(),thumbnailsExtensions,
+                new FileViewer.FileViewOptions(6)
+        );
+        explorer = new FileExplorer(androidBrowser,path);
     }
 }

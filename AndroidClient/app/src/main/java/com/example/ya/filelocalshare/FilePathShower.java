@@ -17,11 +17,13 @@ import java.io.File;
 public class FilePathShower {
     int pathElementView;
     Resources res;
-    public FilePathShower(Context con, int pathElement){
+    LinearLayout parent;
+    public FilePathShower(Context con, int pathElement, LinearLayout parent){
         res = con.getResources();
         pathElementView = pathElement;
+        this.parent = parent;
     }
-    public void showPath(MainActivity activity, LinearLayout parent, FileExplorer explorer, String path){
+    public void showPath(MainActivity activity, String path, FileExplorer explorer){
         Log.d("DEB", path);
         parent.removeAllViews();
         path = path.replaceAll(
@@ -31,7 +33,7 @@ public class FilePathShower {
         String fullPath = res.getString(R.string.default_path);
         for(int i =0; i<parts.length; i++){
             View view =  inflateView(activity).findViewById(R.id.pathTextView);
-            applyPathElement(fullPath, parts[i]+"/", view, activity);
+            applyPathElement(fullPath, parts[i]+"/", view, explorer);
             parent.addView((View)view.getParent());
             if(i<parts.length-2)
                 fullPath+=parts[i+1]+"/";
@@ -47,22 +49,20 @@ public class FilePathShower {
     private String[] getPathParts(String path){
         return path.split("[/]");
     }
-    private void applyPathElement(String fullPath, String name, View view, final MainActivity activity){
+    private void applyPathElement(String fullPath, String name, View view, final FileExplorer explorer){
         ((TextView)view).setText(name);
-        setPathOnClickAction(activity, view, fullPath);
+        setPathOnClickAction(explorer, view, fullPath);
     }
     private View inflateView(Activity activity){
         LayoutInflater ltInflater = activity.getLayoutInflater();
         return ltInflater.inflate(pathElementView, null, false);
     }
 
-    private void setPathOnClickAction(final MainActivity activity, final View view, final String path){
+    private void setPathOnClickAction(final FileExplorer explorer, final View view, final String path){
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                activity.explorer.SetCurrentPath(path);
-                activity.ViewPath(path);
-                activity.ViewFiles(path);
+                explorer.openDirectory(path);
             }
         });
     }

@@ -7,10 +7,13 @@ import android.media.ThumbnailUtils;
 import android.os.AsyncTask;
 import android.text.Layout;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.ImageView;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -29,8 +32,6 @@ public class FileViewer {
     Map<String,Integer> iconResources;
     HashSet<String> imageExtensions;
     static final int FileView = R.layout.file_view;
-    AsyncBitmapSettings asyncBitmapSettings = new AsyncBitmapSettings();
-    ArrayList<BitmapHolder> bitmapHolders = new ArrayList<>();
 
     public FileViewer( Map<String,Integer> iconResources, HashSet<String> imageExtensions){
         this.iconResources = iconResources;
@@ -41,14 +42,14 @@ public class FileViewer {
         if( MimeTypeMap.getMimeTypeFromExtension(extension))
 
     }*/
-    public View GetFileView(Activity activity, File file) {
+    public View GetFileView(Activity activity, File file, FileExplorer explorer) {
         LayoutInflater ltInflater = activity.getLayoutInflater();
         View output = ltInflater.inflate(FileView, null, false);
         ((TextView) output.findViewById(R.id.fileName)).setText(file.getName());
         int iconId = iconResources.get("unknown");
         if (file.isDirectory()) {
             iconId = iconResources.get("folder");
-            setOnClickActionForFolder((MainActivity)activity, output, file);
+            setOnClickActionForFolder(explorer, output, file);
         }
         else {
             String extension = GetFileExtension(file.getName());
@@ -66,10 +67,42 @@ public class FileViewer {
         }
         return output;
     }
-    public void ShowImageThumbnails(){
-        //asyncBitmapSettings.cancel(true);
-        asyncBitmapSettings.execute(bitmapHolders.toArray(new BitmapHolder[0]));
-        bitmapHolders.clear();
+    public void viewFiles(Activity activity, TableLayout parent, File[] files, FileExplorer explorer, FileViewOptions opt){
+        parent.removeAllViews();
+        View[] fileViews = new View[files.length];
+        for(int i =0; i< files.length; i++)
+            fileViews[i] = GetFileView(activity, files[i], explorer);
+        TableRow row;
+        for(int r = 0; r<Math.ceil((float)files.length/opt.columns); r++){
+            row = new TableRow(activity);
+            for(int i = 0; i<opt.columns&&r*opt.columns+i<fileViews.length; i++){
+                row.addView(fileViews[r*opt.columns+i]);
+            }
+            //row.setGravity(Gravity.START);
+            parent.addView(row);
+        }
+    }
+    public void viewFile(Activity activity, TableLayout parent, File file, FileExplorer explorer, FileViewOptions opt) {
+        View fileView = GetFileView(activity, file, explorer);
+        int rowCount = parent.getChildCount();
+        if (rowCount == 0) {
+            parent.addView(new TableRow(activity));
+        }
+        TableRow row = (TableRow) parent.getChildAt(rowCount - 1);
+        int columnCount = row.getChildCount();
+        if (columnCount >= opt.columns) {
+            row = new TableRow(activity);
+            parent.addView(row);
+        }
+        row.addView(fileView);
+    }
+
+    public static class FileViewOptions{
+        int columns;
+
+        public FileViewOptions(int columns) {
+            this.columns = columns;
+        }
     }
     private String GetFileExtension(String extension){
         char[] textArray = extension.toCharArray();
@@ -96,29 +129,13 @@ public class FileViewer {
         input = outputDirs.toArray(input);
     }
 
-    private void setOnClickActionForFolder(final MainActivity activity, final View view, final File file){
+    private void setOnClickActionForFolder(final FileExplorer explorer, final View view, final File file){
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                activity.explorer.SetCurrentPath(file.getAbsolutePath());
-                activity.ViewPath(file.getAbsolutePath());
-                activity.ViewFiles(file.getAbsolutePath()+"/");
+                explorer.openDirectory(file);
             }
         });
-    }
-    private Bitmap getBitmap(File file){
-        BitmapFactory.Options opts = new BitmapFactory.Options();
-        // Get bitmap dimensions before reading...
-        opts.inJustDecodeBounds = true;
-        BitmapFactory.decodeFile(file.getAbsolutePath(), opts);
-        int width = opts.outWidth;
-        int height = opts.outHeight;
-        int largerSide = Math.max(width, height);
-        opts.inJustDecodeBounds = false; // This time it's for real!
-        opts.inPreferredConfig = Bitmap.Config.RGB_565;
-        int sampleSize = Math.round(largerSide/128f);
-        opts.inSampleSize = sampleSize;
-        return ThumbnailUtils.extractThumbnail(BitmapFactory.decodeFile(file.getAbsolutePath(), opts), 130, 130);
     }
 
     private File[] GetSpecificFiles(File[] files, HashSet<String> extensions){
@@ -127,35 +144,5 @@ public class FileViewer {
             if(extensions.contains(GetFileExtension(files[i].getName())))
                 output.add(files[i]);
             return output.toArray(new File[0]);
-    }
-
-
-    public class BitmapHolder {
-        Bitmap bitmap;
-        ImageView view;
-        File file;
-
-        public BitmapHolder(Bitmap bitmap, ImageView view, File file) {
-            this.bitmap = bitmap;
-            this.view = view;
-            this.file = file;
-        }
-    }
-    private class AsyncBitmapSettings extends AsyncTask<BitmapHolder[], BitmapHolder, Void> {
-        @Override
-        protected Void doInBackground(BitmapHolder[]... holders) {
-            android.os.Process.setThreadPriority(  android.os.Process.THREAD_PRIORITY_BACKGROUND +   android.os.Process.THREAD_PRIORITY_MORE_FAVORABLE);
-            for(int i =0; i<holders[0].length; i++){
-
-                holders[0][i].bitmap = getBitmap(holders[0][i].file);
-                publishProgress(holders[0][i]);
-            }
-            return null;
-        }
-
-        @Override
-        protected void onProgressUpdate(BitmapHolder... holder) {
-            holder[0].view.setImageBitmap(holder[0].bitmap);
-        }
     }
 }
