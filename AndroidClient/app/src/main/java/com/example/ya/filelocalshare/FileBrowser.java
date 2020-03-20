@@ -8,4 +8,5 @@ public interface FileBrowser {
     void displayPath(String path);
     void clearFileView();
     void startSearching(File dir, String target);
+    void cancelSearching();
 }

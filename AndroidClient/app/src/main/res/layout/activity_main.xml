@@ -102,6 +102,7 @@
             android:layout_weight="1"
             android:ems="10"
             android:hint="@android:string/search_go"
+            android:singleLine="true"
             android:textSize="12sp" />
 
         <ImageButton

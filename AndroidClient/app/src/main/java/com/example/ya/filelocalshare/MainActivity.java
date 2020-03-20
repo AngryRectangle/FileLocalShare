@@ -14,7 +14,9 @@ import android.os.Bundle;
 import android.text.format.Formatter;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.HorizontalScrollView;
@@ -38,6 +40,7 @@ import java.util.Map;
 public class MainActivity extends AppCompatActivity {
 
     FileExplorer explorer;
+    AndroidBrowser androidBrowser;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -103,8 +106,29 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
+        EditText searchField = findViewById(R.id.searchText);
         createExplorer(getString(R.string.default_path));
+        searchField.setOnEditorActionListener(
+                new EditText.OnEditorActionListener() {
+                    @Override
+                    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                        if (actionId == EditorInfo.IME_ACTION_SEARCH ||
+                                actionId == EditorInfo.IME_ACTION_DONE ||
+                                event != null &&
+                                        event.getAction() == KeyEvent.ACTION_DOWN &&
+                                        event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+                            if (event == null || !event.isShiftPressed()) {
+                                explorer.search(
+                                        ((EditText)findViewById(R.id.searchText)).getText().toString()
+                                );
+                                return true;
+                            }
+                        }
+                        return false;
+                    }
+                }
+        );
+
         explorer.openDirectory(getString(R.string.default_path));
     }
 
@@ -150,7 +174,7 @@ public class MainActivity extends AppCompatActivity {
         thumbnailsExtensions.add("mp4");
         thumbnailsExtensions.add("avi");
         explorer = new FileExplorer();
-        AndroidBrowser androidBrowser = new AndroidBrowser(
+        androidBrowser = new AndroidBrowser(
                 this,
                 (TableLayout) findViewById(R.id.fileTable),
                 (LinearLayout)findViewById(R.id.pathViewerLayout),
