@@ -13,6 +13,7 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.io.IOException;
 import java.net.DatagramPacket;
 
 public class ChooseConnectionFragment extends Fragment {
@@ -33,7 +34,7 @@ public class ChooseConnectionFragment extends Fragment {
 
     @Override
     public View onCreateView(
-            LayoutInflater inflater,
+            final LayoutInflater inflater,
             ViewGroup container,
             Bundle savedInstanceState
     ) {
@@ -44,14 +45,19 @@ public class ChooseConnectionFragment extends Fragment {
         );
         View chooseButton;
         for(int i =0; i<packets.length; i++) {
+            final DatagramPacket packet = packets[i];
             chooseButton = inflater.inflate(R.layout.server_connection_button, null, false);
             chooseButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
+                    try {
+                        ((MainActivity) inflater.getContext()).connect(packet.getAddress());
+                    }catch (IOException e){
+                        Log.d("DEB", e.toString());
+                    }
                 }
             });
-            ((TextView)chooseButton.findViewById(R.id.pcName)).setText(new String(packets[i].getData()));
+            ((TextView)chooseButton.findViewById(R.id.pcName)).setText(new String(packet.getData()));
             ((LinearLayout)fragment.findViewById(R.id.connectionList)).addView(chooseButton);
         }
         return fragment;

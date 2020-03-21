@@ -11,6 +11,8 @@ public class NetworkInteraction {
     static final int DEFAULT_PORT = 22102;
     public static final String DEFAULT_PC_GROUP = "230.22.10.99";
     public static final String DEFAULT_ANDROID_GROUP = "230.22.10.100";
+    public static final int IO_BUFFER_SIZE = 65535;
+    public static final int INFORMATION_RECEIVING_SLEEP_TIME = 5;
     static final int API_VERSION = 0;
     static final int TIME_TO_TIME_EXCEED = 100;
     static final int DEFAULT_MULTICAST_REQUEST_LENGTH = 4;
@@ -88,30 +90,13 @@ public class NetworkInteraction {
         return packet.getAddress();
     }
 
-    public static Socket host(){
+    public static Socket host() throws IOException {
         ServerSocket serverSocket = null;
-        try {
-            serverSocket = new ServerSocket(DEFAULT_PORT, 1);
-            serverSocket.setSoTimeout(TIME_TO_TIME_EXCEED);
-            serverSocket.accept();
-        } catch (Exception e) {
-            if(e instanceof SocketTimeoutException)
-                System.out.println("Connection failed due to time exceed");
-            else
-                System.out.println("Connection failed");
-        }
-        return null;
+        serverSocket = new ServerSocket(DEFAULT_PORT, 1);
+        serverSocket.setSoTimeout(TIME_TO_TIME_EXCEED);
+        return serverSocket.accept();
     }
-    public static Socket connect(InetAddress address){
-        try {
-        Socket socket = new Socket(address, DEFAULT_PORT);
-        socket.setSoTimeout(TIME_TO_TIME_EXCEED);
-        } catch (Exception e) {
-            if(e instanceof SocketTimeoutException)
-                System.out.println("Connection failed due to time exceed");
-            else
-                System.out.println("Connection failed");
-        }
-        return null;
+    public static Socket connect(InetAddress address) throws IOException{
+        return new Socket(address, DEFAULT_PORT);
     }
 }

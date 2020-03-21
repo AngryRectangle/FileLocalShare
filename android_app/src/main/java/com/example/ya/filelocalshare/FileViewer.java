@@ -58,8 +58,8 @@ public class FileViewer {
     }
 
     public View getFileView(
-            @NonNull Activity activity,
-            @NonNull File file,
+            @NonNull final Activity activity,
+            @NonNull final File file,
             @NonNull FileExplorer explorer
     ) {
 
@@ -69,6 +69,15 @@ public class FileViewer {
 
         setFileName((TextView) output.findViewById(R.id.fileName), file);
         setFileIcon(file, view, explorer, activity);
+
+
+        //TODO refactoring
+        output.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((MainActivity)activity).sendFile(file);
+            }
+        });
         return output;
     }
 

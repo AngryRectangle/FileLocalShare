@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 import com.radioactiv_gear_project.core.NetworkInteraction;
+import com.radioactiv_gear_project.core.SocketWrapper;
 
 import static java.lang.Thread.sleep;
 
@@ -27,6 +28,18 @@ public class Main {
             System.out.println(e.toString());
         }
         try {
+            Socket socket = NetworkInteraction.host();
+            SocketWrapper wrapper = new SocketWrapper(socket);
+            while (true) {
+                SocketWrapper.InteractionType type = wrapper.receiveCode();
+                if(type==SocketWrapper.InteractionType.FILE_SENDING||type==SocketWrapper.InteractionType.DIRECTORY_SENDING){
+                    wrapper.receiveData(type, "A://FileLocalShare/");
+                }
+            }
+        }catch (Exception e){
+            System.out.println(e.toString());
+        }
+        /*try {
             System.out.println(InetAddress.getLocalHost().getHostAddress());
             ServerSocket server = new ServerSocket(5000, 1);
             while (true) {
@@ -39,7 +52,7 @@ public class Main {
             }
         }catch (IOException e){
 
-        }
+        }*/
 
     }
     final static int DEFAULT_BLOCK_SIZE = 1024;

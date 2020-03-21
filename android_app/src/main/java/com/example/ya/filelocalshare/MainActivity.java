@@ -25,10 +25,13 @@ import android.widget.TextView;
 
 import com.example.ya.filelocalshare.sort.FileSorter;
 import com.radioactiv_gear_project.core.NetworkInteraction;
+import com.radioactiv_gear_project.core.SocketWrapper;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
+import java.net.Socket;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -37,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
 
     FileExplorer explorer;
     AndroidBrowser androidBrowser;
+    SocketWrapper socket;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +71,18 @@ public class MainActivity extends AppCompatActivity {
 
                 setOnClickActions();
         explorer.openDirectory(getString(R.string.default_path));
+    }
+
+    void connect(InetAddress address)throws IOException {
+        socket = new SocketWrapper(NetworkInteraction.connect(address));
+    }
+    public void sendFile(File file){
+        try {
+            if (socket != null)
+                socket.sendData(file);
+        }catch (IOException e){
+            Log.e("ERR", e.toString());
+        }
     }
 
     private Map<String, Integer> getIcons() {
