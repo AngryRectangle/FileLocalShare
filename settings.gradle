@@ -1,0 +1,3 @@
+include ':android_app'
+include ':core'
+include ':windows_app'
