@@ -11,11 +11,18 @@ import static java.lang.Thread.sleep;
 public class Main {
     public static void main(String[] args) {
         try{
-            String pcName = InetAddress.getLocalHost().getHostName()+"$";
+            String pcName = InetAddress.getLocalHost().getHostName();
             DatagramPacket packet = NetworkInteraction.receivePacket(NetworkInteraction.DEFAULT_PC_GROUP);
             NetworkInteraction.multicast(pcName.getBytes(), NetworkInteraction.DEFAULT_ANDROID_GROUP);
             sleep(3);
-            NetworkInteraction.multicast(pcName.getBytes(), NetworkInteraction.DEFAULT_ANDROID_GROUP);
+            NetworkInteraction.multicast(("DickPC").getBytes(), NetworkInteraction.DEFAULT_ANDROID_GROUP);
+            sleep(27);
+            NetworkInteraction.multicast(("CockPC").getBytes(), NetworkInteraction.DEFAULT_ANDROID_GROUP);
+            sleep(58);
+            NetworkInteraction.multicast(("PooPC").getBytes(), NetworkInteraction.DEFAULT_ANDROID_GROUP);
+            sleep(58);
+            NetworkInteraction.multicast(("ShitPC").getBytes(), NetworkInteraction.DEFAULT_ANDROID_GROUP);
+            Socket socket = NetworkInteraction.host();
         }catch (Exception e){
             System.out.println(e.toString());
         }

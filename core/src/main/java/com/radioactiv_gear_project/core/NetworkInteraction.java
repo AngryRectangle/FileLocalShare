@@ -14,6 +14,7 @@ public class NetworkInteraction {
     static final int API_VERSION = 0;
     static final int TIME_TO_TIME_EXCEED = 100;
     static final int DEFAULT_MULTICAST_REQUEST_LENGTH = 4;
+
     public static void multicast(byte[] buffer, String groupAdress) throws IOException {
         DatagramSocket socket = new DatagramSocket();
         InetAddress group = InetAddress.getByName(groupAdress);
@@ -23,16 +24,19 @@ public class NetworkInteraction {
         System.out.println("send");
         socket.close();
     }
+
     public static DatagramPacket[] receivePackets(String groupAdress) throws IOException, InterruptedException {
         MulticastSocket socket = new MulticastSocket(DEFAULT_PORT);
         InetAddress group = InetAddress.getByName(groupAdress);
         socket.joinGroup(group);
         ArrayList<DatagramPacket> packets = new ArrayList<>();
         socket.setSoTimeout(TIME_TO_TIME_EXCEED);
-        byte[] buf = new byte[65535];
-        for(int i =0; i<10; i++) {
+        DatagramPacket packet;
+        byte[] buf;
+        for (int i = 0; i < 10; i++) {
             try {
-                DatagramPacket packet = new DatagramPacket(buf, buf.length);
+                buf = new byte[65535];
+                packet = new DatagramPacket(buf, buf.length);
                 socket.receive(packet);
                 packets.add(packet);
             } catch (SocketTimeoutException ste) {
@@ -43,6 +47,7 @@ public class NetworkInteraction {
         socket.close();
         return packets.toArray(new DatagramPacket[0]);
     }
+
     public static DatagramPacket receivePacket(String groupAdress) throws IOException, InterruptedException {
         MulticastSocket socket = new MulticastSocket(DEFAULT_PORT);
         InetAddress group = InetAddress.getByName(groupAdress);
@@ -55,28 +60,58 @@ public class NetworkInteraction {
         socket.close();
         return packet;
     }
-    public enum ConnectionType{
+
+    public enum ConnectionType {
         SUCCESSFUL,
         OBSOLETE_SENDER,
         OBSOLETE_CLIENT,
         TIME_LIMIT_EXCEEDED
     }
-    public static ConnectionType getConnectionType(DatagramPacket packet){
+
+    public static ConnectionType getConnectionType(DatagramPacket packet) {
         ByteBuffer byteBuffer = ByteBuffer.wrap(packet.getData());
         int senderVersion = byteBuffer.getInt();
-        if(senderVersion==API_VERSION)
+        if (senderVersion == API_VERSION)
             return ConnectionType.SUCCESSFUL;
-        if(senderVersion<API_VERSION)
+        if (senderVersion < API_VERSION)
             return ConnectionType.OBSOLETE_SENDER;
         return ConnectionType.OBSOLETE_CLIENT;
     }
-    public static byte[] getVersionByteArray(){
+
+    public static byte[] getVersionByteArray() {
         ByteBuffer buffer = ByteBuffer.allocate(4);
         buffer.putInt(API_VERSION);
         return buffer.array();
     }
-    public InetAddress getAdress(DatagramPacket packet){
+
+    public static InetAddress getAdress(DatagramPacket packet) {
         return packet.getAddress();
     }
 
+    public static Socket host(){
+        ServerSocket serverSocket = null;
+        try {
+            serverSocket = new ServerSocket(DEFAULT_PORT, 1);
+            serverSocket.setSoTimeout(TIME_TO_TIME_EXCEED);
+            serverSocket.accept();
+        } catch (Exception e) {
+            if(e instanceof SocketTimeoutException)
+                System.out.println("Connection failed due to time exceed");
+            else
+                System.out.println("Connection failed");
+        }
+        return null;
+    }
+    public static Socket connect(InetAddress address){
+        try {
+        Socket socket = new Socket(address, DEFAULT_PORT);
+        socket.setSoTimeout(TIME_TO_TIME_EXCEED);
+        } catch (Exception e) {
+            if(e instanceof SocketTimeoutException)
+                System.out.println("Connection failed due to time exceed");
+            else
+                System.out.println("Connection failed");
+        }
+        return null;
+    }
 }

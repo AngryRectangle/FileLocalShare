@@ -8,10 +8,12 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.text.Layout;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
@@ -42,72 +44,22 @@ public class MainActivity extends AppCompatActivity {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
         setContentView(R.layout.activity_main);
-        /*TextView text = findViewById(R.id.ipText);
-        WifiManager wifiMgr = (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
-        WifiInfo wifiInfo = wifiMgr.getConnectionInfo();
-        int ip = wifiInfo.getIpAddress();
 
-        text.setText( Formatter.formatIpAddress(ip));
-        Button button = findViewById(R.id.connectButton);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                try {
-                    EditText ipField = view.getRootView().findViewById(R.id.ipField);
-
-                    class AsyncRequest extends AsyncTask<String, Void, Socket> {
-
-                        @Override
-                        protected Socket doInBackground(String... arg) {
-                            try {
-                                Socket s = new Socket(InetAddress.getByName(arg[0]), 5000);
-                                return s;
-                            } catch (Exception e) {
-                                return  null;
-                            }
-                        }
-                    }
-                    AsyncTask<String, Void, Socket> s = new AsyncRequest().execute(ipField.getText().toString());
-                    Socket socket = s.get();
-                    FileTransmitter fileTransmitter = new FileTransmitter(new DataOutputStream(socket.getOutputStream()));
-
-                    if (Build.VERSION.SDK_INT>=23&&ContextCompat.checkSelfPermission(view.getContext(), Manifest.permission.READ_EXTERNAL_STORAGE)
-                            != PackageManager.PERMISSION_GRANTED) {
-                        requestPermissions(new String[]{"android.permission.READ_EXTERNAL_STORAGE"},10);
-                    }
-
-
-                    File file = new File("/storage/emulated/0/test.jpg");
-                    byte[] bArray = new byte[(int) file.length()];
-                    try{
-                        FileInputStream fis = new FileInputStream(file);
-                        fis.read(bArray);
-                        fis.close();
-
-                    }catch(IOException ioExp){
-                        ioExp.printStackTrace();
-                    }
-                    fileTransmitter.PrepareBytes(bArray);
-                    Thread t = fileTransmitter.SendMessage();
-                    t.start();
-                }catch (Exception e){
-                    Log.e("Tag",e.toString());
-                }
-            }
-        });*/
         if (Build.VERSION.SDK_INT>=23&& ContextCompat.checkSelfPermission(this, Manifest.permission.INTERNET)
                 != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(new String[]{"android.permission.INTERNET"},11);
         }
-            Button button = findViewById(R.id.connectButton);
+            final Button button = findViewById(R.id.connectButton);
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    ((ViewGroup)button.getParent()).removeView(button);
                     try {
                     NetworkInteraction.multicast(NetworkInteraction.getVersionByteArray(), NetworkInteraction.DEFAULT_PC_GROUP);
                         DatagramPacket[] packet = NetworkInteraction.receivePackets(NetworkInteraction.DEFAULT_ANDROID_GROUP);
-                        ((TextView)findViewById(R.id.ipText)).setText(new String(packet[0].getData())+new String(packet[1].getData()));
-                    }catch (Exception e){
+                        ChooseConnectionFragment fragment = ChooseConnectionFragment.newInstance(packet);
+                        ((ViewGroup)findViewById(R.id.topFrame)).addView(fragment.onCreateView(getLayoutInflater(), null, null));
+                    }catch (Exception e) {
                         Log.e("ERR", e.toString());
                     }
                 }
@@ -256,3 +208,57 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 }
+
+/*TextView text = findViewById(R.id.ipText);
+        WifiManager wifiMgr = (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
+        WifiInfo wifiInfo = wifiMgr.getConnectionInfo();
+        int ip = wifiInfo.getIpAddress();
+
+        text.setText( Formatter.formatIpAddress(ip));
+        Button button = findViewById(R.id.connectButton);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    EditText ipField = view.getRootView().findViewById(R.id.ipField);
+
+                    class AsyncRequest extends AsyncTask<String, Void, Socket> {
+
+                        @Override
+                        protected Socket doInBackground(String... arg) {
+                            try {
+                                Socket s = new Socket(InetAddress.getByName(arg[0]), 5000);
+                                return s;
+                            } catch (Exception e) {
+                                return  null;
+                            }
+                        }
+                    }
+                    AsyncTask<String, Void, Socket> s = new AsyncRequest().execute(ipField.getText().toString());
+                    Socket socket = s.get();
+                    FileTransmitter fileTransmitter = new FileTransmitter(new DataOutputStream(socket.getOutputStream()));
+
+                    if (Build.VERSION.SDK_INT>=23&&ContextCompat.checkSelfPermission(view.getContext(), Manifest.permission.READ_EXTERNAL_STORAGE)
+                            != PackageManager.PERMISSION_GRANTED) {
+                        requestPermissions(new String[]{"android.permission.READ_EXTERNAL_STORAGE"},10);
+                    }
+
+
+                    File file = new File("/storage/emulated/0/test.jpg");
+                    byte[] bArray = new byte[(int) file.length()];
+                    try{
+                        FileInputStream fis = new FileInputStream(file);
+                        fis.read(bArray);
+                        fis.close();
+
+                    }catch(IOException ioExp){
+                        ioExp.printStackTrace();
+                    }
+                    fileTransmitter.PrepareBytes(bArray);
+                    Thread t = fileTransmitter.SendMessage();
+                    t.start();
+                }catch (Exception e){
+                    Log.e("Tag",e.toString());
+                }
+            }
+        });*/
