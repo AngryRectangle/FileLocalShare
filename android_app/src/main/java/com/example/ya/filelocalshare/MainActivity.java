@@ -25,6 +25,7 @@ import com.example.ya.filelocalshare.sort.FileSorter;
 import com.radioactiv_gear_project.core.NetworkInteraction;
 
 import java.io.IOException;
+import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -103,8 +104,10 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     try {
-                    NetworkInteraction.broadcast();
-                    }catch (IOException e){
+                    NetworkInteraction.multicast(NetworkInteraction.getVersionByteArray(), NetworkInteraction.DEFAULT_PC_GROUP);
+                        DatagramPacket[] packet = NetworkInteraction.receivePackets(NetworkInteraction.DEFAULT_ANDROID_GROUP);
+                        ((TextView)findViewById(R.id.ipText)).setText(new String(packet[0].getData())+new String(packet[1].getData()));
+                    }catch (Exception e){
                         Log.e("ERR", e.toString());
                     }
                 }

@@ -6,24 +6,16 @@ import java.util.Enumeration;
 import java.util.List;
 import com.radioactiv_gear_project.core.NetworkInteraction;
 
+import static java.lang.Thread.sleep;
+
 public class Main {
-    public static void getBroadcast() throws IOException {
-        MulticastSocket socket = new MulticastSocket(22102);
-        InetAddress group = InetAddress.getByName("230.22.10.99");
-        socket.joinGroup(group);
-        DatagramPacket packet;
-        byte[] buf = new byte[256];
-        packet = new DatagramPacket(buf, buf.length);
-        socket.receive(packet);
-        System.out.println("sender is "+packet.getAddress());
-        String received = new String(packet.getData());
-        System.out.println(received);
-        socket.leaveGroup(group);
-        socket.close();
-    }
     public static void main(String[] args) {
         try{
-            getBroadcast();
+            String pcName = InetAddress.getLocalHost().getHostName()+"$";
+            DatagramPacket packet = NetworkInteraction.receivePacket(NetworkInteraction.DEFAULT_PC_GROUP);
+            NetworkInteraction.multicast(pcName.getBytes(), NetworkInteraction.DEFAULT_ANDROID_GROUP);
+            sleep(3);
+            NetworkInteraction.multicast(pcName.getBytes(), NetworkInteraction.DEFAULT_ANDROID_GROUP);
         }catch (Exception e){
             System.out.println(e.toString());
         }
