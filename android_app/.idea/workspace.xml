@@ -10,15 +10,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="26e5b912-d17a-4600-98b6-890615f516fb" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/caches/gradle_models.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/gradle_models.ser" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/ya/filelocalshare/ChooseConnectionFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/ya/filelocalshare/ChooseConnectionFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/ya/filelocalshare/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/ya/filelocalshare/MainActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../core/build/classes/java/main/com/radioactiv_gear_project/core/BidirectionalSocketConnection.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../core/build/classes/java/main/com/radioactiv_gear_project/core/NetworkInteraction$ConnectionType.class" beforeDir="false" afterPath="$PROJECT_DIR$/../core/build/classes/java/main/com/radioactiv_gear_project/core/NetworkInteraction$ConnectionType.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/ya/filelocalshare/FileViewer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/ya/filelocalshare/FileViewer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../core/build/classes/java/main/com/radioactiv_gear_project/core/DirectoryReceiver.class" beforeDir="false" afterPath="$PROJECT_DIR$/../core/build/classes/java/main/com/radioactiv_gear_project/core/DirectoryReceiver.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../core/build/classes/java/main/com/radioactiv_gear_project/core/FileReceiver.class" beforeDir="false" afterPath="$PROJECT_DIR$/../core/build/classes/java/main/com/radioactiv_gear_project/core/FileReceiver.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../core/build/classes/java/main/com/radioactiv_gear_project/core/InformationSender.class" beforeDir="false" afterPath="$PROJECT_DIR$/../core/build/classes/java/main/com/radioactiv_gear_project/core/InformationSender.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../core/build/classes/java/main/com/radioactiv_gear_project/core/NetworkInteraction.class" beforeDir="false" afterPath="$PROJECT_DIR$/../core/build/classes/java/main/com/radioactiv_gear_project/core/NetworkInteraction.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../core/build/classes/java/main/com/radioactiv_gear_project/core/SocketWrapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/../core/build/classes/java/main/com/radioactiv_gear_project/core/SocketWrapper.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../core/build/libs/core.jar" beforeDir="false" afterPath="$PROJECT_DIR$/../core/build/libs/core.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../core/src/main/java/com/radioactiv_gear_project/core/FileReceiver.java" beforeDir="false" afterPath="$PROJECT_DIR$/../core/src/main/java/com/radioactiv_gear_project/core/FileReceiver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../core/src/main/java/com/radioactiv_gear_project/core/InformationSender.java" beforeDir="false" afterPath="$PROJECT_DIR$/../core/src/main/java/com/radioactiv_gear_project/core/InformationSender.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../core/src/main/java/com/radioactiv_gear_project/core/NetworkInteraction.java" beforeDir="false" afterPath="$PROJECT_DIR$/../core/src/main/java/com/radioactiv_gear_project/core/NetworkInteraction.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../core/src/main/java/com/radioactiv_gear_project/core/SocketWrapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/../core/src/main/java/com/radioactiv_gear_project/core/SocketWrapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../windows_app/build/classes/java/main/com/radioactiv_gear_project/windows_app/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/../windows_app/build/classes/java/main/com/radioactiv_gear_project/windows_app/Main.class" afterDir="false" />
@@ -39,62 +41,58 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/example/ya/filelocalshare/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="462">
-              <caret line="83" column="39" selection-start-line="83" selection-start-column="39" selection-end-line="83" selection-end-column="39" />
+            <state relative-caret-position="323">
+              <caret line="49" column="41" selection-start-line="49" selection-start-column="41" selection-end-line="49" selection-end-column="41" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#1797#2542#0" expanded="true" />
-                <element signature="e#2541#2542#0" expanded="true" />
-                <element signature="e#2614#2646#0" expanded="true" />
-                <element signature="e#5940#6466#0" expanded="true" />
-                <element signature="e#6465#6466#0" expanded="true" />
-                <element signature="e#6560#7291#0" expanded="true" />
-                <element signature="e#7290#7291#0" expanded="true" />
-                <element signature="e#6946#7222#0" expanded="true" />
-                <element signature="e#7221#7222#0" expanded="true" />
-                <element signature="e#7383#8021#0" expanded="true" />
-                <element signature="e#8020#8021#0" expanded="true" />
-                <element signature="e#8147#8543#0" expanded="true" />
-                <element signature="e#8542#8543#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/example/ya/filelocalshare/FileTransmitter.java">
+        <entry file="file://$PROJECT_DIR$/src/main/AndroidManifest.xml">
+          <provider editor-type-id="android-manifest" />
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="74">
-              <caret line="10" column="20" selection-start-line="10" selection-start-column="4" selection-end-line="10" selection-end-column="20" />
-              <folding>
-                <element signature="e#406#407#0" expanded="true" />
-                <element signature="e#467#468#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="253">
+              <caret line="11" column="76" selection-start-line="11" selection-start-column="76" selection-end-line="11" selection-end-column="76" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/res/layout/server_connection_button.xml">
-          <provider editor-type-id="text-editor">
-            <state relative-caret-position="92">
-              <caret line="9" column="25" selection-start-line="9" selection-start-column="25" selection-end-line="9" selection-end-column="25" />
+        <entry file="file://$PROJECT_DIR$/build.gradle">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="414">
+              <caret line="36" column="27" selection-start-line="36" selection-start-column="27" selection-end-line="36" selection-end-column="27" />
             </state>
           </provider>
-          <provider selected="true" editor-type-id="android-designer2" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/example/ya/filelocalshare/FileViewer.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="307">
+              <caret line="79" column="49" selection-start-line="79" selection-start-column="49" selection-end-line="79" selection-end-column="49" />
+              <folding>
+                <element signature="e#2191#2367#0" expanded="true" />
+                <element signature="e#2366#2367#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/res/layout/fragment_choose_connection.xml">
+          <provider selected="true" editor-type-id="android-designer2" />
           <provider editor-type-id="text-editor">
-            <state relative-caret-position="220">
+            <state relative-caret-position="276">
               <caret line="12" column="21" selection-start-line="12" selection-start-column="21" selection-end-line="12" selection-end-column="21" />
             </state>
           </provider>
-          <provider selected="true" editor-type-id="android-designer2" />
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
@@ -108,33 +106,33 @@
       </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/res/layout/file_view.xml">
+          <provider editor-type-id="android-designer2" />
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="46">
               <caret line="2" column="4" selection-start-line="2" selection-start-column="4" selection-end-line="2" selection-end-column="55" />
             </state>
           </provider>
-          <provider editor-type-id="android-designer2" />
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/res/layout/activity_main.xml">
+          <provider selected="true" editor-type-id="android-designer2" />
           <provider editor-type-id="text-editor">
-            <state relative-caret-position="574">
+            <state relative-caret-position="805">
               <caret line="35" column="56" selection-start-line="35" selection-start-column="56" selection-end-line="35" selection-end-column="56" />
             </state>
           </provider>
-          <provider selected="true" editor-type-id="android-designer2" />
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/example/ya/filelocalshare/ChooseConnectionFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="414">
-              <caret line="55" column="51" selection-start-line="55" selection-start-column="51" selection-end-line="55" selection-end-column="51" />
+            <state relative-caret-position="337">
+              <caret line="53" column="92" selection-start-line="53" selection-start-column="92" selection-end-line="53" selection-end-column="92" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#1546#1822#0" expanded="true" />
-                <element signature="e#1821#1822#0" expanded="true" />
+                <element signature="e#1574#1946#0" expanded="true" />
+                <element signature="e#1945#1946#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -143,7 +141,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/example/ya/filelocalshare/FilePathShower.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="162">
+            <state relative-caret-position="1265">
               <caret line="65" column="64" selection-start-line="64" selection-start-column="6" selection-end-line="65" selection-end-column="64" />
             </state>
           </provider>
@@ -170,8 +168,10 @@
         <option value="$PROJECT_DIR$/src/main/res/layout/server_connection_button.xml" />
         <option value="$PROJECT_DIR$/src/main/res/layout/activity_main.xml" />
         <option value="$PROJECT_DIR$/src/main/res/layout/fragment_choose_connection.xml" />
-        <option value="$PROJECT_DIR$/src/main/java/com/example/ya/filelocalshare/ChooseConnectionFragment.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/example/ya/filelocalshare/MainActivity.java" />
+        <option value="$PROJECT_DIR$/src/main/AndroidManifest.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/com/example/ya/filelocalshare/ChooseConnectionFragment.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/example/ya/filelocalshare/FileViewer.java" />
       </list>
     </option>
   </component>
@@ -189,12 +189,20 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="ProjectPane" />
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="AndroidView">
         <subPane>
           <expand>
             <path>
               <item name="FileLocalShare" type="1abcf292:AndroidViewProjectNode" />
               <item name="android_app" type="feadf853:AndroidModuleNode" />
+            </path>
+            <path>
+              <item name="FileLocalShare" type="1abcf292:AndroidViewProjectNode" />
+              <item name="android_app" type="feadf853:AndroidModuleNode" />
+              <item name="manifests" type="f94875db:AndroidManifestsGroupNode" />
             </path>
             <path>
               <item name="FileLocalShare" type="1abcf292:AndroidViewProjectNode" />
@@ -232,9 +240,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
-      <pane id="ProjectPane" />
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -342,7 +347,7 @@
     <editor active="true" />
     <layout>
       <window_info id="Captures" order="0" side_tool="true" weight="0.25" />
-      <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.09578697" />
+      <window_info content_ui="combo" id="Project" order="1" visible="true" weight="0.09578697" />
       <window_info id="Structure" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info id="Build Variants" order="4" side_tool="true" />
@@ -351,81 +356,60 @@
       <window_info id="Resources Explorer" order="7" weight="0.3298887" />
       <window_info id="Capture Tool" order="8" />
       <window_info anchor="bottom" id="Run" order="0" />
-      <window_info anchor="bottom" id="Logcat" order="1" weight="0.3336945" />
+      <window_info active="true" anchor="bottom" id="Logcat" order="1" visible="true" weight="0.3336945" />
       <window_info anchor="bottom" id="TODO" order="2" />
       <window_info anchor="bottom" id="Debug" order="3" />
       <window_info anchor="bottom" id="Terminal" order="4" />
       <window_info anchor="bottom" id="Event Log" order="5" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="6" />
-      <window_info anchor="bottom" id="Build" order="7" visible="true" weight="0.24918744" />
+      <window_info anchor="bottom" id="Build" order="7" weight="0.24918744" />
       <window_info anchor="bottom" id="Android Profiler" order="8" />
-      <window_info anchor="right" id="Preview" />
       <window_info anchor="right" id="Device File Explorer" order="0" side_tool="true" />
       <window_info anchor="right" id="Capture Analysis" order="1" />
       <window_info anchor="right" id="Gradle" order="2" />
       <window_info anchor="right" id="Theme Preview" order="3" />
       <window_info anchor="right" id="Palette&#9;" order="4" />
+      <window_info anchor="right" id="Preview" order="5" />
     </layout>
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/../settings.gradle">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/example/ya/filelocalshare/ConnectionFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/example/ya/filelocalshare/ConnectionFragmentViewAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-161" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/res/layout/fragment_item.xml">
-      <provider editor-type-id="text-editor" />
-      <provider selected="true" editor-type-id="android-designer2" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/res/layout/fragment_item_list.xml">
-      <provider editor-type-id="text-editor" />
-      <provider selected="true" editor-type-id="android-designer2" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="552">
-          <caret line="39" column="57" selection-start-line="39" selection-start-column="57" selection-end-line="39" selection-end-column="57" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/example/ya/filelocalshare/ConnectionFragment.java" />
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/example/ya/filelocalshare/ConnectionFragmentViewAdapter.java" />
+    <entry file="file://$PROJECT_DIR$/src/main/res/layout/fragment_item.xml" />
+    <entry file="file://$PROJECT_DIR$/src/main/res/layout/fragment_item_list.xml" />
     <entry file="file://$PROJECT_DIR$/src/main/res/layout/path_view.xml">
-      <provider editor-type-id="text-editor" />
       <provider selected="true" editor-type-id="android-designer2" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/res/layout/fragment_connection_button.xml">
       <provider editor-type-id="text-editor" />
-      <provider selected="true" editor-type-id="android-designer2" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/example/ya/filelocalshare/ConnectionButton.java">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/res/layout/file_view.xml">
+    <entry file="file://$PROJECT_DIR$/src/main/res/layout/fragment_connection_button.xml" />
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/example/ya/filelocalshare/ConnectionButton.java" />
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/example/ya/filelocalshare/FileTransmitter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="46">
-          <caret line="2" column="4" selection-start-line="2" selection-start-column="4" selection-end-line="2" selection-end-column="55" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/example/ya/filelocalshare/FilePathShower.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
-          <caret line="65" column="64" selection-start-line="64" selection-start-column="6" selection-end-line="65" selection-end-column="64" />
+        <state relative-caret-position="138">
+          <caret line="10" column="20" selection-start-line="10" selection-start-column="4" selection-end-line="10" selection-end-column="20" />
+          <folding>
+            <element signature="e#406#407#0" expanded="true" />
+            <element signature="e#467#468#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/example/ya/filelocalshare/FileViewer.java">
-      <provider selected="true" editor-type-id="text-editor">
+    <entry file="file://$PROJECT_DIR$/src/main/res/layout/server_connection_button.xml">
+      <provider selected="true" editor-type-id="android-designer2" />
+      <provider editor-type-id="text-editor">
         <state relative-caret-position="207">
-          <caret line="65" column="65" lean-forward="true" selection-start-line="65" selection-start-column="36" selection-end-line="65" selection-end-column="65" />
+          <caret line="9" column="25" selection-start-line="9" selection-start-column="25" selection-end-line="9" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/res/layout/fragment_choose_connection.xml">
+      <provider selected="true" editor-type-id="android-designer2" />
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="276">
+          <caret line="12" column="21" selection-start-line="12" selection-start-column="21" selection-end-line="12" selection-end-column="21" />
         </state>
       </provider>
     </entry>
@@ -436,72 +420,73 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/res/layout/server_connection_button.xml">
-      <provider editor-type-id="text-editor">
-        <state relative-caret-position="92">
-          <caret line="9" column="25" selection-start-line="9" selection-start-column="25" selection-end-line="9" selection-end-column="25" />
-        </state>
-      </provider>
-      <provider selected="true" editor-type-id="android-designer2" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/res/layout/fragment_choose_connection.xml">
-      <provider editor-type-id="text-editor">
-        <state relative-caret-position="220">
-          <caret line="12" column="21" selection-start-line="12" selection-start-column="21" selection-end-line="12" selection-end-column="21" />
-        </state>
-      </provider>
-      <provider selected="true" editor-type-id="android-designer2" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/example/ya/filelocalshare/FileTransmitter.java">
+    <entry file="file://$PROJECT_DIR$/src/main/res/layout/file_view.xml">
+      <provider editor-type-id="android-designer2" />
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="74">
-          <caret line="10" column="20" selection-start-line="10" selection-start-column="4" selection-end-line="10" selection-end-column="20" />
-          <folding>
-            <element signature="e#406#407#0" expanded="true" />
-            <element signature="e#467#468#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="46">
+          <caret line="2" column="4" selection-start-line="2" selection-start-column="4" selection-end-line="2" selection-end-column="55" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/res/layout/activity_main.xml">
+      <provider selected="true" editor-type-id="android-designer2" />
       <provider editor-type-id="text-editor">
-        <state relative-caret-position="574">
+        <state relative-caret-position="805">
           <caret line="35" column="56" selection-start-line="35" selection-start-column="56" selection-end-line="35" selection-end-column="56" />
         </state>
       </provider>
-      <provider selected="true" editor-type-id="android-designer2" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/example/ya/filelocalshare/ChooseConnectionFragment.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/example/ya/filelocalshare/FilePathShower.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="414">
-          <caret line="55" column="51" selection-start-line="55" selection-start-column="51" selection-end-line="55" selection-end-column="51" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1546#1822#0" expanded="true" />
-            <element signature="e#1821#1822#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="1265">
+          <caret line="65" column="64" selection-start-line="64" selection-start-column="6" selection-end-line="65" selection-end-column="64" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/example/ya/filelocalshare/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="462">
-          <caret line="83" column="39" selection-start-line="83" selection-start-column="39" selection-end-line="83" selection-end-column="39" />
+        <state relative-caret-position="323">
+          <caret line="49" column="41" selection-start-line="49" selection-start-column="41" selection-end-line="49" selection-end-column="41" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1797#2542#0" expanded="true" />
-            <element signature="e#2541#2542#0" expanded="true" />
-            <element signature="e#2614#2646#0" expanded="true" />
-            <element signature="e#5940#6466#0" expanded="true" />
-            <element signature="e#6465#6466#0" expanded="true" />
-            <element signature="e#6560#7291#0" expanded="true" />
-            <element signature="e#7290#7291#0" expanded="true" />
-            <element signature="e#6946#7222#0" expanded="true" />
-            <element signature="e#7221#7222#0" expanded="true" />
-            <element signature="e#7383#8021#0" expanded="true" />
-            <element signature="e#8020#8021#0" expanded="true" />
-            <element signature="e#8147#8543#0" expanded="true" />
-            <element signature="e#8542#8543#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="414">
+          <caret line="36" column="27" selection-start-line="36" selection-start-column="27" selection-end-line="36" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/AndroidManifest.xml">
+      <provider editor-type-id="android-manifest" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="253">
+          <caret line="11" column="76" selection-start-line="11" selection-start-column="76" selection-end-line="11" selection-end-column="76" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/example/ya/filelocalshare/ChooseConnectionFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="337">
+          <caret line="53" column="92" selection-start-line="53" selection-start-column="92" selection-end-line="53" selection-end-column="92" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1574#1946#0" expanded="true" />
+            <element signature="e#1945#1946#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/example/ya/filelocalshare/FileViewer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="307">
+          <caret line="79" column="49" selection-start-line="79" selection-start-column="49" selection-end-line="79" selection-end-column="49" />
+          <folding>
+            <element signature="e#2191#2367#0" expanded="true" />
+            <element signature="e#2366#2367#0" expanded="true" />
           </folding>
         </state>
       </provider>

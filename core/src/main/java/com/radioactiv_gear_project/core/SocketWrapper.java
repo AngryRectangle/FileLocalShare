@@ -21,6 +21,7 @@ public class SocketWrapper {
 
     public static String getString(DataInputStream stream)throws IOException{
         int length = stream.readInt();
+        System.out.println("String length is "+length);
         return new String(getByteArray(stream, length));
     }
     //for small arrays
@@ -37,6 +38,7 @@ public class SocketWrapper {
         return InteractionType.values()[getByteArray(reader, 1)[0]];
     }
     public void receiveData(InteractionType type, String path) throws IOException, InterruptedException{
+        System.out.println("receiving type is "+type);
         if(type==InteractionType.FILE_SENDING)
             FileReceiver.receiveFile(reader, path);
         else if(type==InteractionType.DIRECTORY_SENDING)

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -76,6 +77,7 @@ public class FileViewer {
             @Override
             public void onClick(View view) {
                 ((MainActivity)activity).sendFile(file);
+                Log.d("SENDING", file.getName());
             }
         });
         return output;

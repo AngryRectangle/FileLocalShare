@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import static java.lang.Thread.sleep;
 
 public class NetworkInteraction {
-    static final int DEFAULT_PORT = 22102;
+    static final int DEFAULT_PORT = 22099;
     public static final String DEFAULT_PC_GROUP = "230.22.10.99";
     public static final String DEFAULT_ANDROID_GROUP = "230.22.10.100";
     public static final int IO_BUFFER_SIZE = 65535;
@@ -93,7 +93,7 @@ public class NetworkInteraction {
     public static Socket host() throws IOException {
         ServerSocket serverSocket = null;
         serverSocket = new ServerSocket(DEFAULT_PORT, 1);
-        serverSocket.setSoTimeout(TIME_TO_TIME_EXCEED);
+        //serverSocket.setSoTimeout(TIME_TO_TIME_EXCEED);
         return serverSocket.accept();
     }
     public static Socket connect(InetAddress address) throws IOException{

@@ -23,17 +23,18 @@ public class Main {
             NetworkInteraction.multicast(("PooPC").getBytes(), NetworkInteraction.DEFAULT_ANDROID_GROUP);
             sleep(58);
             NetworkInteraction.multicast(("ShitPC").getBytes(), NetworkInteraction.DEFAULT_ANDROID_GROUP);
-            Socket socket = NetworkInteraction.host();
         }catch (Exception e){
             System.out.println(e.toString());
         }
         try {
             Socket socket = NetworkInteraction.host();
+            System.out.println("Connected");
             SocketWrapper wrapper = new SocketWrapper(socket);
             while (true) {
                 SocketWrapper.InteractionType type = wrapper.receiveCode();
                 if(type==SocketWrapper.InteractionType.FILE_SENDING||type==SocketWrapper.InteractionType.DIRECTORY_SENDING){
-                    wrapper.receiveData(type, "A://FileLocalShare/");
+                    System.out.println("Receiving");
+                    wrapper.receiveData(type, "A:/FileLocalShare/");
                 }
             }
         }catch (Exception e){

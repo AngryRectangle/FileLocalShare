@@ -7,8 +7,15 @@ import static java.lang.Thread.sleep;
 public class FileReceiver {
     public static void receiveFile(DataInputStream stream, String filePath) throws IOException, InterruptedException {
         String path = filePath != null ? filePath : "";
+        System.out.println("Creating file on path "+path);
         File file = new File(path + SocketWrapper.getString(stream));
+        if(file.createNewFile())
+            System.out.println("Succesful created file "+file.getAbsolutePath());
+        else
+            System.out.println("Failed to create file "+file.getAbsolutePath());
+        System.out.println("Receiving of "+file.getName()+" in path "+file.getPath());
         writeFile(file, stream);
+        System.out.println("Successful");
     }
 
     private static void writeFile(File file, DataInputStream stream) throws IOException, InterruptedException {
