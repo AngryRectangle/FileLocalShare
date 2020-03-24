@@ -32,9 +32,9 @@ public class Main {
             SocketWrapper wrapper = new SocketWrapper(socket);
             while (true) {
                 SocketWrapper.InteractionType type = wrapper.receiveCode();
-                if(type==SocketWrapper.InteractionType.FILE_SENDING||type==SocketWrapper.InteractionType.DIRECTORY_SENDING){
-                    System.out.println("Receiving");
-                    wrapper.receiveData(type, "A:/FileLocalShare/");
+                if(type==SocketWrapper.InteractionType.DATA_SENDING){
+                    System.out.println("Start receiving");
+                    wrapper.receiveData("A:/FileLocalShare/");
                 }
             }
         }catch (Exception e){
