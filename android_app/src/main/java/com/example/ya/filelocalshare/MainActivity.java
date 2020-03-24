@@ -77,8 +77,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void startListeningProgress(){
-        AsyncProgressReceiver receiver = new AsyncProgressReceiver();
-        receiver.execute(socket);
+        Thread receiver = new Thread(new Runnable()
+        {
+            public void run()
+            {
+                try {
+                    while (true){
+                        if (socket.receiveCode() == SocketWrapper.InteractionType.PROGRESS_SENDING)
+                            Log.d("PROGRESS", socket.receiveProgress() + "");
+                    /*if(wrapper.receiveCode() == SocketWrapper.InteractionType.SUCCESSFUL_SENDING)
+                        break;*/
+                    }
+                }catch (Exception e){
+                    Log.e("ERROR", e.toString());
+                }
+            }
+        });
+        receiver.start();
     }
     void connect(InetAddress address)throws IOException {
         socket = new SocketWrapper(NetworkInteraction.connect(address));
@@ -86,13 +101,13 @@ public class MainActivity extends AppCompatActivity {
     public AsyncFileSending fileSender;
     public void sendFile(File file){
             if ((fileSender==null||fileSender.getStatus()== AsyncTask.Status.FINISHED)&&socket != null) {
-                /*fileSender = new AsyncFileSending();
-                fileSender.execute(file);*/
-                try {
+                fileSender = new AsyncFileSending();
+                fileSender.execute(file);
+                /*try {
                     socket.sendData(file);
                 } catch (IOException e) {
                     Log.e("ERR", e.toString());
-                }
+                }*/
             }
     }
     private class AsyncFileSending extends AsyncTask<File, String, Void> {
@@ -248,27 +263,5 @@ public class MainActivity extends AppCompatActivity {
                 popup.setOnMenuItemClickListener(menuItemClickListener(menuButton));
             }
         });
-    }
-    private class AsyncProgressReceiver extends AsyncTask<SocketWrapper, Long, Void>{
-        @Override
-        protected Void doInBackground(SocketWrapper... wrappers){
-            SocketWrapper wrapper = wrappers[0];
-            try {
-                while (true){
-                    if (wrapper.receiveCode() == SocketWrapper.InteractionType.PROGRESS_SENDING)
-                        Log.d("PROGRESS", wrapper.receiveProgress() + "");
-                    /*if(wrapper.receiveCode() == SocketWrapper.InteractionType.SUCCESSFUL_SENDING)
-                        break;*/
-                }
-            }catch (Exception e){
-                Log.e("ERROR", e.toString());
-            }
-            return null;
-        }
-
-        @Override
-        protected void onProgressUpdate(Long... values) {
-            Log.d("PROGRESS", values[0] + "");
-        }
     }
 }
