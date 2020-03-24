@@ -5,6 +5,7 @@ import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -76,15 +77,24 @@ public class MainActivity extends AppCompatActivity {
     void connect(InetAddress address)throws IOException {
         socket = new SocketWrapper(NetworkInteraction.connect(address));
     }
+    public AsyncFileSending fileSender;
     public void sendFile(File file){
-        try {
-            if (socket != null)
-                socket.sendData(file);
-        }catch (IOException e){
-            Log.e("ERR", e.toString());
+            if ((fileSender==null||fileSender.getStatus()== AsyncTask.Status.FINISHED)&&socket != null) {
+                fileSender = new AsyncFileSending();
+                fileSender.execute(file);
+            }
+    }
+    private class AsyncFileSending extends AsyncTask<File, Void, Void> {
+        @Override
+        protected Void doInBackground(File... files) {
+            try {
+                socket.sendData(files[0]);
+            } catch (IOException e) {
+                Log.e("ERR", e.toString());
+            }
+            return null;
         }
     }
-
     private Map<String, Integer> getIcons() {
         Map<String, Integer> map = new HashMap<String, Integer>();
         map.put("txt", R.drawable.ic_file_icon_txt);

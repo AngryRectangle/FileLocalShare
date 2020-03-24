@@ -7,8 +7,11 @@ import java.util.ArrayList;
 public class InformationSender {
     protected static void sendFile(File file, DataOutputStream stream) throws IOException {
         stream.write((byte) SocketWrapper.InteractionType.FILE_SENDING.ordinal());
-        stream.writeInt(file.getName().length());
-        stream.write(file.getName().getBytes());
+        byte[] nameBytes = file.getName().getBytes();
+        stream.writeInt(nameBytes.length);
+        System.out.println("File sending with length of name "+file.getName().length());
+        System.out.println("File name is "+file.getName());
+        stream.write(nameBytes);
         stream.writeLong(file.length());
         stream.flush();
         DataInputStream fileStream = new DataInputStream(new FileInputStream(file));

@@ -28,7 +28,8 @@ public class SocketWrapper {
     private static byte[] getByteArray(DataInputStream stream, int size)throws IOException{
         byte[] output = new byte[size];
         int shift = 0;
-        while (shift<output.length){
+        System.out.println("Getting byte array with length "+size);
+        while (shift<size){
             shift+=stream.read(output);
         }
         return output;

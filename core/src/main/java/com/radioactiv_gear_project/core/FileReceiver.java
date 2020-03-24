@@ -35,5 +35,6 @@ public class FileReceiver {
             remaining -= readed;
             sleep(NetworkInteraction.INFORMATION_RECEIVING_SLEEP_TIME);
         }
+        fileStream.close();
     }
 }
