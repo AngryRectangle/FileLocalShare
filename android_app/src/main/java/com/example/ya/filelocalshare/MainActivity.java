@@ -37,6 +37,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 
+import static java.lang.Thread.sleep;
+
 public class MainActivity extends AppCompatActivity {
 
     FileExplorer explorer;
@@ -74,25 +76,39 @@ public class MainActivity extends AppCompatActivity {
         explorer.openDirectory(getString(R.string.default_path));
     }
 
+    public void startListeningProgress(){
+        AsyncProgressReceiver receiver = new AsyncProgressReceiver();
+        receiver.execute(socket);
+    }
     void connect(InetAddress address)throws IOException {
         socket = new SocketWrapper(NetworkInteraction.connect(address));
     }
     public AsyncFileSending fileSender;
     public void sendFile(File file){
             if ((fileSender==null||fileSender.getStatus()== AsyncTask.Status.FINISHED)&&socket != null) {
-                fileSender = new AsyncFileSending();
-                fileSender.execute(file);
+                /*fileSender = new AsyncFileSending();
+                fileSender.execute(file);*/
+                try {
+                    socket.sendData(file);
+                } catch (IOException e) {
+                    Log.e("ERR", e.toString());
+                }
             }
     }
-    private class AsyncFileSending extends AsyncTask<File, Void, Void> {
+    private class AsyncFileSending extends AsyncTask<File, String, Void> {
         @Override
         protected Void doInBackground(File... files) {
             try {
                 socket.sendData(files[0]);
             } catch (IOException e) {
-                Log.e("ERR", e.toString());
+               publishProgress(e.toString());
             }
             return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(String... values) {
+            Log.e("ERR", values[0]);
         }
     }
     private Map<String, Integer> getIcons() {
@@ -233,58 +249,26 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-}
-
-/*TextView text = findViewById(R.id.ipText);
-        WifiManager wifiMgr = (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
-        WifiInfo wifiInfo = wifiMgr.getConnectionInfo();
-        int ip = wifiInfo.getIpAddress();
-
-        text.setText( Formatter.formatIpAddress(ip));
-        Button button = findViewById(R.id.connectButton);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                try {
-                    EditText ipField = view.getRootView().findViewById(R.id.ipField);
-
-                    class AsyncRequest extends AsyncTask<String, Void, Socket> {
-
-                        @Override
-                        protected Socket doInBackground(String... arg) {
-                            try {
-                                Socket s = new Socket(InetAddress.getByName(arg[0]), 5000);
-                                return s;
-                            } catch (Exception e) {
-                                return  null;
-                            }
-                        }
-                    }
-                    AsyncTask<String, Void, Socket> s = new AsyncRequest().execute(ipField.getText().toString());
-                    Socket socket = s.get();
-                    FileTransmitter fileTransmitter = new FileTransmitter(new DataOutputStream(socket.getOutputStream()));
-
-                    if (Build.VERSION.SDK_INT>=23&&ContextCompat.checkSelfPermission(view.getContext(), Manifest.permission.READ_EXTERNAL_STORAGE)
-                            != PackageManager.PERMISSION_GRANTED) {
-                        requestPermissions(new String[]{"android.permission.READ_EXTERNAL_STORAGE"},10);
-                    }
-
-
-                    File file = new File("/storage/emulated/0/test.jpg");
-                    byte[] bArray = new byte[(int) file.length()];
-                    try{
-                        FileInputStream fis = new FileInputStream(file);
-                        fis.read(bArray);
-                        fis.close();
-
-                    }catch(IOException ioExp){
-                        ioExp.printStackTrace();
-                    }
-                    fileTransmitter.PrepareBytes(bArray);
-                    Thread t = fileTransmitter.SendMessage();
-                    t.start();
-                }catch (Exception e){
-                    Log.e("Tag",e.toString());
+    private class AsyncProgressReceiver extends AsyncTask<SocketWrapper, Long, Void>{
+        @Override
+        protected Void doInBackground(SocketWrapper... wrappers){
+            SocketWrapper wrapper = wrappers[0];
+            try {
+                while (true){
+                    if (wrapper.receiveCode() == SocketWrapper.InteractionType.PROGRESS_SENDING)
+                        Log.d("PROGRESS", wrapper.receiveProgress() + "");
+                    /*if(wrapper.receiveCode() == SocketWrapper.InteractionType.SUCCESSFUL_SENDING)
+                        break;*/
                 }
+            }catch (Exception e){
+                Log.e("ERROR", e.toString());
             }
-        });*/
+            return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(Long... values) {
+            Log.d("PROGRESS", values[0] + "");
+        }
+    }
+}

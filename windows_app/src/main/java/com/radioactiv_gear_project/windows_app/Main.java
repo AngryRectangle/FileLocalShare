@@ -11,69 +11,42 @@ import static java.lang.Thread.sleep;
 
 public class Main {
     public static void main(String[] args) {
-        try{
+        try {
             String pcName = InetAddress.getLocalHost().getHostName();
             DatagramPacket packet = NetworkInteraction.receivePacket(NetworkInteraction.DEFAULT_PC_GROUP);
             NetworkInteraction.multicast(pcName.getBytes(), NetworkInteraction.DEFAULT_ANDROID_GROUP);
             sleep(3);
-            NetworkInteraction.multicast(("DickPC").getBytes(), NetworkInteraction.DEFAULT_ANDROID_GROUP);
-            sleep(27);
-            NetworkInteraction.multicast(("CockPC").getBytes(), NetworkInteraction.DEFAULT_ANDROID_GROUP);
-            sleep(58);
-            NetworkInteraction.multicast(("PooPC").getBytes(), NetworkInteraction.DEFAULT_ANDROID_GROUP);
-            sleep(58);
-            NetworkInteraction.multicast(("ShitPC").getBytes(), NetworkInteraction.DEFAULT_ANDROID_GROUP);
-        }catch (Exception e){
+            NetworkInteraction.multicast(("SecondPC").getBytes(), NetworkInteraction.DEFAULT_ANDROID_GROUP);
+        } catch (Exception e) {
             System.out.println(e.toString());
         }
         try {
             Socket socket = NetworkInteraction.host();
             System.out.println("Connected");
             SocketWrapper wrapper = new SocketWrapper(socket);
-            while (true) {
-                SocketWrapper.InteractionType type = wrapper.receiveCode();
-                if(type==SocketWrapper.InteractionType.DATA_SENDING){
+            wrapper.startProgressSending(500);
+            wrapper.addListener(new FileReceiver(wrapper));
+            while (true){
+                wrapper.executeListeners();
+            }
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+    }
+    public static class FileReceiver implements SocketWrapper.CodeReceiveHandler{
+        SocketWrapper wrapper;
+        public FileReceiver(SocketWrapper w){
+            wrapper = w;
+        }
+        public void execute(SocketWrapper.InteractionType type){
+            try {
+                if (type == SocketWrapper.InteractionType.DATA_SENDING) {
                     System.out.println("Start receiving");
                     wrapper.receiveData("A:/FileLocalShare/");
                 }
+            }catch (Exception e){
+                System.out.println(e.toString());
             }
-        }catch (Exception e){
-            System.out.println(e.toString());
         }
-        /*try {
-            System.out.println(InetAddress.getLocalHost().getHostAddress());
-            ServerSocket server = new ServerSocket(5000, 1);
-            while (true) {
-                // Блокируется до возникновения нового соединения:
-                Socket socket = server.accept();
-                System.out.println(socket.getInetAddress().getHostAddress());
-                byte[] fileV = ReadFile(socket);
-                System.out.println("Transmitted file with length "+fileV.length);
-                WriteFile(fileV, "A://", "image.jpg");
-            }
-        }catch (IOException e){
-
-        }*/
-
-    }
-    final static int DEFAULT_BLOCK_SIZE = 1024;
-    public static byte[] ReadFile(Socket socket) {
-        try {
-            FileReceiver receiver = new FileReceiver(new DataInputStream(socket.getInputStream()));
-            Thread receiveThread = receiver.ReceiveMessage();
-            receiveThread.start();
-            receiveThread.join();
-            return receiver.output;
-        } catch (Exception e) {
-            System.out.println(e.toString());
-            return  null;
-        }
-    }
-    public static void WriteFile(byte[] bytes, String path, String name)throws IOException{
-        File f = new File(path+name);
-        f.createNewFile();
-        FileOutputStream fos = new FileOutputStream(f);
-        fos.write(bytes);
-        fos.close();
     }
 }

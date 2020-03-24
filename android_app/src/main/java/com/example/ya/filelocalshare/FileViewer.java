@@ -77,7 +77,7 @@ public class FileViewer {
             @Override
             public void onClick(View view) {
                 ((MainActivity)activity).sendFile(file);
-                Log.d("SENDING", file.getName());
+                //((MainActivity)activity).startListeningProgress();
             }
         });
         return output;
