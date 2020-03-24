@@ -8,6 +8,7 @@ public class DirectoryReceiver {
     public static void receiveDirectory(DataInputStream stream, String filePath)throws IOException, InterruptedException{
         String path = filePath != null ? filePath : "";
         File file = new File(path + SocketWrapper.getString(stream));
+        System.out.println("Directory creating in "+path+" with name "+file.getName());
         if(file.mkdir()) {
             writeDirectory(file, stream);
         }else
