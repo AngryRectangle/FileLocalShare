@@ -9,17 +9,7 @@
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="26e5b912-d17a-4600-98b6-890615f516fb" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../core/build/classes/java/main/com/radioactiv_gear_project/core/DirectoryReceiver.class" beforeDir="false" afterPath="$PROJECT_DIR$/../core/build/classes/java/main/com/radioactiv_gear_project/core/DirectoryReceiver.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../core/build/classes/java/main/com/radioactiv_gear_project/core/FileReceiver.class" beforeDir="false" afterPath="$PROJECT_DIR$/../core/build/classes/java/main/com/radioactiv_gear_project/core/FileReceiver.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../core/build/classes/java/main/com/radioactiv_gear_project/core/InformationSender.class" beforeDir="false" afterPath="$PROJECT_DIR$/../core/build/classes/java/main/com/radioactiv_gear_project/core/InformationSender.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../core/build/classes/java/main/com/radioactiv_gear_project/core/SocketWrapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/../core/build/classes/java/main/com/radioactiv_gear_project/core/SocketWrapper.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../core/build/libs/core.jar" beforeDir="false" afterPath="$PROJECT_DIR$/../core/build/libs/core.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../core/src/main/java/com/radioactiv_gear_project/core/DirectoryReceiver.java" beforeDir="false" afterPath="$PROJECT_DIR$/../core/src/main/java/com/radioactiv_gear_project/core/DirectoryReceiver.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../core/src/main/java/com/radioactiv_gear_project/core/InformationSender.java" beforeDir="false" afterPath="$PROJECT_DIR$/../core/src/main/java/com/radioactiv_gear_project/core/InformationSender.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../core/src/main/java/com/radioactiv_gear_project/core/SocketWrapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/../core/src/main/java/com/radioactiv_gear_project/core/SocketWrapper.java" afterDir="false" />
-    </list>
+    <list default="true" id="26e5b912-d17a-4600-98b6-890615f516fb" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,22 +38,13 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/build.gradle">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="414">
-              <caret line="36" column="74" lean-forward="true" selection-start-line="36" selection-start-column="74" selection-end-line="36" selection-end-column="74" />
+        <entry file="file://$PROJECT_DIR$/src/main/res/layout/sending_progress_bar.xml">
+          <provider editor-type-id="text-editor">
+            <state relative-caret-position="161">
+              <caret line="66" selection-start-line="66" selection-end-line="66" />
             </state>
           </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/AndroidManifest.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="368">
-              <caret line="16" column="28" selection-start-line="16" selection-start-column="28" selection-end-line="16" selection-end-column="28" />
-            </state>
-          </provider>
-          <provider editor-type-id="android-manifest" />
+          <provider selected="true" editor-type-id="android-designer2" />
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
@@ -159,6 +140,7 @@
         <option value="$PROJECT_DIR$/src/main/java/com/example/ya/filelocalshare/ChooseConnectionFragment.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/example/ya/filelocalshare/FileViewer.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/example/ya/filelocalshare/MainActivity.java" />
+        <option value="$PROJECT_DIR$/src/main/res/layout/sending_progress_bar.xml" />
       </list>
     </option>
   </component>
@@ -177,6 +159,8 @@
     </navigator>
     <panes>
       <pane id="PackagesPane" />
+      <pane id="ProjectPane" />
+      <pane id="Scope" />
       <pane id="AndroidView">
         <subPane>
           <expand>
@@ -191,14 +175,23 @@
             </path>
             <path>
               <item name="FileLocalShare" type="1abcf292:AndroidViewProjectNode" />
+              <item name="android_app" type="feadf853:AndroidModuleNode" />
+              <item name="res" type="d4f16f75:AndroidResFolderNode" />
+            </path>
+            <path>
+              <item name="FileLocalShare" type="1abcf292:AndroidViewProjectNode" />
+              <item name="android_app" type="feadf853:AndroidModuleNode" />
+              <item name="res" type="d4f16f75:AndroidResFolderNode" />
+              <item name="layout" type="ddeffd01:AndroidResFolderTypeNode" />
+            </path>
+            <path>
+              <item name="FileLocalShare" type="1abcf292:AndroidViewProjectNode" />
               <item name="Gradle Scripts" type="ae0cef3a:AndroidBuildScriptsGroupNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="ProjectPane" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -303,9 +296,10 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="2576" height="1056" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Captures" order="0" side_tool="true" weight="0.25" />
-      <window_info content_ui="combo" id="Project" order="1" visible="true" weight="0.09578697" />
+      <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.09578697" />
       <window_info id="Structure" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info id="Build Variants" order="4" side_tool="true" />
@@ -320,7 +314,7 @@
       <window_info anchor="bottom" id="Terminal" order="4" />
       <window_info anchor="bottom" id="Event Log" order="5" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="6" />
-      <window_info active="true" anchor="bottom" id="Build" order="7" visible="true" weight="0.24918744" />
+      <window_info anchor="bottom" id="Build" order="7" visible="true" weight="0.25135428" />
       <window_info anchor="bottom" id="Android Profiler" order="8" />
       <window_info anchor="bottom" id="Find" order="9" weight="0.32936078" />
       <window_info anchor="right" id="Device File Explorer" order="0" side_tool="true" />
@@ -368,40 +362,15 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/example/ya/filelocalshare/ChooseConnectionFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="897">
-          <caret line="53" column="92" selection-start-line="53" selection-start-column="92" selection-end-line="53" selection-end-column="92" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/res/layout/activity_main.xml">
-      <provider editor-type-id="text-editor">
-        <state relative-caret-position="805">
-          <caret line="35" column="56" selection-start-line="35" selection-start-column="56" selection-end-line="35" selection-end-column="56" />
-        </state>
-      </provider>
-      <provider selected="true" editor-type-id="android-designer2" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/res/layout/file_view.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="46">
-          <caret line="2" column="4" selection-start-line="2" selection-start-column="4" selection-end-line="2" selection-end-column="55" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/res/values/styles.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="161">
-          <caret line="7" column="58" selection-start-line="7" selection-start-column="58" selection-end-line="7" selection-end-column="58" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/example/ya/filelocalshare/FileTransmitter.java" />
+    <entry file="file://$PROJECT_DIR$/src/main/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="368">
+          <caret line="16" column="28" selection-start-line="16" selection-start-column="28" selection-end-line="16" selection-end-column="28" />
+        </state>
+      </provider>
+      <provider editor-type-id="android-manifest" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/example/ya/filelocalshare/FileViewer.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1150">
@@ -423,6 +392,46 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/res/values/styles.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="161">
+          <caret line="7" column="58" selection-start-line="7" selection-start-column="58" selection-end-line="7" selection-end-column="58" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/res/layout/file_view.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="46">
+          <caret line="2" column="4" selection-start-line="2" selection-start-column="4" selection-end-line="2" selection-end-column="55" />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/res/layout/activity_main.xml">
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="805">
+          <caret line="35" column="56" selection-start-line="35" selection-start-column="56" selection-end-line="35" selection-end-column="56" />
+        </state>
+      </provider>
+      <provider selected="true" editor-type-id="android-designer2" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/example/ya/filelocalshare/ChooseConnectionFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="897">
+          <caret line="53" column="92" selection-start-line="53" selection-start-column="92" selection-end-line="53" selection-end-column="92" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="414">
+          <caret line="36" column="74" selection-start-line="36" selection-start-column="74" selection-end-line="36" selection-end-column="74" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/example/ya/filelocalshare/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="369">
@@ -433,20 +442,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="368">
-          <caret line="16" column="28" selection-start-line="16" selection-start-column="28" selection-end-line="16" selection-end-column="28" />
+    <entry file="file://$PROJECT_DIR$/src/main/res/layout/sending_progress_bar.xml">
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="161">
+          <caret line="66" selection-start-line="66" selection-end-line="66" />
         </state>
       </provider>
-      <provider editor-type-id="android-manifest" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="414">
-          <caret line="36" column="74" lean-forward="true" selection-start-line="36" selection-start-column="74" selection-end-line="36" selection-end-column="74" />
-        </state>
-      </provider>
+      <provider selected="true" editor-type-id="android-designer2" />
     </entry>
   </component>
 </project>
