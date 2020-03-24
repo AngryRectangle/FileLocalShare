@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -12,6 +13,7 @@ import android.os.StrictMode;
 import android.text.Layout;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,22 +34,20 @@ import java.io.File;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
-import java.net.Socket;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-
-import static java.lang.Thread.sleep;
 
 public class MainActivity extends AppCompatActivity {
 
     FileExplorer explorer;
     AndroidBrowser androidBrowser;
     SocketWrapper socket;
+    SendingProgressMonitor monitor;
+    LayoutInflater inflater;
+    SendingQueue queue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        inflater = getLayoutInflater();
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
         setContentView(R.layout.activity_main);
@@ -75,101 +75,14 @@ public class MainActivity extends AppCompatActivity {
                 setOnClickActions();
         explorer.openDirectory(getString(R.string.default_path));
     }
-
-    public void startListeningProgress(){
-        Thread receiver = new Thread(new Runnable()
-        {
-            public void run()
-            {
-                try {
-                    while (true){
-                        if (socket.receiveCode() == SocketWrapper.InteractionType.PROGRESS_SENDING)
-                            Log.d("PROGRESS", socket.receiveProgress() + "");
-                    /*if(wrapper.receiveCode() == SocketWrapper.InteractionType.SUCCESSFUL_SENDING)
-                        break;*/
-                    }
-                }catch (Exception e){
-                    Log.e("ERROR", e.toString());
-                }
-            }
-        });
-        receiver.start();
-    }
     void connect(InetAddress address)throws IOException {
         socket = new SocketWrapper(NetworkInteraction.connect(address));
+        monitor = new SendingProgressMonitor(socket);
+        queue = new SendingQueue(socket);
     }
-    public AsyncFileSending fileSender;
     public void sendFile(File file){
-            if ((fileSender==null||fileSender.getStatus()== AsyncTask.Status.FINISHED)&&socket != null) {
-                fileSender = new AsyncFileSending();
-                fileSender.execute(file);
-                /*try {
-                    socket.sendData(file);
-                } catch (IOException e) {
-                    Log.e("ERR", e.toString());
-                }*/
-            }
-    }
-    private class AsyncFileSending extends AsyncTask<File, String, Void> {
-        @Override
-        protected Void doInBackground(File... files) {
-            try {
-                socket.sendData(files[0]);
-            } catch (IOException e) {
-               publishProgress(e.toString());
-            }
-            return null;
-        }
-
-        @Override
-        protected void onProgressUpdate(String... values) {
-            Log.e("ERR", values[0]);
-        }
-    }
-    private Map<String, Integer> getIcons() {
-        Map<String, Integer> map = new HashMap<String, Integer>();
-        map.put("txt", R.drawable.ic_file_icon_txt);
-        map.put("avi", R.drawable.ic_file_icon_avi);
-        map.put("css", R.drawable.ic_file_icon_css);
-        map.put("csv", R.drawable.ic_file_icon_csv);
-        map.put("doc", R.drawable.ic_file_icon_doc);
-        map.put("docx", R.drawable.ic_file_icon_doc);
-        map.put("htm", R.drawable.ic_file_icon_html);
-        map.put("html", R.drawable.ic_file_icon_html);
-        map.put("js", R.drawable.ic_file_icon_javascript);
-        map.put("jpg", R.drawable.ic_file_icon_jpg);
-        map.put("jpe", R.drawable.ic_file_icon_jpg);
-        map.put("jpeg", R.drawable.ic_file_icon_jpg);
-        map.put("json", R.drawable.ic_file_icon_json);
-        map.put("mp3", R.drawable.ic_file_icon_mp3);
-        map.put("mp4", R.drawable.ic_file_icon_mp4);
-        map.put("pdf", R.drawable.ic_file_icon_pdf);
-        map.put("png", R.drawable.ic_file_icon_png);
-        map.put("ppt", R.drawable.ic_file_icon_ppt);
-        map.put("pptx", R.drawable.ic_file_icon_ppt);
-        map.put("psd", R.drawable.ic_file_icon_psd);
-        map.put("svg", R.drawable.ic_file_icon_svg);
-        map.put("xls", R.drawable.ic_file_icon_xls);
-        map.put("xml", R.drawable.ic_file_icon_xml);
-        map.put("zip", R.drawable.ic_file_icon_zip);
-
-
-        map.put("folder", R.drawable.ic_file_icon_folder);
-        map.put("unknown", R.drawable.ic_file_icon_txt);
-        return map;
-    }
-
-    private HashSet<String> getMediaExtensions() {
-        HashSet<String> output = new HashSet<>();
-        output.add("png");
-        output.add("jpg");
-        output.add("jpeg");
-        output.add("jpe");
-        output.add("gif");
-        output.add("mp4");
-        output.add("avi");
-        output.add("pdf");
-        return output;
+        queue.addFileToQueue(file);
+        queue.startDataTransmitting();
     }
 
     private void createExplorer() {
@@ -179,7 +92,6 @@ public class MainActivity extends AppCompatActivity {
                 (TableLayout) findViewById(R.id.fileTable),
                 (LinearLayout) findViewById(R.id.pathViewerLayout),
                 explorer,
-                getIcons(), getMediaExtensions(),
                 new FileViewer.FileViewOptions(5)
         );
     }

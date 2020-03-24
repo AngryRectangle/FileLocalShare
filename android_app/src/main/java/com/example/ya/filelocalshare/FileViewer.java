@@ -26,8 +26,6 @@ public class FileViewer {
     public FileViewHandler fileViewer;
     public ClearViewHandler clearViewHandler;
     private static final int FileView = R.layout.file_view;
-    private final Map<String, Integer> iconResources;
-    private final HashSet<String> imageExtensions;
     private ArrayList<File> viewedFiles = new ArrayList<>();
 
     public static abstract class FileViewHandler {
@@ -44,14 +42,6 @@ public class FileViewer {
         public FileViewOptions(int columns) {
             this.columns = columns;
         }
-    }
-
-    public FileViewer(
-            @NonNull Map<String, Integer> iconResources,
-            @NonNull HashSet<String> imageExtensions
-    ) {
-        this.iconResources = iconResources;
-        this.imageExtensions = imageExtensions;
     }
 
     public ArrayList<File> getViewedFiles() {
@@ -77,7 +67,6 @@ public class FileViewer {
             @Override
             public void onClick(View view) {
                 ((MainActivity)activity).sendFile(file);
-                //((MainActivity)activity).startListeningProgress();
             }
         });
         return output;
@@ -149,12 +138,12 @@ public class FileViewer {
         });
     }
 
-    private void setFileThumbnail(
+    private static void setFileThumbnail(
             @NonNull ImageView view,
             @NonNull File file,
             @NonNull Activity activity
     ) {
-        if (imageExtensions.contains(getFileExtension(file.getName()))) {
+        if (FileExtensionsHandler.isMediaFile(getFileExtension(file.getName()))) {
             requestMediaIcon(file, activity).into(view);
         } else if (getFileExtension(file.getName()).equals("apk")) {
             Drawable drawable = getApkIcon(file, activity);
@@ -169,14 +158,32 @@ public class FileViewer {
             @NonNull FileExplorer explorer,
             @NonNull Activity activity
     ) {
-        int iconId = iconResources.get("unknown");
+        int iconId = FileExtensionsHandler.fileIcons.get("unknown");
         if (file.isDirectory()) {
-            iconId = iconResources.get("folder");
+            iconId = FileExtensionsHandler.fileIcons.get("folder");
             setOnClickActionForFolder(explorer, (View) view.getParent(), file);
+            //TODO убрать логику установки функции при тапе отсюда
         } else {
             String extension = getFileExtension(file.getName());
-            if (iconResources.containsKey(extension))
-                iconId = iconResources.get(extension);
+            if (FileExtensionsHandler.fileIcons.containsKey(extension))
+                iconId = FileExtensionsHandler.fileIcons.get(extension);
+        }
+
+        view.setImageResource(iconId);
+        setFileThumbnail(view, file, activity);
+    }
+    public static void setFileIcon(
+            @NonNull File file,
+            @NonNull ImageView view,
+            @NonNull Activity activity
+    ) {
+        int iconId = FileExtensionsHandler.fileIcons.get("unknown");
+        if (file.isDirectory()) {
+            iconId = FileExtensionsHandler.fileIcons.get("folder");
+        } else {
+            String extension = getFileExtension(file.getName());
+            if (FileExtensionsHandler.fileIcons.containsKey(extension))
+                iconId = FileExtensionsHandler.fileIcons.get(extension);
         }
 
         view.setImageResource(iconId);

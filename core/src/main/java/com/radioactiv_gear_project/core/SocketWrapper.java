@@ -10,13 +10,13 @@ import static java.lang.Thread.sleep;
 
 public class SocketWrapper {
     public enum InteractionType {
+        CANCEL_CONNECTION,
         DATA_SENDING,
         FILE_SENDING,
         DIRECTORY_SENDING,
         START_FILE_RECEIVING,
         PROGRESS_SENDING,
-        SUCCESSFUL_SENDING,
-        CANCEL_CONNECTION
+        SUCCESSFUL_SENDING
     }
 
     DataInputStream reader;
@@ -63,7 +63,6 @@ public class SocketWrapper {
     private static byte[] getByteArray(DataInputStream stream, int size) throws IOException {
         byte[] output = new byte[size];
         int shift = 0;
-        System.out.println("Getting byte array with length " + size);
         while (shift < size) {
             shift += stream.read(output);
         }

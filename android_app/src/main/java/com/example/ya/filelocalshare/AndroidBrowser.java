@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.ya.filelocalshare.sort.FileSorter;
+import com.radioactiv_gear_project.core.FileBrowser;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -25,8 +26,6 @@ public class AndroidBrowser implements FileBrowser {
     private final TableLayout fileView;
     private final FileViewer fileViewer;
     private final FilePathShower pathViewer;
-    private final Map<String, Integer> icons;
-    private final HashSet<String> thumbnailExtensions;
     private final FileViewer.FileViewOptions options;
     private AsyncSearch asyncSearch;
     FileExplorer explorer;
@@ -36,23 +35,13 @@ public class AndroidBrowser implements FileBrowser {
             @NonNull final TableLayout fileView,
             @NonNull LinearLayout pathLayout, final
             @NonNull FileExplorer explorer,
-            @Nullable Map<String, Integer> icons,
-            @Nullable HashSet<String> thumbnailExtensions,
             @Nullable FileViewer.FileViewOptions options
     ) {
         this.activity = activity;
         this.fileView = fileView;
-        fileViewer = new FileViewer(icons, thumbnailExtensions);
+        fileViewer = new FileViewer();
         pathViewer = new FilePathShower(activity, R.layout.path_view, pathLayout);
         this.explorer = explorer;
-        if (icons == null) {
-            icons = new HashMap<>();
-            icons.put("unknown", R.drawable.ic_file_icon_txt);
-        }
-        this.icons = icons;
-        if (thumbnailExtensions == null)
-            thumbnailExtensions = new HashSet<>();
-        this.thumbnailExtensions = thumbnailExtensions;
         if (options == null)
             options = new FileViewer.FileViewOptions(3);
         this.options = options;

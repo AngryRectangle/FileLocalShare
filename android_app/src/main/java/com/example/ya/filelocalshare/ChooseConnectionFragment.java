@@ -52,7 +52,7 @@ public class ChooseConnectionFragment extends Fragment {
                 public void onClick(View view) {
                     try {
                         ((MainActivity) inflater.getContext()).connect(packet.getAddress());
-                       ((MainActivity) inflater.getContext()).startListeningProgress();
+                       ((MainActivity) inflater.getContext()).monitor.startMonitoring();
                     }catch (IOException e){
                         Log.d("DEB", e.toString());
                     }

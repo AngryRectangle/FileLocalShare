@@ -1,4 +1,4 @@
-package com.example.ya.filelocalshare;
+package com.radioactiv_gear_project.core;
 
 import java.io.File;
 
