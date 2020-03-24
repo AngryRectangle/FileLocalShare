@@ -15,8 +15,10 @@ public class DirectoryReceiver {
     }
     private static void writeDirectory(File file, DataInputStream stream) throws IOException, InterruptedException{
         int fileCount = stream.readInt();
+        System.out.println("Writing directory "+file.getName()+" with "+fileCount+" files");
+        System.out.println("Files will be in "+file.getCanonicalPath());
         for(int i =0; i<fileCount; i++){
-            SocketWrapper.receiveData(file.getAbsolutePath(), stream);
+            SocketWrapper.receiveData(file.getAbsolutePath()+"/", stream);
         }
     }
 }

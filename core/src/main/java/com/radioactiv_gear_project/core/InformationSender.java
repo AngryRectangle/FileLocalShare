@@ -25,11 +25,15 @@ public class InformationSender {
     }
     protected static void sendDirectory(File file, DataOutputStream stream)throws IOException, NullPointerException{
         stream.write((byte) SocketWrapper.InteractionType.DIRECTORY_SENDING.ordinal());
-        stream.write(file.getName().length());
-        stream.write(file.getName().getBytes());
+        byte[] nameBytes = file.getName().getBytes();
+        stream.writeInt(nameBytes.length);
+        stream.write(nameBytes);
         File[] files = file.listFiles();
-        if(files!=null)
-            stream.write(files.length);
+        if(files!=null) {
+            stream.writeInt(files.length);
+            for(int i = 0;i<files.length; i++)
+                SocketWrapper.sendData(files[i], stream);
+        }
         else{
             System.out.println("File isn't a directory");
             stream.write(0);

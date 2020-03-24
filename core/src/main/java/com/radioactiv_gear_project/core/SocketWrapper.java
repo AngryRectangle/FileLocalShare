@@ -58,4 +58,10 @@ public class SocketWrapper {
         else
             InformationSender.sendFile(file, writer);
     }
+    public static void sendData(File file, DataOutputStream writer) throws IOException{
+        if(file.isDirectory())
+            InformationSender.sendDirectory(file, writer);
+        else
+            InformationSender.sendFile(file, writer);
+    }
 }
