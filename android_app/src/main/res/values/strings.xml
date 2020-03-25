@@ -3,6 +3,11 @@
     <string name="default_path">/storage/emulated/0/</string>
     <string name="default_path_name">inner_storage/</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="bytesDesignation">B</string>
+    <string name="kilobytesDesignation">KB</string>
+    <string name="megabytesDesignation">MB</string>
+    <string name="gigabytesDesignation">GB</string>
+    <string name="terabytesDesignation">TB</string>
+
+    <string name="inSecondDesignation">/s</string>
 </resources>

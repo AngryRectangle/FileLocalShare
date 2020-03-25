@@ -29,6 +29,7 @@ public class SendingQueue {
                 }
             }
         });
+        sendingThread.setPriority(10);
     }
     public void startDataTransmitting(){
         if(sendingThread==null||!sendingThread.isAlive()) {

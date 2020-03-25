@@ -18,7 +18,7 @@ public class SocketWrapper {
         PROGRESS_SENDING,
         SUCCESSFUL_SENDING
     }
-
+    public static int PROGRESS_SENDING_DELAY = 500;
     DataInputStream reader;
     DataOutputStream writer;
     FileReceiver fileReceiver = new FileReceiver();

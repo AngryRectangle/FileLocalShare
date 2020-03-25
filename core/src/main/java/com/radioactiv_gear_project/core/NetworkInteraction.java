@@ -12,7 +12,7 @@ public class NetworkInteraction {
     public static final String DEFAULT_PC_GROUP = "230.22.10.99";
     public static final String DEFAULT_ANDROID_GROUP = "230.22.10.100";
     public static final int IO_BUFFER_SIZE = 65535;
-    public static final int INFORMATION_RECEIVING_SLEEP_TIME = 5;
+    public static final int INFORMATION_RECEIVING_SLEEP_TIME = 2;
     static final int API_VERSION = 0;
     static final int TIME_TO_TIME_EXCEED = 100;
     static final int DEFAULT_MULTICAST_REQUEST_LENGTH = 4;
@@ -20,6 +20,7 @@ public class NetworkInteraction {
     public static void multicast(byte[] buffer, String groupAdress) throws IOException {
         DatagramSocket socket = new DatagramSocket();
         InetAddress group = InetAddress.getByName(groupAdress);
+        System.out.println(group);
         DatagramPacket packet;
         packet = new DatagramPacket(buffer, buffer.length, group, DEFAULT_PORT);
         socket.send(packet);

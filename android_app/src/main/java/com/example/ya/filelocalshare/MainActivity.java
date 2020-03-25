@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     SendingProgressMonitor monitor;
     LayoutInflater inflater;
     SendingQueue queue;
+    FileSendingVisualizer visualizer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,10 +80,21 @@ public class MainActivity extends AppCompatActivity {
         socket = new SocketWrapper(NetworkInteraction.connect(address));
         monitor = new SendingProgressMonitor(socket);
         queue = new SendingQueue(socket);
+        visualizer = new FileSendingVisualizer((LinearLayout)findViewById(R.id.connectionList),this);
+        monitor.progressListener = new SendingProgressMonitor.ProgressHandler() {
+            @Override
+            public void execute(SocketWrapper.InteractionType type, long progress) {
+                if(type== SocketWrapper.InteractionType.PROGRESS_SENDING)
+                    visualizer.setProgress(progress);
+                if(type==SocketWrapper.InteractionType.SUCCESSFUL_SENDING)
+                    visualizer.removeFirstTicket();
+            }
+        };
     }
     public void sendFile(File file){
         queue.addFileToQueue(file);
         queue.startDataTransmitting();
+        visualizer.addProgressTicket(file);
     }
 
     private void createExplorer() {

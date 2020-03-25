@@ -53,6 +53,7 @@ public class ChooseConnectionFragment extends Fragment {
                     try {
                         ((MainActivity) inflater.getContext()).connect(packet.getAddress());
                        ((MainActivity) inflater.getContext()).monitor.startMonitoring();
+                        ((LinearLayout)view.getParent()).removeAllViews();
                     }catch (IOException e){
                         Log.d("DEB", e.toString());
                     }

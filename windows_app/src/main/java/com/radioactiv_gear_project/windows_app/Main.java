@@ -24,7 +24,7 @@ public class Main {
             Socket socket = NetworkInteraction.host();
             System.out.println("Connected");
             SocketWrapper wrapper = new SocketWrapper(socket);
-            wrapper.startProgressSending(500);
+            wrapper.startProgressSending(SocketWrapper.PROGRESS_SENDING_DELAY);
             wrapper.addListener(new FileReceiver(wrapper));
             while (true){
                 wrapper.executeListeners();
