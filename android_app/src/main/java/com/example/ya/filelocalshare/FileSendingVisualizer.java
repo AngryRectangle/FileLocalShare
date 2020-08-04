@@ -6,8 +6,6 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.radioactiv_gear_project.core.SocketWrapper;
-
 import java.io.File;
 import java.util.LinkedList;
 

@@ -1,0 +1,11 @@
+A:\Project\Java\FileLocalShare\windows_app\File Local Share\bin\Debug\netcoreapp2.1\File Local Share.deps.json
+A:\Project\Java\FileLocalShare\windows_app\File Local Share\bin\Debug\netcoreapp2.1\File Local Share.runtimeconfig.json
+A:\Project\Java\FileLocalShare\windows_app\File Local Share\bin\Debug\netcoreapp2.1\File Local Share.runtimeconfig.dev.json
+A:\Project\Java\FileLocalShare\windows_app\File Local Share\bin\Debug\netcoreapp2.1\File Local Share.dll
+A:\Project\Java\FileLocalShare\windows_app\File Local Share\bin\Debug\netcoreapp2.1\File Local Share.pdb
+A:\Project\Java\FileLocalShare\windows_app\File Local Share\obj\Debug\netcoreapp2.1\File Local Share.csprojAssemblyReference.cache
+A:\Project\Java\FileLocalShare\windows_app\File Local Share\obj\Debug\netcoreapp2.1\File Local Share.csproj.CoreCompileInputs.cache
+A:\Project\Java\FileLocalShare\windows_app\File Local Share\obj\Debug\netcoreapp2.1\File Local Share.AssemblyInfoInputs.cache
+A:\Project\Java\FileLocalShare\windows_app\File Local Share\obj\Debug\netcoreapp2.1\File Local Share.AssemblyInfo.cs
+A:\Project\Java\FileLocalShare\windows_app\File Local Share\obj\Debug\netcoreapp2.1\File Local Share.dll
+A:\Project\Java\FileLocalShare\windows_app\File Local Share\obj\Debug\netcoreapp2.1\File Local Share.pdb

@@ -13,13 +13,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.ya.filelocalshare.sort.FileSorter;
-import com.radioactiv_gear_project.core.FileBrowser;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
 
 public class AndroidBrowser implements FileBrowser {
     private final Activity activity;

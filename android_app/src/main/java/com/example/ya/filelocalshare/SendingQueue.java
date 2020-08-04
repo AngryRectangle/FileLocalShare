@@ -2,8 +2,6 @@ package com.example.ya.filelocalshare;
 
 import android.util.Log;
 
-import com.radioactiv_gear_project.core.SocketWrapper;
-
 import java.io.File;
 import java.util.concurrent.LinkedBlockingQueue;
 
