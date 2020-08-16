@@ -1,9 +1,5 @@
 package com.radioactiv_gear_project.windows_app;
-import java.io.*;
 import java.net.*;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.List;
 import com.radioactiv_gear_project.core.NetworkInteraction;
 import com.radioactiv_gear_project.core.SocketWrapper;
 
@@ -14,8 +10,9 @@ public class Main {
         try {
             String pcName = InetAddress.getLocalHost().getHostName();
             DatagramPacket packet = NetworkInteraction.receivePacket(NetworkInteraction.DEFAULT_PC_GROUP);
+            sleep(100);
             NetworkInteraction.multicast(pcName.getBytes(), NetworkInteraction.DEFAULT_ANDROID_GROUP);
-            sleep(3);
+            sleep(30);
             NetworkInteraction.multicast(("SecondPC").getBytes(), NetworkInteraction.DEFAULT_ANDROID_GROUP);
         } catch (Exception e) {
             System.out.println(e.toString());

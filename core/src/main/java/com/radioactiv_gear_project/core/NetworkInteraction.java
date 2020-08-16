@@ -14,17 +14,19 @@ public class NetworkInteraction {
     public static final int IO_BUFFER_SIZE = 65535;
     public static final int INFORMATION_RECEIVING_SLEEP_TIME = 2;
     static final int API_VERSION = 0;
-    static final int TIME_TO_TIME_EXCEED = 100;
+    static final int TIME_TO_TIME_EXCEED = 500;
     static final int DEFAULT_MULTICAST_REQUEST_LENGTH = 4;
 
     public static void multicast(byte[] buffer, String groupAdress) throws IOException {
-        DatagramSocket socket = new DatagramSocket();
+        MulticastSocket socket = new MulticastSocket(DEFAULT_PORT);
         InetAddress group = InetAddress.getByName(groupAdress);
         System.out.println(group);
         DatagramPacket packet;
         packet = new DatagramPacket(buffer, buffer.length, group, DEFAULT_PORT);
+        socket.joinGroup(group);
         socket.send(packet);
         System.out.println("send");
+        socket.leaveGroup(group);
         socket.close();
     }
 
@@ -36,15 +38,15 @@ public class NetworkInteraction {
         socket.setSoTimeout(TIME_TO_TIME_EXCEED);
         DatagramPacket packet;
         byte[] buf;
-        for (int i = 0; i < 10; i++) {
-            try {
+        try {
+            for (int i = 0; i < 10; i++) {
                 buf = new byte[65535];
                 packet = new DatagramPacket(buf, buf.length);
                 socket.receive(packet);
                 packets.add(packet);
-            } catch (SocketTimeoutException ste) {
-                break;
             }
+        } catch (SocketTimeoutException ste) {
+            System.out.println(ste.toString());
         }
         socket.leaveGroup(group);
         socket.close();
@@ -97,7 +99,8 @@ public class NetworkInteraction {
         //serverSocket.setSoTimeout(TIME_TO_TIME_EXCEED);
         return serverSocket.accept();
     }
-    public static Socket connect(InetAddress address) throws IOException{
+
+    public static Socket connect(InetAddress address) throws IOException {
         return new Socket(address, DEFAULT_PORT);
     }
 }
