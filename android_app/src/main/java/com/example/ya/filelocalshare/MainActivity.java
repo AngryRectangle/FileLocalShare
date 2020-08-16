@@ -4,10 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.pm.PackageManager;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.text.Layout;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -25,6 +28,7 @@ import android.widget.TextView;
 
 import com.example.ya.filelocalshare.sort.FileSorter;
 import com.radioactiv_gear_project.core.NetworkInteraction;
+import com.radioactiv_gear_project.core.SocketWrapper;
 
 import java.io.File;
 import java.io.IOException;

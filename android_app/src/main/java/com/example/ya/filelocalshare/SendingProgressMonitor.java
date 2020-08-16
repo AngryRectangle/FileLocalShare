@@ -2,6 +2,8 @@ package com.example.ya.filelocalshare;
 
 import android.util.Log;
 
+import com.radioactiv_gear_project.core.SocketWrapper;
+
 public class SendingProgressMonitor {
     SocketWrapper wrapper;
     Thread receiveThread;
