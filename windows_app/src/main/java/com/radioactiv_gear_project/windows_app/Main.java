@@ -1,5 +1,6 @@
 package com.radioactiv_gear_project.windows_app;
 import java.net.*;
+
 import com.radioactiv_gear_project.core.NetworkInteraction;
 import com.radioactiv_gear_project.core.SocketWrapper;
 
@@ -7,13 +8,18 @@ import static java.lang.Thread.sleep;
 
 public class Main {
     public static void main(String[] args) {
+
         try {
             String pcName = InetAddress.getLocalHost().getHostName();
             DatagramPacket packet = NetworkInteraction.receivePacket(NetworkInteraction.DEFAULT_PC_GROUP);
-            sleep(100);
+            sleep(10);
             NetworkInteraction.multicast(pcName.getBytes(), NetworkInteraction.DEFAULT_ANDROID_GROUP);
-            sleep(30);
+            sleep(5);
             NetworkInteraction.multicast(("SecondPC").getBytes(), NetworkInteraction.DEFAULT_ANDROID_GROUP);
+            sleep(120);
+            NetworkInteraction.multicast(("ThirdPC").getBytes(), NetworkInteraction.DEFAULT_ANDROID_GROUP);
+            sleep(1200);
+            NetworkInteraction.multicast(("FourthPC").getBytes(), NetworkInteraction.DEFAULT_ANDROID_GROUP);
         } catch (Exception e) {
             System.out.println(e.toString());
         }

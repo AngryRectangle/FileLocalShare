@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import static java.lang.Thread.sleep;
 
 public class NetworkInteraction {
-    static final int DEFAULT_PORT = 22099;
+    public static final int DEFAULT_PORT = 22099;
     public static final String DEFAULT_PC_GROUP = "230.22.10.99";
     public static final String DEFAULT_ANDROID_GROUP = "230.22.10.100";
     public static final int IO_BUFFER_SIZE = 65535;

@@ -28,12 +28,18 @@ import android.widget.TextView;
 
 import com.example.ya.filelocalshare.sort.FileSorter;
 import com.radioactiv_gear_project.core.NetworkInteraction;
+import com.radioactiv_gear_project.core.Pinger;
+import com.radioactiv_gear_project.core.Receiver;
 import com.radioactiv_gear_project.core.SocketWrapper;
+import com.radioactiv_gear_project.core.Waiter;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
+import java.net.MulticastSocket;
+
+import static com.radioactiv_gear_project.core.NetworkInteraction.DEFAULT_PORT;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -44,6 +50,8 @@ public class MainActivity extends AppCompatActivity {
     LayoutInflater inflater;
     SendingQueue queue;
     FileSendingVisualizer visualizer;
+    boolean isConnecting = false;
+    Receiver receiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,45 +61,64 @@ public class MainActivity extends AppCompatActivity {
         StrictMode.setThreadPolicy(policy);
         setContentView(R.layout.activity_main);
 
-        if (Build.VERSION.SDK_INT>=23&& ContextCompat.checkSelfPermission(this, Manifest.permission.INTERNET)
+        if (Build.VERSION.SDK_INT >= 23 && ContextCompat.checkSelfPermission(this, Manifest.permission.INTERNET)
                 != PackageManager.PERMISSION_GRANTED) {
-            requestPermissions(new String[]{"android.permission.INTERNET"},11);
+            requestPermissions(new String[]{"android.permission.INTERNET"}, 11);
         }
-            final Button button = findViewById(R.id.connectButton);
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    ((ViewGroup)button.getParent()).removeView(button);
-                    try {
-                    NetworkInteraction.multicast(NetworkInteraction.getVersionByteArray(), NetworkInteraction.DEFAULT_PC_GROUP);
-                        DatagramPacket[] packet = NetworkInteraction.receivePackets(NetworkInteraction.DEFAULT_ANDROID_GROUP);
-                        ChooseConnectionFragment fragment = ChooseConnectionFragment.newInstance(packet);
-                        ((ViewGroup)findViewById(R.id.topFrame)).addView(fragment.onCreateView(getLayoutInflater(), null, null));
-                    }catch (Exception e) {
-                        Log.e("ERR", e.toString());
-                    }
-                }
-            });
+        final Button button = findViewById(R.id.connectButton);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((ViewGroup) button.getParent()).removeView(button);
+                isConnecting = true;
+                final MulticastSocket socket;
 
-                setOnClickActions();
+                try {
+                    NetworkInteraction.multicast(NetworkInteraction.getVersionByteArray(), NetworkInteraction.DEFAULT_PC_GROUP);
+                    socket = new MulticastSocket(DEFAULT_PORT);
+                    socket.joinGroup(InetAddress.getByName(NetworkInteraction.DEFAULT_ANDROID_GROUP));
+                    final ChooseConnectionFragment fragment = new ChooseConnectionFragment();
+                    ((ViewGroup) findViewById(R.id.topFrame)).addView(fragment.onCreateView(getLayoutInflater(), null, null));
+
+                    receiver = new Receiver(socket, new Receiver.ResultHandler() {
+                        @Override
+                        public void execute(final DatagramPacket packet) {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    fragment.addButton(packet);
+                                }
+                            });
+                        }
+                    });
+                    receiver.start();
+                } catch (Exception e) {
+                    Log.e("ERR", e.toString());
+                }
+            }
+        });
+
+        setOnClickActions();
         explorer.openDirectory(getString(R.string.default_path));
     }
-    void connect(InetAddress address)throws IOException {
+
+    void connect(InetAddress address) throws IOException {
         socket = new SocketWrapper(NetworkInteraction.connect(address));
         monitor = new SendingProgressMonitor(socket);
         queue = new SendingQueue(socket);
-        visualizer = new FileSendingVisualizer((LinearLayout)findViewById(R.id.connectionList),this);
+        visualizer = new FileSendingVisualizer((LinearLayout) findViewById(R.id.connectionList), this);
         monitor.progressListener = new SendingProgressMonitor.ProgressHandler() {
             @Override
             public void execute(SocketWrapper.InteractionType type, long progress) {
-                if(type== SocketWrapper.InteractionType.PROGRESS_SENDING)
+                if (type == SocketWrapper.InteractionType.PROGRESS_SENDING)
                     visualizer.setProgress(progress);
-                if(type==SocketWrapper.InteractionType.SUCCESSFUL_SENDING)
+                if (type == SocketWrapper.InteractionType.SUCCESSFUL_SENDING)
                     visualizer.removeFirstTicket();
             }
         };
     }
-    public void sendFile(File file){
+
+    public void sendFile(File file) {
         queue.addFileToQueue(file);
         queue.startDataTransmitting();
         visualizer.addProgressTicket(file);
@@ -107,14 +134,16 @@ public class MainActivity extends AppCompatActivity {
                 new FileViewer.FileViewOptions(5)
         );
     }
-    private static boolean isTextEditDone(int actionId, KeyEvent event){
+
+    private static boolean isTextEditDone(int actionId, KeyEvent event) {
         return (actionId == EditorInfo.IME_ACTION_SEARCH ||
                 actionId == EditorInfo.IME_ACTION_DONE ||
                 event != null &&
                         event.getAction() == KeyEvent.ACTION_DOWN &&
                         event.getKeyCode() == KeyEvent.KEYCODE_ENTER);
     }
-    private PopupMenu.OnMenuItemClickListener menuItemClickListener(final ImageButton button){
+
+    private PopupMenu.OnMenuItemClickListener menuItemClickListener(final ImageButton button) {
         return new PopupMenu.OnMenuItemClickListener() {
             public boolean onMenuItemClick(MenuItem item) {
                 if (item.getItemId() == R.id.selectOrderButton) {
@@ -127,10 +156,11 @@ public class MainActivity extends AppCompatActivity {
             }
         };
     }
-    private PopupMenu.OnMenuItemClickListener sortMenuClickListener(){
+
+    private PopupMenu.OnMenuItemClickListener sortMenuClickListener() {
         return new PopupMenu.OnMenuItemClickListener() {
             public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()){
+                switch (item.getItemId()) {
                     case R.id.sortByName: {
                         explorer.setSortType(FileSorter.SortType.BY_NAME);
                         break;
@@ -148,7 +178,8 @@ public class MainActivity extends AppCompatActivity {
             }
         };
     }
-    private void setOnClickActions(){
+
+    private void setOnClickActions() {
         ImageButton searchButton = findViewById(R.id.searchButton);
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
