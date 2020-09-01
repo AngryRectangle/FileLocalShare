@@ -1,8 +1,9 @@
 package com.radioactiv_gear_project.windows_app.UI;
 
 import javafx.scene.Group;
+import javafx.scene.Parent;
 
 public interface IView {
-    Group Show();
+    Parent Show();
     void Hide();
 }

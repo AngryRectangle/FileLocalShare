@@ -10,6 +10,7 @@ import com.radioactiv_gear_project.windows_app.UI.MainMenu.Info;
 import com.radioactiv_gear_project.windows_app.UI.MainMenu.View;
 import javafx.application.Application;
 import javafx.scene.Group;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -17,6 +18,7 @@ import javafx.stage.Stage;
 import static java.lang.Thread.sleep;
 
 public final class Main extends Application {
+    public static Stage stage;
     public static void main(String[] args) {
         Application.launch(Main.class, args);
 
@@ -50,20 +52,15 @@ public final class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        stage = primaryStage;
         Controller mainMenuController = new Controller();
         View mainMenuView = new View();
-        Text text = new Text("Hello from JavaFX!");
-        text.setLayoutY(80);
-        text.setLayoutX(100);
-
-        Group group = mainMenuView.Show();
+        Parent parent = mainMenuView.Show();
         mainMenuController.OnShow(mainMenuView, new Info());
 
-        Scene scene = new Scene(group);
+        Scene scene = new Scene(parent);
         primaryStage.setScene(scene);
         primaryStage.setTitle("FileLocalShare");
-        primaryStage.setWidth(800);
-        primaryStage.setHeight(1000);
         primaryStage.show();
     }
 

@@ -6,3 +6,9 @@ targetCompatibility = JavaVersion.VERSION_1_7
 dependencies {
     implementation project(":core")
 }
+
+sourceSets {
+    main {
+        output.resourcesDir = "${buildDir}/classes/java/main"
+    }
+}
