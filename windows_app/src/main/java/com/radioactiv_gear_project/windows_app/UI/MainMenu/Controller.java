@@ -13,7 +13,7 @@ import javafx.stage.Stage;
 public class Controller implements IController<View, Info> {
     @Override
     public void OnShow(final View view, final Info info) {
-        /*view.ConnectButton.onMousePressedProperty().set(new EventHandler<MouseEvent>() {
+        view.ConnectButton.onMousePressedProperty().set(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
                 OnSettingsButton(view, info);
@@ -25,7 +25,7 @@ public class Controller implements IController<View, Info> {
                 OnConnectButton(view, info);
             }
         });
-        view.AppName.setText(info.appName);*/
+        view.AppName.setText(info.appName);
     }
 
     @Override

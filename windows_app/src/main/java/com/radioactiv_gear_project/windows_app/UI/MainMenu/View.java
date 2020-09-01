@@ -10,7 +10,6 @@ import javafx.scene.control.Button;
 import javafx.scene.text.Text;
 
 import java.io.IOException;
-import java.net.URL;
 
 public class View implements IView {
     public Button ConnectButton;
@@ -20,10 +19,11 @@ public class View implements IView {
 
     @Override
     public Parent Show() {
-        //ff
         try {
-            URL url = getClass().getResource("/MainMenu.fxml");
-            parent = FXMLLoader.load(url);
+            parent = FXMLLoader.load(getClass().getResource("/MainMenu.fxml"));
+            ConnectButton = (Button) parent.lookup("#connectButton");
+            SettingsButton = (Button) parent.lookup("#settingsButton");
+            AppName = (Text) parent.lookup("#appName");
         } catch (IOException e) {
             Debug.error(e.toString());
         }
