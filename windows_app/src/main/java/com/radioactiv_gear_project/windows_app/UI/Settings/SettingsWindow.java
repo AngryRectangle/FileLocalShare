@@ -1,22 +1,23 @@
 package com.radioactiv_gear_project.windows_app.UI.Settings;
 
-import com.radioactiv_gear_project.windows_app.UI.IView;
+import com.radioactiv_gear_project.windows_app.UI.Window;
 import javafx.scene.Group;
+import javafx.scene.Parent;
 import javafx.scene.text.Text;
 
-public class View implements IView {
+public class SettingsWindow extends Window {
     public Text SettingsText;
-    @Override
-    public Group Show() {
+    private Parent parent;
+
+    public SettingsWindow(){
         SettingsText = new Text("Settings");
         SettingsText.setLayoutX(100);
         SettingsText.setLayoutY(20);
-        Group parent = new Group(SettingsText);
-        return parent;
+        parent = new Group(SettingsText);
     }
 
     @Override
-    public void Hide() {
-
+    protected Parent getView() {
+        return parent;
     }
 }
