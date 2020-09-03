@@ -4,9 +4,13 @@ import java.net.*;
 
 import com.radioactiv_gear_project.core.NetworkInteraction;
 import com.radioactiv_gear_project.core.SocketWrapper;
+import com.radioactiv_gear_project.windows_app.UI.EWindowType;
+import com.radioactiv_gear_project.windows_app.UI.IWindowFactory;
 import com.radioactiv_gear_project.windows_app.UI.MainMenu.MainMenuController;
-import com.radioactiv_gear_project.windows_app.UI.MainMenu.Info;
 import com.radioactiv_gear_project.windows_app.UI.MainMenu.MainMenuWindow;
+import com.radioactiv_gear_project.windows_app.UI.Settings.SettingsController;
+import com.radioactiv_gear_project.windows_app.UI.Settings.SettingsWindow;
+import com.radioactiv_gear_project.windows_app.UI.WindowService;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -16,8 +20,22 @@ import static java.lang.Thread.sleep;
 
 public final class Main extends Application {
     public static Stage stage;
+    public static AppContext appContext;
+    public static WindowService windowService;
 
     public static void main(String[] args) {
+        windowService = new WindowService(new MainMenuController(new IWindowFactory<MainMenuWindow>() {
+            @Override
+            public MainMenuWindow instantiate() {
+                return new MainMenuWindow();
+            }
+        }), new SettingsController(new IWindowFactory<SettingsWindow>() {
+            @Override
+            public SettingsWindow instantiate() {
+                return new SettingsWindow();
+            }
+        }));
+
         Application.launch(Main.class, args);
 
         try {
@@ -49,13 +67,11 @@ public final class Main extends Application {
     }
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage) {
         stage = primaryStage;
-        MainMenuController mainMenuController = new MainMenuController();
-        MainMenuWindow window = new MainMenuWindow();
-        mainMenuController.OnShow(window, new Info());
+        appContext = new AppContext();
         primaryStage.setScene(new Scene(new Group()));
-        window.show();
+        windowService.Open(EWindowType.MainMenu);
         primaryStage.setTitle("FileLocalShare");
     }
 

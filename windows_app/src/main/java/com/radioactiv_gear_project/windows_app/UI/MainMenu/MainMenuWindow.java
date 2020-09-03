@@ -1,6 +1,7 @@
 package com.radioactiv_gear_project.windows_app.UI.MainMenu;
 
 import com.radioactiv_gear_project.core.Debug;
+import com.radioactiv_gear_project.windows_app.UI.UIResources;
 import com.radioactiv_gear_project.windows_app.UI.Window;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -17,7 +18,7 @@ public class MainMenuWindow extends Window {
 
     public MainMenuWindow() {
         try {
-            parent = FXMLLoader.load(getClass().getResource("/MainMenu.fxml"));
+            parent = FXMLLoader.load(getClass().getResource(UIResources.MAIN_MENU_WINDOW));
         } catch (IOException e) {
             Debug.error(e.toString());
         }

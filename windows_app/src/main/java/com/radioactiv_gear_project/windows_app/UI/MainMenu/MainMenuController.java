@@ -1,48 +1,57 @@
 package com.radioactiv_gear_project.windows_app.UI.MainMenu;
 
-import com.radioactiv_gear_project.windows_app.UI.IController;
-import com.radioactiv_gear_project.windows_app.UI.Settings.SettingsController;
+import com.radioactiv_gear_project.windows_app.Main;
+import com.radioactiv_gear_project.windows_app.UI.AWindowController;
+import com.radioactiv_gear_project.windows_app.UI.EWindowType;
+import com.radioactiv_gear_project.windows_app.UI.IWindowFactory;
 import com.radioactiv_gear_project.windows_app.UI.Settings.SettingsWindow;
+import com.radioactiv_gear_project.windows_app.UI.WindowService;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 
-public class MainMenuController implements IController<MainMenuWindow, Info> {
+public class MainMenuController extends AWindowController<MainMenuWindow> {
+    public MainMenuController(IWindowFactory<MainMenuWindow> factory) {
+        super(factory);
+    }
+
     @Override
-    public void OnShow(final MainMenuWindow view, final Info info) {
-        view.ConnectButton.onMousePressedProperty().set(new EventHandler<MouseEvent>() {
+    public void OnShow() {
+        Get().ConnectButton.onMousePressedProperty().set(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                OnConnectButton(view, info);
+                OnConnectButton();
             }
         });
-        view.SettingsButton.onMousePressedProperty().set(new EventHandler<MouseEvent>() {
+        Get().SettingsButton.onMousePressedProperty().set(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                OnSettingsButton(view, info);
+                OnSettingsButton();
             }
         });
-        view.AppName.setText(info.appName);
+        Get().AppName.setText("FileLocalShare");
     }
 
     @Override
-    public void Execute(MainMenuWindow view, Info info) {
+    public void Execute() {
 
     }
 
     @Override
-    public void OnHide(MainMenuWindow view, Info info) {
+    public void OnHide() {
 
     }
 
-    private void OnSettingsButton(MainMenuWindow view, Info info) {
-        OnHide(view, info);
-        SettingsController settingsController = new SettingsController();
-        SettingsWindow settingsWindow = new SettingsWindow();
-        settingsWindow.show();
-        settingsController.OnShow(settingsWindow, new com.radioactiv_gear_project.windows_app.UI.Settings.Info());
+    @Override
+    public EWindowType getWindowType() {
+        return EWindowType.MainMenu;
     }
 
-    private void OnConnectButton(MainMenuWindow view, Info info) {
+    private void OnSettingsButton() {
+        OnHide();
+        Main.windowService.Open(EWindowType.Settings);
+    }
+
+    private void OnConnectButton() {
 
     }
 }
