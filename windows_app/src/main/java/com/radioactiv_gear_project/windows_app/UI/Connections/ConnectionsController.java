@@ -1,5 +1,6 @@
-package com.radioactiv_gear_project.windows_app.UI.Settings;
+package com.radioactiv_gear_project.windows_app.UI.Connections;
 
+import com.radioactiv_gear_project.windows_app.Main;
 import com.radioactiv_gear_project.windows_app.UI.AWindowController;
 import com.radioactiv_gear_project.windows_app.UI.EWindowType;
 import com.radioactiv_gear_project.windows_app.UI.IWindowFactory;
@@ -7,9 +8,8 @@ import com.radioactiv_gear_project.windows_app.UI.WindowService;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 
-public class SettingsController extends AWindowController<SettingsWindow> {
-
-    public SettingsController(IWindowFactory<SettingsWindow> factory) {
+public class ConnectionsController extends AWindowController<ConnectionsWindow> {
+    public ConnectionsController(IWindowFactory<ConnectionsWindow> factory) {
         super(factory);
     }
 
@@ -19,6 +19,12 @@ public class SettingsController extends AWindowController<SettingsWindow> {
             @Override
             public void handle(MouseEvent event) {
                 OnBackButton();
+            }
+        });
+        get().SettingsButton.onMousePressedProperty().set(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                OnSettingsButton();
             }
         });
     }
@@ -35,10 +41,14 @@ public class SettingsController extends AWindowController<SettingsWindow> {
 
     @Override
     public EWindowType getWindowType() {
-        return EWindowType.Settings;
+        return EWindowType.Connections;
     }
 
-    private void OnBackButton(){
+    private void OnBackButton() {
         WindowService.switchOnPrevious();
+    }
+
+    private void OnSettingsButton() {
+        WindowService.switchOn(EWindowType.Settings);
     }
 }

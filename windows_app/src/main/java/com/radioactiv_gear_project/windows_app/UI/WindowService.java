@@ -1,27 +1,52 @@
 package com.radioactiv_gear_project.windows_app.UI;
 
-import com.radioactiv_gear_project.windows_app.Main;
+import com.radioactiv_gear_project.windows_app.AppContext;
 
-public class WindowService {
-    private AWindowController[] controllers;
+public final class WindowService {
+    private static AWindowController[] _controllers;
+    private static AppContext _appContext;
 
-    public WindowService(AWindowController... controllers) {
-        this.controllers = controllers;
+    public static void initialize(AppContext appContext, AWindowController... controllers) {
+        _controllers = controllers;
+        _appContext = appContext;
     }
 
-    public void Open(EWindowType windowType){
-        for(int i = 0; i < controllers.length; i++){
-            AWindowController controller = controllers[i];
-            if(controller.getWindowType() != windowType)
-                continue;
-
-            AWindowController previous = Main.appContext.currentController;
-            if(previous!=null)
-                previous.OnHide();
-            Main.appContext.previousController = Main.appContext.currentController;
-            Main.appContext.currentController = controller;
-            controller.Get().show();
-            controller.OnShow();
+    public static AWindowController getController(EWindowType windowType) {
+        for (int i = 0; i < _controllers.length; i++) {
+            AWindowController controller = _controllers[i];
+            if (controller.getWindowType() == windowType)
+                return controller;
         }
+
+        throw new RuntimeException("No controller for window type " + windowType);
+    }
+
+    public static void switchOn(EWindowType windowType) {
+        closeCurrent();
+        _appContext.windowStack.add(windowType);
+        openCurrent();
+    }
+
+    public static void switchOnPrevious() {
+        closeCurrent();
+        _appContext.windowStack.pop();
+        openCurrent();
+    }
+    public static void closeCurrent() {
+        EWindowType currentType = _appContext.windowStack.size() > 0 ? _appContext.windowStack.peek() : null;
+        if (currentType == null)
+            return;
+
+        getController(currentType).OnHide();
+    }
+
+    public static void openCurrent() {
+        EWindowType currentType = _appContext.windowStack.size() > 0 ? _appContext.windowStack.peek() : null;
+        if (currentType == null)
+            return;
+
+        AWindowController newController = getController(currentType);
+        newController.get().show();
+        newController.onShow();
     }
 }

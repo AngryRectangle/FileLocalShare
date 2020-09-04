@@ -1,9 +1,9 @@
 package com.radioactiv_gear_project.windows_app;
 
-import com.radioactiv_gear_project.windows_app.UI.AWindowController;
-import com.radioactiv_gear_project.windows_app.UI.Window;
+import com.radioactiv_gear_project.windows_app.UI.EWindowType;
+
+import java.util.Stack;
 
 public class AppContext {
-    public AWindowController previousController;
-    public AWindowController currentController;
+    public Stack<EWindowType> windowStack = new Stack<>();
 }

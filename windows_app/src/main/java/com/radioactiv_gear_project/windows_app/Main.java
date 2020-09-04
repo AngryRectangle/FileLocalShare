@@ -4,6 +4,8 @@ import java.net.*;
 
 import com.radioactiv_gear_project.core.NetworkInteraction;
 import com.radioactiv_gear_project.core.SocketWrapper;
+import com.radioactiv_gear_project.windows_app.UI.Connections.ConnectionsController;
+import com.radioactiv_gear_project.windows_app.UI.Connections.ConnectionsWindow;
 import com.radioactiv_gear_project.windows_app.UI.EWindowType;
 import com.radioactiv_gear_project.windows_app.UI.IWindowFactory;
 import com.radioactiv_gear_project.windows_app.UI.MainMenu.MainMenuController;
@@ -21,21 +23,30 @@ import static java.lang.Thread.sleep;
 public final class Main extends Application {
     public static Stage stage;
     public static AppContext appContext;
-    public static WindowService windowService;
 
     public static void main(String[] args) {
-        windowService = new WindowService(new MainMenuController(new IWindowFactory<MainMenuWindow>() {
-            @Override
-            public MainMenuWindow instantiate() {
-                return new MainMenuWindow();
-            }
-        }), new SettingsController(new IWindowFactory<SettingsWindow>() {
-            @Override
-            public SettingsWindow instantiate() {
-                return new SettingsWindow();
-            }
-        }));
+        appContext = new AppContext();
 
+        WindowService.initialize(appContext,
+                new MainMenuController(new IWindowFactory<MainMenuWindow>() {
+                    @Override
+                    public MainMenuWindow instantiate() {
+                        return new MainMenuWindow();
+                    }
+                }),
+                new SettingsController(new IWindowFactory<SettingsWindow>() {
+                    @Override
+                    public SettingsWindow instantiate() {
+                        return new SettingsWindow();
+                    }
+                }),
+                new ConnectionsController(new IWindowFactory<ConnectionsWindow>() {
+                    @Override
+                    public ConnectionsWindow instantiate() {
+                        return new ConnectionsWindow();
+                    }
+                })
+        );
         Application.launch(Main.class, args);
 
         try {
@@ -69,9 +80,8 @@ public final class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
         stage = primaryStage;
-        appContext = new AppContext();
         primaryStage.setScene(new Scene(new Group()));
-        windowService.Open(EWindowType.MainMenu);
+        WindowService.switchOn(EWindowType.MainMenu);
         primaryStage.setTitle("FileLocalShare");
     }
 

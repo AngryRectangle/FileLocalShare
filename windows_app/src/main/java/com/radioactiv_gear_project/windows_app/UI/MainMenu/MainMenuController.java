@@ -1,10 +1,8 @@
 package com.radioactiv_gear_project.windows_app.UI.MainMenu;
 
-import com.radioactiv_gear_project.windows_app.Main;
 import com.radioactiv_gear_project.windows_app.UI.AWindowController;
 import com.radioactiv_gear_project.windows_app.UI.EWindowType;
 import com.radioactiv_gear_project.windows_app.UI.IWindowFactory;
-import com.radioactiv_gear_project.windows_app.UI.Settings.SettingsWindow;
 import com.radioactiv_gear_project.windows_app.UI.WindowService;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
@@ -15,20 +13,20 @@ public class MainMenuController extends AWindowController<MainMenuWindow> {
     }
 
     @Override
-    public void OnShow() {
-        Get().ConnectButton.onMousePressedProperty().set(new EventHandler<MouseEvent>() {
+    public void onShow() {
+        get().ConnectButton.onMousePressedProperty().set(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
                 OnConnectButton();
             }
         });
-        Get().SettingsButton.onMousePressedProperty().set(new EventHandler<MouseEvent>() {
+        get().SettingsButton.onMousePressedProperty().set(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
                 OnSettingsButton();
             }
         });
-        Get().AppName.setText("FileLocalShare");
+        get().AppName.setText("FileLocalShare");
     }
 
     @Override
@@ -47,11 +45,10 @@ public class MainMenuController extends AWindowController<MainMenuWindow> {
     }
 
     private void OnSettingsButton() {
-        OnHide();
-        Main.windowService.Open(EWindowType.Settings);
+        WindowService.switchOn(EWindowType.Settings);
     }
 
     private void OnConnectButton() {
-
+        WindowService.switchOn(EWindowType.Connections);
     }
 }

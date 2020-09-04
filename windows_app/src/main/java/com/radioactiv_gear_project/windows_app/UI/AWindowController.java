@@ -8,7 +8,7 @@ public abstract class AWindowController<TWindow extends Window> {
         _factory = factory;
     }
 
-    public abstract void OnShow();
+    public abstract void onShow();
 
     public abstract void Execute();
 
@@ -16,7 +16,7 @@ public abstract class AWindowController<TWindow extends Window> {
 
     public abstract EWindowType getWindowType();
 
-    protected TWindow Get() {
+    protected TWindow get() {
         if (_instance == null)
             _instance = _factory.instantiate();
         return _instance;
