@@ -6,14 +6,14 @@ import com.radioactiv_gear_project.windows_app.UI.Window;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
-import javafx.scene.layout.VBox;
+import javafx.scene.control.ScrollPane;
 
 import java.io.IOException;
 
 public class ConnectionsWindow extends Window {
     public Button SettingsButton;
     public Button BackButton;
-    public VBox DevicesBox;
+    public ScrollPane DevicesPane;
     private Parent parent;
 
     public ConnectionsWindow() {
@@ -25,7 +25,7 @@ public class ConnectionsWindow extends Window {
 
         SettingsButton = (Button) parent.lookup("#settingsButton");
         BackButton = (Button) parent.lookup("#backButton");
-        DevicesBox = (VBox) parent.lookup("#devicesBox");
+        DevicesPane = (ScrollPane) parent.lookup("#devicesPane");
     }
 
     @Override

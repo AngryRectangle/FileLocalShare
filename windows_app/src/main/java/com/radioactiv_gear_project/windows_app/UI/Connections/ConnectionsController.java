@@ -1,6 +1,5 @@
 package com.radioactiv_gear_project.windows_app.UI.Connections;
 
-import com.radioactiv_gear_project.windows_app.Main;
 import com.radioactiv_gear_project.windows_app.UI.AWindowController;
 import com.radioactiv_gear_project.windows_app.UI.EWindowType;
 import com.radioactiv_gear_project.windows_app.UI.IWindowFactory;
