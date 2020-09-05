@@ -1,4 +1,4 @@
-package com.radioactiv_gear_project.windows_app.UI.Connections;
+package com.radioactiv_gear_project.windows_app.UI.windows.connections;
 
 import com.radioactiv_gear_project.windows_app.UI.*;
 import com.radioactiv_gear_project.windows_app.UI.views.connection.ConnectionInfo;
@@ -25,9 +25,8 @@ public class ConnectionsController extends AWindowController<ConnectionsWindow> 
                 OnSettingsButton();
             }
         });
-        addTestDevices();
-        addTestDevices();
-        addTestDevices();
+        for (int i = 0; i < 20; i++)
+            addTestDevices();
     }
 
     @Override
@@ -53,7 +52,7 @@ public class ConnectionsController extends AWindowController<ConnectionsWindow> 
         WindowService.switchOn(EWindowType.Settings);
     }
 
-    private void addTestDevices(){
+    private void addTestDevices() {
         ConnectionView view = new ConnectionView();
         ViewControllerService.getController(EViewType.Connection).onShow(view, new ConnectionInfo("SomePC"));
         get().DevicesBox.getChildren().add(view.getView());

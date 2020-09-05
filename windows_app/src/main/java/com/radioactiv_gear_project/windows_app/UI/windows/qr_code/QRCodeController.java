@@ -1,4 +1,4 @@
-package com.radioactiv_gear_project.windows_app.UI.Settings;
+package com.radioactiv_gear_project.windows_app.UI.windows.qr_code;
 
 import com.radioactiv_gear_project.windows_app.UI.AWindowController;
 import com.radioactiv_gear_project.windows_app.UI.EWindowType;
@@ -7,9 +7,8 @@ import com.radioactiv_gear_project.windows_app.UI.WindowService;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 
-public class SettingsController extends AWindowController<SettingsWindow> {
-
-    public SettingsController(IWindowFactory<SettingsWindow> factory) {
+public class QRCodeController extends AWindowController<QRCodeWindow> {
+    public QRCodeController(IWindowFactory<QRCodeWindow> factory) {
         super(factory);
     }
 
@@ -18,7 +17,14 @@ public class SettingsController extends AWindowController<SettingsWindow> {
         get().BackButton.onMousePressedProperty().set(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                OnBackButton();
+                onBackButton();
+            }
+        });
+
+        get().SettingsButton.onMousePressedProperty().set(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                onSettingsButton();
             }
         });
     }
@@ -35,10 +41,14 @@ public class SettingsController extends AWindowController<SettingsWindow> {
 
     @Override
     public EWindowType getWindowType() {
-        return EWindowType.Settings;
+        return EWindowType.QRCodeWindow;
     }
 
-    private void OnBackButton(){
+    private void onBackButton(){
         WindowService.switchOnPrevious();
+    }
+
+    private void onSettingsButton(){
+        WindowService.switchOn(EWindowType.Settings);
     }
 }

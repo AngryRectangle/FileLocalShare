@@ -1,4 +1,4 @@
-package com.radioactiv_gear_project.windows_app.UI.Settings;
+package com.radioactiv_gear_project.windows_app.UI.windows.settings;
 
 import com.radioactiv_gear_project.core.Debug;
 import com.radioactiv_gear_project.windows_app.UI.UIResources;

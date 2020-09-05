@@ -1,4 +1,4 @@
-package com.radioactiv_gear_project.windows_app.UI.MainMenu;
+package com.radioactiv_gear_project.windows_app.UI.windows.main_menu;
 
 import com.radioactiv_gear_project.windows_app.UI.AWindowController;
 import com.radioactiv_gear_project.windows_app.UI.EWindowType;

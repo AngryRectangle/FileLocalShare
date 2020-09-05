@@ -5,12 +5,14 @@ import java.net.*;
 import com.radioactiv_gear_project.core.NetworkInteraction;
 import com.radioactiv_gear_project.core.SocketWrapper;
 import com.radioactiv_gear_project.windows_app.UI.*;
-import com.radioactiv_gear_project.windows_app.UI.Connections.ConnectionsController;
-import com.radioactiv_gear_project.windows_app.UI.Connections.ConnectionsWindow;
-import com.radioactiv_gear_project.windows_app.UI.MainMenu.MainMenuController;
-import com.radioactiv_gear_project.windows_app.UI.MainMenu.MainMenuWindow;
-import com.radioactiv_gear_project.windows_app.UI.Settings.SettingsController;
-import com.radioactiv_gear_project.windows_app.UI.Settings.SettingsWindow;
+import com.radioactiv_gear_project.windows_app.UI.windows.connections.ConnectionsController;
+import com.radioactiv_gear_project.windows_app.UI.windows.connections.ConnectionsWindow;
+import com.radioactiv_gear_project.windows_app.UI.windows.main_menu.MainMenuController;
+import com.radioactiv_gear_project.windows_app.UI.windows.main_menu.MainMenuWindow;
+import com.radioactiv_gear_project.windows_app.UI.windows.qr_code.QRCodeController;
+import com.radioactiv_gear_project.windows_app.UI.windows.qr_code.QRCodeWindow;
+import com.radioactiv_gear_project.windows_app.UI.windows.settings.SettingsController;
+import com.radioactiv_gear_project.windows_app.UI.windows.settings.SettingsWindow;
 import com.radioactiv_gear_project.windows_app.UI.views.connection.ConnectionController;
 import javafx.application.Application;
 import javafx.scene.Group;
@@ -37,6 +39,12 @@ public final class Main extends Application {
                     @Override
                     public SettingsWindow instantiate() {
                         return new SettingsWindow();
+                    }
+                }),
+                new QRCodeController(new IWindowFactory<QRCodeWindow>() {
+                    @Override
+                    public QRCodeWindow instantiate() {
+                        return new QRCodeWindow();
                     }
                 }),
                 new ConnectionsController(new IWindowFactory<ConnectionsWindow>() {
