@@ -25,7 +25,7 @@ public class ConnectionView extends AView {
         DeviceNameText = (Text) _parent.lookup("#deviceNameText");
     }
     @Override
-    protected Parent getView() {
+    public Parent getView() {
         return _parent;
     }
 }

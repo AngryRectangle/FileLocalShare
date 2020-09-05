@@ -1,9 +1,8 @@
 package com.radioactiv_gear_project.windows_app.UI.Connections;
 
-import com.radioactiv_gear_project.windows_app.UI.AWindowController;
-import com.radioactiv_gear_project.windows_app.UI.EWindowType;
-import com.radioactiv_gear_project.windows_app.UI.IWindowFactory;
-import com.radioactiv_gear_project.windows_app.UI.WindowService;
+import com.radioactiv_gear_project.windows_app.UI.*;
+import com.radioactiv_gear_project.windows_app.UI.views.connection.ConnectionInfo;
+import com.radioactiv_gear_project.windows_app.UI.views.connection.ConnectionView;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 
@@ -26,6 +25,9 @@ public class ConnectionsController extends AWindowController<ConnectionsWindow> 
                 OnSettingsButton();
             }
         });
+        addTestDevices();
+        addTestDevices();
+        addTestDevices();
     }
 
     @Override
@@ -35,7 +37,7 @@ public class ConnectionsController extends AWindowController<ConnectionsWindow> 
 
     @Override
     public void OnHide() {
-
+        get().DevicesBox.getChildren().clear();
     }
 
     @Override
@@ -49,5 +51,11 @@ public class ConnectionsController extends AWindowController<ConnectionsWindow> 
 
     private void OnSettingsButton() {
         WindowService.switchOn(EWindowType.Settings);
+    }
+
+    private void addTestDevices(){
+        ConnectionView view = new ConnectionView();
+        ViewControllerService.getController(EViewType.Connection).onShow(view, new ConnectionInfo("SomePC"));
+        get().DevicesBox.getChildren().add(view.getView());
     }
 }

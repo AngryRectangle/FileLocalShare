@@ -29,7 +29,7 @@ public class MainMenuWindow extends AWindow {
     }
 
     @Override
-    protected Parent getView() {
+    public Parent getView() {
         return parent;
     }
 }

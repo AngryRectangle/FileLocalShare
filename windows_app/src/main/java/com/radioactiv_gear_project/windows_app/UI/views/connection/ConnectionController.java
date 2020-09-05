@@ -6,7 +6,7 @@ public class ConnectionController extends AViewController<ConnectionView, Connec
 
     @Override
     public void onShow(ConnectionView view, ConnectionInfo connectionInfo) {
-
+        view.DeviceNameText.setText(connectionInfo.deviceName);
     }
 
     @Override

@@ -4,15 +4,14 @@ import java.net.*;
 
 import com.radioactiv_gear_project.core.NetworkInteraction;
 import com.radioactiv_gear_project.core.SocketWrapper;
+import com.radioactiv_gear_project.windows_app.UI.*;
 import com.radioactiv_gear_project.windows_app.UI.Connections.ConnectionsController;
 import com.radioactiv_gear_project.windows_app.UI.Connections.ConnectionsWindow;
-import com.radioactiv_gear_project.windows_app.UI.EWindowType;
-import com.radioactiv_gear_project.windows_app.UI.IWindowFactory;
 import com.radioactiv_gear_project.windows_app.UI.MainMenu.MainMenuController;
 import com.radioactiv_gear_project.windows_app.UI.MainMenu.MainMenuWindow;
 import com.radioactiv_gear_project.windows_app.UI.Settings.SettingsController;
 import com.radioactiv_gear_project.windows_app.UI.Settings.SettingsWindow;
-import com.radioactiv_gear_project.windows_app.UI.WindowService;
+import com.radioactiv_gear_project.windows_app.UI.views.connection.ConnectionController;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -47,6 +46,8 @@ public final class Main extends Application {
                     }
                 })
         );
+
+        ViewControllerService.addController(EViewType.Connection, new ConnectionController());
         Application.launch(Main.class, args);
 
         try {
