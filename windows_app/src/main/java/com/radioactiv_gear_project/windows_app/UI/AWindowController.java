@@ -1,6 +1,6 @@
 package com.radioactiv_gear_project.windows_app.UI;
 
-public abstract class AWindowController<TWindow extends Window> {
+public abstract class AWindowController<TWindow extends AWindow> {
     private TWindow _instance;
     private IWindowFactory<TWindow> _factory;
 
