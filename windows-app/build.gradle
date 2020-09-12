@@ -1,0 +1,21 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+sourceCompatibility = JavaVersion.VERSION_1_7
+targetCompatibility = JavaVersion.VERSION_1_7
+
+dependencies {
+    implementation project(":core")
+    implementation 'org.openjfx:javafx:16-ea+1'
+}
+
+sourceSets {
+    main {
+        output.resourcesDir = "${buildDir}/classes/java/main"
+    }
+}
+application {
+    mainClassName = 'com.radioactive.gear.Main'
+}
