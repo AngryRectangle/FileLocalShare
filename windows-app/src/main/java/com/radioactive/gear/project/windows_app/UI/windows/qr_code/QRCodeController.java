@@ -8,13 +8,11 @@ import com.radioactive.gear.project.windows_app.UI.WindowService;
 import javafx.event.EventHandler;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
-/*import net.glxn.qrgen.core.image.ImageType;
-import net.glxn.qrgen.javase.QRCode;*/
+import net.glxn.qrgen.javase.QRCode;
 
-import java.io.*;
-import java.net.URI;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 
 public class QRCodeController extends AWindowController<QRCodeWindow> {
     public QRCodeController(IWindowFactory<QRCodeWindow> factory) {
@@ -37,12 +35,12 @@ public class QRCodeController extends AWindowController<QRCodeWindow> {
             }
         });
 
-        /*File file = QRCode.from("HelloWorld").withSize(128, 128).file();
+        File file = QRCode.from("HelloWorld").withSize(128, 128).file();
         try {
             get().QRImage.setImage(new Image(new FileInputStream(file)));
-        }catch (IOException e){
+        } catch (IOException e) {
             Debug.error(e.toString());
-        }*/
+        }
     }
 
     @Override
@@ -60,11 +58,11 @@ public class QRCodeController extends AWindowController<QRCodeWindow> {
         return EWindowType.QRCodeWindow;
     }
 
-    private void onBackButton(){
+    private void onBackButton() {
         WindowService.switchOnPrevious();
     }
 
-    private void onSettingsButton(){
+    private void onSettingsButton() {
         WindowService.switchOn(EWindowType.Settings);
     }
 }

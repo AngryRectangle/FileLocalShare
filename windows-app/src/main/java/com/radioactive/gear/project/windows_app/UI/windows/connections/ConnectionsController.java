@@ -53,8 +53,8 @@ public class ConnectionsController extends AWindowController<ConnectionsWindow> 
     }
 
     private void addTestDevices() {
-        /*ConnectionView view = new ConnectionView();
+        ConnectionView view = new ConnectionView();
         ViewControllerService.getController(EViewType.Connection).onShow(view, new ConnectionInfo("SomePC"));
-        get().DevicesBox.getChildren().add(view.getView());*/
+        get().DevicesBox.getChildren().add(view.getView());
     }
 }

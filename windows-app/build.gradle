@@ -9,6 +9,8 @@ targetCompatibility = JavaVersion.VERSION_1_7
 dependencies {
     implementation project(":core")
     implementation 'org.openjfx:javafx:16-ea+1'
+    compile 'com.github.kenglxn.QRGen:core:2.6.0'
+    compile 'com.github.kenglxn.QRGen:javase:2.6.0'
 }
 
 sourceSets {
