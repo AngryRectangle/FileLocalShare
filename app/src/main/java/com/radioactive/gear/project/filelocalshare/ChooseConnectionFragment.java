@@ -39,13 +39,7 @@ public class ChooseConnectionFragment extends Fragment {
         chooseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                try {
-                    ((MainActivity) inflater.getContext()).connect(packet.getAddress());
-                    ((MainActivity) inflater.getContext()).monitor.startMonitoring();
-                    ((LinearLayout) view.getParent()).removeAllViews();
-                } catch (IOException e) {
-                    Debug.error(e.toString());
-                }
+
             }
         });
         ((TextView) chooseButton.findViewById(R.id.pcName)).setText(new String(packet.getData()));

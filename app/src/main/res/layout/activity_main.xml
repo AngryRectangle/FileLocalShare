@@ -1,110 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/ic_background"
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <FrameLayout
-        android:id="@+id/topFrame"
-        android:layout_width="match_parent"
-        android:layout_height="200dp">
-
-        <Button
-            android:id="@+id/connectButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:text="Connect"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </FrameLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="25dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginBottom="5dp"
-        android:orientation="horizontal">
-
-        <HorizontalScrollView
-            android:id="@+id/pathScroller"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="start"
-            android:layout_weight="1"
-            android:foregroundGravity="right"
-            android:scrollbars="none"
-            android:visibility="visible">
-
-            <LinearLayout
-                android:id="@+id/pathViewerLayout"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:orientation="horizontal" />
-        </HorizontalScrollView>
-
-        <ImageButton
-            android:id="@+id/popupMenuButton"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_gravity="start|center_vertical"
-            android:layout_weight=".06"
-            android:background="?android:attr/panelBackground"
-            app:srcCompat="@drawable/ic_menu" />
-
-    </LinearLayout>
-
-    <ScrollView
-        android:layout_width="match_parent"
+    <Button
+        android:id="@+id/connectButton"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="6dp"
-        android:layout_marginRight="6dp"
-        android:layout_weight="1"
-        android:scrollbars="none">
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/oval_button"
+        android:fontFamily="@font/raleway_light"
+        android:padding="5dp"
+        android:paddingStart="30dp"
+        android:paddingEnd="30dp"
+        android:text="@string/connect"
+        android:textAllCaps="false"
+        android:textColor="#e5e5e5"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.84000003" />
 
-        <TableLayout
-            android:id="@+id/fileTable"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="bottom" />
-    </ScrollView>
+    <TextView
+        android:id="@+id/titleText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:fontFamily="@font/raleway_light"
+        android:shadowColor="@color/PrimaryText"
+        android:text="@string/app_name"
+        android:textColor="@color/PrimaryText"
+        android:textSize="50sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/connectButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.23000002" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="35dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginRight="20dp"
-        android:orientation="horizontal">
+    <Button
+        android:id="@+id/button"
+        style="@style/Base.Widget.AppCompat.Button.Borderless"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="8dp"
+        android:fontFamily="@font/raleway_light"
+        android:text="@string/howToConnect"
+        android:textAllCaps="false"
+        android:textColor="@color/PrimaryText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/connectButton" />
 
-        <EditText
-            android:id="@+id/searchText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
-            android:hint="@android:string/search_go"
-            android:singleLine="true"
-            android:textSize="12sp" />
-
-        <ImageButton
-            android:id="@+id/searchButton"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_weight=".05"
-            android:adjustViewBounds="true"
-            android:background="?android:attr/panelBackground"
-            android:scaleType="centerInside"
-            app:srcCompat="@drawable/ic_search" />
-    </LinearLayout>
-
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

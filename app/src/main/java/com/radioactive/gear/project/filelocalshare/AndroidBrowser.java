@@ -76,8 +76,6 @@ public class AndroidBrowser implements FileBrowser {
         asyncSearch = null;
         clearFileView();
         displayFiles(explorer.getFiles());
-        ((EditText) activity.findViewById(R.id.searchText)).setText(null);
-        activity.findViewById(R.id.searchText).clearFocus();
         pathViewer.showPath(explorer.currentPath, explorer);
     }
 

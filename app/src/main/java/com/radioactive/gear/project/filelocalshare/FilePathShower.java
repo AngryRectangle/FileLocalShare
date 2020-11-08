@@ -33,7 +33,6 @@ public class FilePathShower {
     public void showPath(String path, FileExplorer explorer) {
         clear();
         addElements(path, explorer);
-        scrollToEnd((HorizontalScrollView) activity.findViewById(R.id.pathScroller));
     }
 
     public void addElement(

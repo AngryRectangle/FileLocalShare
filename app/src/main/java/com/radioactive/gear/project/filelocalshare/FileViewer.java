@@ -62,7 +62,7 @@ public class FileViewer {
         output.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((MainActivity)activity).sendFile(file);
+
             }
         });
         return output;

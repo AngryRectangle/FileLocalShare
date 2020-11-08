@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    android:background="@null"
+    android:orientation="vertical"
+    android:padding="3dp"
+    tools:context=".custom_view.FileExplorerFragment">
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="left"
+            android:gravity="left"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/button3"
+                style="@style/FileExplorerPathButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight=".1"
+                android:text="/ > storage > emulated > 0"
+                android:textColor="@color/PrimaryText" />
+
+            <Button
+                android:id="@+id/button2"
+                style="@style/FileExplorerPathButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight=".1"
+                android:text="> Download" />
+
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <GridView
+        android:id="@+id/fileViewHolder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:columnWidth="75dp"
+        android:numColumns="auto_fit" />
+
+</LinearLayout>
