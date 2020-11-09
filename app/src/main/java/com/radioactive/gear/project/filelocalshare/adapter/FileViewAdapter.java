@@ -3,7 +3,6 @@ package com.radioactive.gear.project.filelocalshare.adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.MimeTypeMap;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -11,47 +10,35 @@ import android.widget.TextView;
 import com.radioactive.gear.project.filelocalshare.FileIconService;
 import com.radioactive.gear.project.filelocalshare.FileViewHolder;
 import com.radioactive.gear.project.filelocalshare.R;
+import com.radioactive.gear.project.filelocalshare.util.file_provider.AFileProvider;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class FileViewAdapter extends BaseAdapter {
-    private List<File> _files;
+    private AFileProvider _fileProvider;
     private LayoutInflater _inflater;
 
-    public FileViewAdapter(LayoutInflater inflater, File[] files) {
+    public FileViewAdapter(LayoutInflater inflater, AFileProvider fileProvider) {
         super();
         _inflater = inflater;
-        _files = Arrays.asList(files);
-    }
+        _fileProvider = fileProvider;
 
-    public FileViewAdapter(LayoutInflater inflater, List<File> files) {
-        super();
-        _inflater = inflater;
-        _files = files;
-    }
-
-    public FileViewAdapter(LayoutInflater inflater) {
-        super();
-        _inflater = inflater;
-        _files = new ArrayList<>();
-    }
-
-    public void addFiles(File[] files) {
-        _files.addAll(Arrays.asList(files));
-        notifyDataSetChanged();
+        _fileProvider.OnFileUpdate = new Runnable() {
+            @Override
+            public void run() {
+                notifyDataSetChanged();
+            }
+        };
     }
 
     @Override
     public int getCount() {
-        return _files.size();
+        return _fileProvider.getCount();
     }
 
     @Override
     public File getItem(int position) {
-        return _files.get(position);
+        return _fileProvider.getFile(position);
     }
 
     @Override
