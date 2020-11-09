@@ -21,6 +21,12 @@ import java.nio.file.DirectoryStream;
 
 public class FileExplorerFragment extends Fragment {
 
+    private String _path;
+    public FileExplorerFragment(String path) {
+        super();
+        _path = path;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,7 +40,7 @@ public class FileExplorerFragment extends Fragment {
         LinearLayout layout = (LinearLayout) inflater.inflate(R.layout.fragment_file_explorer, container, false);
         GridView fileViewParent = layout.findViewById(R.id.fileViewHolder);
 
-        File file = new File("/storage/emulated/0/");
+        File file = new File(_path);
         File[] files = file.listFiles();
         files = FileSorter.sort(files, FileSorter.SortType.BY_NAME);
 

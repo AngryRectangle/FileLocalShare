@@ -23,11 +23,11 @@ public class FileExplorerActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new FileExplorerFragment(), getResources().getString(R.string.storage));
-        adapter.addFragment(new FileExplorerFragment(), getResources().getString(R.string.photo));
-        adapter.addFragment(new FileExplorerFragment(), getResources().getString(R.string.downloads));
-        adapter.addFragment(new FileExplorerFragment(), getResources().getString(R.string.video));
-        adapter.addFragment(new FileExplorerFragment(), getResources().getString(R.string.documents));
+        adapter.addFragment(new FileExplorerFragment("/storage/emulated/0/"), getResources().getString(R.string.storage));
+        adapter.addFragment(new FileExplorerFragment("/storage/emulated/0/DCIM/"), getResources().getString(R.string.photo));
+        adapter.addFragment(new FileExplorerFragment("/storage/emulated/0/Download/"), getResources().getString(R.string.downloads));
+        adapter.addFragment(new FileExplorerFragment("/storage/emulated/0/"), getResources().getString(R.string.video));
+        adapter.addFragment(new FileExplorerFragment("/storage/emulated/0/"), getResources().getString(R.string.documents));
         viewPager.setAdapter(adapter);
     }
 
