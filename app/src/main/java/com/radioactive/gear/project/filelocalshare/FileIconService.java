@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
-import android.os.AsyncTask;
-import android.os.Process;
 import android.webkit.MimeTypeMap;
 import android.widget.ImageView;
 
@@ -14,10 +12,6 @@ import com.bumptech.glide.RequestBuilder;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.io.File;
-
-import static android.os.Process.THREAD_PRIORITY_BACKGROUND;
-import static android.os.Process.THREAD_PRIORITY_MORE_FAVORABLE;
-
 public class FileIconService {
     private static FileIconService _instance;
 
@@ -27,50 +21,44 @@ public class FileIconService {
         return _instance;
     }
 
-    public void setIcon(File file, ImageView view) {
+    public void setIcon(File file, final ImageView view) {
+        Activity activity = (Activity) FileLocalShare.getActivityContext();
+        Glide.with(activity).clear(view);
         if (file.isDirectory()) {
-            view.setImageResource(FileIconProvider.getFolderIcon());
+            view.setImageDrawable(FileIconProvider.getFolderIcon());
             return;
         }
 
         String extension = getExtension(file.getName());
-        Activity activity = (Activity) FileLocalShare.getActivityContext();
-        if (extension.equals("apk")) {
-            ApkImageRequestTask task = new ApkImageRequestTask();
-            task.execute(new ApkImageData(file, view, activity));
-            view.setImageResource(FileIconProvider.getDefaultIcon());
-            return;
-        }
-
-        String mimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension);
-        String contentType = mimeType != null ? mimeType.substring(0, mimeType.indexOf('/')) : "";
-        int icon;
-
+        Drawable icon;
         if (FileIconProvider.hasIcon(extension))
             icon = FileIconProvider.getIcon(extension);
         else
             icon = FileIconProvider.getDefaultIcon();
 
+        if (extension.equals("apk")) {
+            requestApkIcon(file, icon, activity).into(view);
+            return;
+        }
+
+        String mimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension);
+        String contentType = mimeType != null ? mimeType.substring(0, mimeType.indexOf('/')) : "";
         if (mimeType != null && (contentType.equals("image") || contentType.equals("video"))) {
             requestMediaIcon(file, icon, activity).into(view);
             return;
         }
 
-        view.setImageResource(icon);
+        view.setImageDrawable(icon);
     }
-
-    private static Drawable getApkIcon(File file, Activity activity) {
+    private static RequestBuilder requestApkIcon(File file, Drawable placeHolderResourceId, Activity activity) {
         PackageManager pm = activity.getPackageManager();
-        PackageInfo pi = pm.getPackageArchiveInfo(file.getAbsolutePath(), 0);
-        if (pi != null) {
-            pi.applicationInfo.sourceDir = file.getAbsolutePath();
-            pi.applicationInfo.publicSourceDir = file.getAbsolutePath();
-            return pi.applicationInfo.loadIcon(pm);
-        }
-        return null;
+        return Glide.with(activity)
+                .load(new ApkImageData(file, pm))
+                .placeholder(placeHolderResourceId)
+                .diskCacheStrategy(DiskCacheStrategy.NONE);
     }
 
-    private static RequestBuilder requestMediaIcon(File file, int placeHolderResourceId, Activity activity) {
+    private static RequestBuilder requestMediaIcon(File file, Drawable placeHolderResourceId, Activity activity) {
         return Glide.with(activity)
                 .load(file)
                 .placeholder(placeHolderResourceId)
@@ -89,40 +77,13 @@ public class FileIconService {
         return name.substring(dotIndex + 1).toLowerCase();
     }
 
-    private class ApkImageRequestTask extends AsyncTask<ApkImageData, Void, Void>{
-        private ApkImageData[] _datas;
-        private Drawable[] _drawableResult;
-
-        @Override
-        protected Void doInBackground(ApkImageData... datas) {
-            Process.setThreadPriority(THREAD_PRIORITY_BACKGROUND + THREAD_PRIORITY_MORE_FAVORABLE);
-            _datas = datas;
-            _drawableResult = new Drawable[datas.length];
-            for(int i = 0; i< datas.length; i++){
-                ApkImageData data = datas[0];
-                _drawableResult[i] = getApkIcon(data.file, data.activity);
-            }
-
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-            for(int i = 0; i< _datas.length; i++)
-                _datas[i].view.setImageDrawable(_drawableResult[i]);
-        }
-    }
-
-    private class ApkImageData{
+    public static class ApkImageData{
         public File file;
-        public ImageView view;
-        public Activity activity;
+        public PackageManager manager;
 
-        public ApkImageData(File file, ImageView view, Activity activity) {
+        public ApkImageData(File file, PackageManager manager) {
             this.file = file;
-            this.view = view;
-            this.activity = activity;
+            this.manager = manager;
         }
     }
 }
