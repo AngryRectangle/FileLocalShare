@@ -62,6 +62,10 @@ public class MainActivity extends AppCompatActivity {
                 != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(new String[]{"android.permission.CAMERA"}, 11);
         }
+        if (Build.VERSION.SDK_INT >= 23 && ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{"android.permission.READ_EXTERNAL_STORAGE"}, 11);
+        }
 
         final MainActivity ex = this;
         Button button = findViewById(R.id.connectButton);

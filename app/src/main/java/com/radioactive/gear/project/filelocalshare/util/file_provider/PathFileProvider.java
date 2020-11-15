@@ -49,9 +49,4 @@ public class PathFileProvider extends AFileProvider {
 
         _files = FileSorter.sort(_files, _sortType);
     }
-
-    private void callFileUpdate() {
-        if (OnFileUpdate != null)
-            OnFileUpdate.run();
-    }
 }

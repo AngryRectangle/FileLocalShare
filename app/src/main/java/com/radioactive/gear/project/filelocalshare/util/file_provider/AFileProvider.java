@@ -6,4 +6,8 @@ public abstract class AFileProvider {
     public abstract int getCount();
     public abstract File getFile(int index);
     public Runnable OnFileUpdate;
+    protected void callFileUpdate() {
+        if (OnFileUpdate != null)
+            OnFileUpdate.run();
+    }
 }

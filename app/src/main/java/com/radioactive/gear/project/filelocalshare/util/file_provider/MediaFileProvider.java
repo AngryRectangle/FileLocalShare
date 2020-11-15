@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MediaFileProvider extends AFileProvider {
-    private static final int BUFFER_LENGTH = 20;
+    private static final int BUFFER_LENGTH = 10;
     private Uri _uri;
     private String[] _projection;
     private String _selection;

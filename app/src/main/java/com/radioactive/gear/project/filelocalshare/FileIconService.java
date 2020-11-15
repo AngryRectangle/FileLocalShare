@@ -5,6 +5,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
+import android.os.Process;
 import android.webkit.MimeTypeMap;
 import android.widget.ImageView;
 
@@ -13,6 +14,9 @@ import com.bumptech.glide.RequestBuilder;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.io.File;
+
+import static android.os.Process.THREAD_PRIORITY_BACKGROUND;
+import static android.os.Process.THREAD_PRIORITY_MORE_FAVORABLE;
 
 public class FileIconService {
     private static FileIconService _instance;
@@ -34,6 +38,7 @@ public class FileIconService {
         if (extension.equals("apk")) {
             ApkImageRequestTask task = new ApkImageRequestTask();
             task.execute(new ApkImageData(file, view, activity));
+            view.setImageResource(FileIconProvider.getDefaultIcon());
             return;
         }
 
@@ -41,9 +46,9 @@ public class FileIconService {
         String contentType = mimeType != null ? mimeType.substring(0, mimeType.indexOf('/')) : "";
         int icon;
 
-        if (FileIconProvider.hasIcon(extension)) {
+        if (FileIconProvider.hasIcon(extension))
             icon = FileIconProvider.getIcon(extension);
-        } else
+        else
             icon = FileIconProvider.getDefaultIcon();
 
         if (mimeType != null && (contentType.equals("image") || contentType.equals("video"))) {
@@ -90,6 +95,7 @@ public class FileIconService {
 
         @Override
         protected Void doInBackground(ApkImageData... datas) {
+            Process.setThreadPriority(THREAD_PRIORITY_BACKGROUND + THREAD_PRIORITY_MORE_FAVORABLE);
             _datas = datas;
             _drawableResult = new Drawable[datas.length];
             for(int i = 0; i< datas.length; i++){
