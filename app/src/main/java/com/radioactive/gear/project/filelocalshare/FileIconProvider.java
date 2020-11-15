@@ -1,37 +1,26 @@
 package com.radioactive.gear.project.filelocalshare;
 
-import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
-
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
-import java.util.Set;
 
 public class FileIconProvider {
 
-    public static boolean hasIcon(String extension) {
-        return _drawableDictionary.containsKey(extension);
+    public static boolean hasIcon(String extension){
+        return _iconDictionary.containsKey(extension);
+    }
+    public static int getIcon(String extension){
+        return _iconDictionary.get(extension);
+    }
+    public static int getFolderIcon(){
+        return R.drawable.ic_file_icon_folder;
+    }
+    public static int getDefaultIcon(){
+        return R.drawable.ic_file_icon_default;
     }
 
-    public static Drawable getIcon(String extension) {
-        return _drawableDictionary.get(extension);
-    }
-
-    public static Drawable getFolderIcon() {
-        return _folderIcon;
-    }
-
-    public static Drawable getDefaultIcon() {
-        return _defaultIcon;
-    }
-
-    private static Map<String, Drawable> _drawableDictionary = new HashMap<>();
-    private static Drawable _defaultIcon;
-    private static Drawable _folderIcon;
+    private static Map<String, Integer> _iconDictionary = new HashMap<String, Integer>();
 
     static {
-        Map<String, Integer> _iconDictionary = new HashMap<String, Integer>();
         _iconDictionary.put("avi", R.drawable.ic_file_icon_avi);
         _iconDictionary.put("css", R.drawable.ic_file_icon_css);
         _iconDictionary.put("csv", R.drawable.ic_file_icon_csv);
@@ -62,16 +51,5 @@ public class FileIconProvider {
         _iconDictionary.put("zip", R.drawable.ic_file_icon_zip);
         _iconDictionary.put("7zip", R.drawable.ic_file_icon_archive);
         _iconDictionary.put("rar", R.drawable.ic_file_icon_archive);
-
-        Set<String> keys = _iconDictionary.keySet();
-        Iterator<String> keyIterator = keys.iterator();
-        Resources resources = FileLocalShare.getActivityContext().getResources();
-        while (keyIterator.hasNext()) {
-            String key = keyIterator.next();
-            _drawableDictionary.put(key, resources.getDrawable(_iconDictionary.get(key)));
-        }
-        _defaultIcon = resources.getDrawable(R.drawable.ic_file_icon_default);
-        _folderIcon = resources.getDrawable(R.drawable.ic_file_icon_folder);
-
     }
 }
