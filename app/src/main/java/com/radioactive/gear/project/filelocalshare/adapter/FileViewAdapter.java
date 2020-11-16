@@ -59,9 +59,12 @@ public class FileViewAdapter extends BaseAdapter {
             convertView.setTag(holder);
         }else
             holder = (FileViewHolder) convertView.getTag();
+
+        if(holder.iconRequest!=null)
+            holder.iconRequest.close();
         File item = getItem(position);
         holder.fileName.setText(item.getName());
-        FileIconService.get().setIcon(item, holder.fileIcon);
+        holder.iconRequest = FileIconService.get().setIcon(item, holder.fileIcon);
         return convertView;
     }
 }

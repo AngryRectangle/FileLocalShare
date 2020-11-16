@@ -19,6 +19,7 @@ import com.radioactive.gear.project.filelocalshare.sort.FileSorter;
 import com.radioactive.gear.project.filelocalshare.util.file_provider.AFileProvider;
 import com.radioactive.gear.project.filelocalshare.util.file_provider.MediaFileProvider;
 import com.radioactive.gear.project.filelocalshare.util.file_provider.PathFileProvider;
+import com.radioactive.gear.project.filelocalshare.util.file_provider.SearchFileProvider;
 
 import java.io.File;
 import java.nio.file.DirectoryStream;
@@ -44,12 +45,12 @@ public class FileExplorerFragment extends Fragment {
         LinearLayout layout = (LinearLayout) inflater.inflate(R.layout.fragment_file_explorer, container, false);
         GridView fileViewParent = layout.findViewById(R.id.fileViewHolder);
 
-        /*PathFileProvider provider = new PathFileProvider("/storage/emulated/0/");
+        PathFileProvider provider = new PathFileProvider("/storage/emulated/0/Download/");
         provider.setSort(FileSorter.SortType.BY_NAME);
-        provider.loadFiles();*/
+        provider.loadFiles();
 
-        String[] projection = {MediaStore.Audio.AudioColumns.DATA};
-        MediaFileProvider provider = new MediaFileProvider(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, projection, MediaStore.Audio.Media.TITLE + " ASC");
+        /*SearchFileProvider provider = new SearchFileProvider();
+        provider.startSearching("/storage/emulated/0/", ".apk");*/
 
         FileViewAdapter adapter = new FileViewAdapter(getLayoutInflater(), provider);
         fileViewParent.setAdapter(adapter);
