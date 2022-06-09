@@ -1,6 +1,7 @@
 package com.radioactive.gear.project.windows_app;
 
 import java.net.*;
+import java.util.Random;
 
 import com.radioactive.gear.project.core.NetworkInteraction;
 import com.radioactive.gear.project.core.SocketWrapper;
@@ -27,7 +28,8 @@ public final class Main extends Application {
 
     public static void main(String[] args) {
         appContext = new AppContext();
-
+        appContext.uniqueCode = new byte[8];
+        new Random().nextBytes(appContext.uniqueCode);
         WindowService.initialize(appContext,
                 new MainMenuController(new IWindowFactory<MainMenuWindow>() {
                     @Override

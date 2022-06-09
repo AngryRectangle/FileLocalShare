@@ -1,13 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <group android:checkableBehavior="single" >
+        <item
+            android:id="@+id/type_sort_radio"
+            android:title="@string/type_sort" />
+        <item
+            android:id="@+id/name_sort_radio"
+            android:title="@string/name_sort" />
+        <item
+            android:id="@+id/size_sort_radio"
+            android:title="@string/size_sort" />
+        <item
+            android:id="@+id/last_modified_sort_radio"
+            android:title="@string/last_modified_sort" />
+    </group>
     <item
-        android:id="@+id/sortByName"
-        android:title="By name" />
-    <item
-        android:id="@+id/sortBySize"
-        android:title="By size" />
-    <item
-        android:id="@+id/sortByDate"
-        android:title="By date" />
+        android:id="@+id/ascending_sort_check"
+        android:checkable="true"
+        android:enabled="true"
+        android:title="@string/ascending_sort"
+        android:visible="true" />
 </menu>

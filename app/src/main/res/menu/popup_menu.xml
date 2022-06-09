@@ -5,12 +5,9 @@
     android:orientation="vertical">
 
     <item
-        android:id="@+id/selectOrderButton"
+        android:id="@+id/select_order_button"
         android:title="Order" />
     <item
         android:id="@+id/settingsButton"
         android:title="Settings" />
-    <item
-        android:id="@+id/activateSearchButton"
-        android:title="@android:string/search_go" />
 </menu>
